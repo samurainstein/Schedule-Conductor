@@ -12,8 +12,8 @@ package Model;
 public class InstrumentTeacher extends Teacher {
     
     private String instrument;
-    private char teachOnline;
-    private char teachInPerson;
+    private char availableOnline;
+    private char availableInPerson;
     
     /**
      * Constructor for InstrumentTeacher objects. 
@@ -25,8 +25,10 @@ public class InstrumentTeacher extends Teacher {
      * @param address Address of teacher   
      * @param phone Phone number of teacher
      * @param instrument Instrument that is taught
-     * @param teachOnline Y or N whether teaches online
-     * @param teachInPerson Y or N whether teacher in person
+     * @param username Username of teacher for login
+     * @param password Password of teacher for login
+     * @param availableOnline Y or N whether teaches online
+     * @param availableInPerson Y or N whether teacher in person
      */
     public InstrumentTeacher(
             int id, 
@@ -39,12 +41,12 @@ public class InstrumentTeacher extends Teacher {
             String username,
             String password,
             String instrument,
-            char teachOnline,
-            char teachInPerson) {
+            char availableOnline,
+            char availableInPerson) {
         super(id, name, countryId, divisionId, postalCode, address, phone, username, password);
         this.instrument = instrument;
-        this.teachOnline = teachOnline;
-        this.teachInPerson = teachInPerson;
+        this.availableOnline = availableOnline;
+        this.availableInPerson = availableInPerson;
     }
     
     /**
@@ -56,18 +58,18 @@ public class InstrumentTeacher extends Teacher {
     }  
     
     /**
-     * Method for getting a y/n result of whether the teacher teaches online. 
+     * Method for getting a y/n result of whether the teacher is available online. 
      * @return y/n result for teaching online
      */
-    public char getTeachOnline() {
-        return teachOnline;
+    public char getAvailableOnline() {
+        return availableOnline;
     }
     
     /**
-     * Method for getting a y/n result of whether the teacher teaches in person. 
+     * Method for getting a y/n result of whether the teacher is available in person. 
      * @return y/n result for teaching online
      */
-    public char getTeachInPerson() {
-        return teachInPerson;
+    public char getAvailableInPerson() {
+        return availableInPerson;
     }
 }
