@@ -36,10 +36,12 @@ public class InstrumentTeacher extends Teacher {
             String postalCode, 
             String address, 
             String phone,
+            String username,
+            String password,
             String instrument,
             char teachOnline,
             char teachInPerson) {
-        super(id, name, countryId, divisionId, postalCode, address, phone);
+        super(id, name, countryId, divisionId, postalCode, address, phone, username, password);
         this.instrument = instrument;
         this.teachOnline = teachOnline;
         this.teachInPerson = teachInPerson;

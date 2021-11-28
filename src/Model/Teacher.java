@@ -18,6 +18,8 @@ public abstract class Teacher {
     private String postalCode;
     private String address;
     private String phone;
+    private String username;
+    private String password;
     
     /**
      * Constructor for Teacher objects. 
@@ -29,7 +31,7 @@ public abstract class Teacher {
      * @param address Address of teacher   
      * @param phone Phone number of teacher
      */
-    public Teacher(int id, String name, int countryId, int divisionId, String postalCode, String address, String phone) {
+    public Teacher(int id, String name, int countryId, int divisionId, String postalCode, String address, String phone, String username, String password) {
         this.id = id;
         this.name = name;
         this.countryId = countryId;
@@ -37,6 +39,8 @@ public abstract class Teacher {
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
+        this.username = username;
+        this.password = password;
     }
     
     /**
@@ -93,6 +97,22 @@ public abstract class Teacher {
      */
     public String getPhone() {
         return phone;
+    }
+    
+    /**
+     * Method for getting a teacher's username. 
+     * @return Returns a username
+     */
+    public String getUsername() {
+        return username;
+    }
+    
+    /**
+     * Method for getting a teacher's password. 
+     * @return Returns a password
+     */
+    public String getPassword() {
+        return password;
     }
     
     /**
