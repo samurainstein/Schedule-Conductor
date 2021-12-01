@@ -41,8 +41,8 @@ public class InstrumentStudent extends Student {
             char availableInPerson) {
         super(id, name, countryId, divisionId, postalCode, address, phone);
         this.instrument = instrument;
-        this.availableOnline = this.availableOnline;
-        this.availableInPerson = this.availableInPerson;
+        this.availableOnline = availableOnline;
+        this.availableInPerson = availableInPerson;
     }
     
     /**
