@@ -17,8 +17,8 @@ public class DBConnection {
     
     private static final String protocol = "jdbc";
     private static final String vendorName = ":mysql:";
-    private static final String ipAddress = "127.0.0.1:3306";
-    private static final String dbName = "Local Host";
+    private static final String ipAddress = "//127.0.0.1:3306/";
+    private static final String dbName = "scheduleconductor";
     //Required for MySQL Connector/J driver 8.0.23 and above
     private static final String timeConv = "?connectionTimeZone=SERVER";
     private static final String jdbcUrl = protocol + vendorName + ipAddress + dbName + timeConv;
