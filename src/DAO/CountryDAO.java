@@ -8,7 +8,7 @@ package DAO;
 import Model.Country;
 import Model.Data;
 import Utilities.DBConnection;
-//import Utilities.DBQuery;
+import Utilities.DBQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,25 +24,25 @@ public abstract class CountryDAO {
      * 
      */
     public static void selectCountries() {
-//        try {
-//            Data.clearCountries();
-//            Connection conn = DBConnection.getConnection();
-//            String sqlStatement = "SELECT * FROM countries; ";
-//            DBQuery.setPreparedStatement(conn, sqlStatement);
-//            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
-//
-//            preparedStatement.execute();
-//            ResultSet resultSet = preparedStatement.getResultSet();
-//            while(resultSet.next()) {
-//                int countryID = resultSet.getInt("Country_ID");
-//                String countryName = resultSet.getString("Country");
-//                
-//                Country country = new Country(countryID, countryName);
-//                Data.addCountry(country);
-//            }
-//        }
-//        catch(SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Data.clearCountries();
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "SELECT * FROM countries; ";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) {
+                int countryID = resultSet.getInt("Country_ID");
+                String countryName = resultSet.getString("Country");
+                
+                Country country = new Country(countryID, countryName);
+                Data.addCountry(country);
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
