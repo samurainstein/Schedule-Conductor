@@ -29,6 +29,7 @@ public class DBConnection {
     
         /**
      * This method starts the connection to the database. 
+     * @return Returns Connection object
      */
     public static Connection startConnection() {
         try {
@@ -50,6 +51,7 @@ public class DBConnection {
     
     /**
      * This method retrieves the connection to the database. 
+     * @return Returns a Connection object
      */
     public static Connection getConnection() {
         return conn;
