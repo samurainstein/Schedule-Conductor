@@ -1,0 +1,78 @@
+
+.root {
+    -fx-background-color: derive(#939DAD, 10%);
+    -fx-font-size: 18px;
+    -fx-font-family: 'Candara';
+/*    -fx-font-weight: bold;*/
+}
+
+.border-pane-left {
+    -fx-background-color: derive(#939DAD, 50%);
+}
+
+.border-pane-center {
+    /*-fx-background-color: derive(blue, 70%);*/
+}
+
+.v-box {
+    -fx-background-color: derive(#939DAD, 80%);
+}
+
+.label {
+    -fx-padding: 15;
+    
+}
+
+#nav-menu-text {
+    -fx-font-size: 16px;
+    -fx-padding: 5;
+}
+
+#login-text {
+    -fx-font-size: 26px;
+
+}
+
+
+.split-pane {
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-background-color: derive(grey, 100%);
+}
+
+.button {
+    -fx-background-color:
+        linear-gradient(
+            derive(grey, 120%), 
+            derive(grey, 90%)
+        ),
+        radial-gradient(
+            center 50% -40%, 
+            radius 180%, 
+            derive(grey, 95%) 55%, 
+            derive(grey, 75%) 55%
+        );
+    -fx-background-radius: 4, 3;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.55) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: derive(grey, -60%);
+    -fx-padding: 3 11 3 11;
+}
+
+.table-view {
+    -fx-border-width: 0;
+    -fx-border-color: red;
+}
+
+.text-area, .text-field {
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+
+.text-area {
+    -fx-padding: 2;
+}
+
+.text-field {
+    -fx-padding: 3 6 3 6;
+}
