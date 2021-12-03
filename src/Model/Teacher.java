@@ -13,8 +13,8 @@ public abstract class Teacher {
     
     private int id;
     private String name;
-    private int countryId;
-    private int divisionId;
+    private String country;
+    private String division;
     private String postalCode;
     private String address;
     private String phone;
@@ -25,19 +25,19 @@ public abstract class Teacher {
      * Constructor for Teacher objects. 
      * @param id ID of teacher
      * @param name Name of teacher
-     * @param countryId Country Id of teacher
-     * @param divisionId Division Id of teacher 
+     * @param country Country of teacher
+     * @param division Division of teacher 
      * @param postalCode Postal Code of teacher
      * @param address Address of teacher   
      * @param phone Phone number of teacher
      * @param username Username of teacher for login
      * @param password Password of teacher for login
      */
-    public Teacher(int id, String name, int countryId, int divisionId, String postalCode, String address, String phone, String username, String password) {
+    public Teacher(int id, String name, String country, String division, String postalCode, String address, String phone, String username, String password) {
         this.id = id;
         this.name = name;
-        this.countryId = countryId;
-        this.divisionId = divisionId;
+        this.country = country;
+        this.division = division;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
@@ -65,16 +65,16 @@ public abstract class Teacher {
      * Method for getting a teacher country Id. 
      * @return Returns a teacher country Id
      */
-    public int getCountryId() {
-        return countryId;
+    public String getCountry() {
+        return country;
     }
     
     /**
      * Method for getting a teacher division Id. 
      * @return Returns a teacher division Id
      */
-    public int getDivisionId() {
-        return divisionId;
+    public String getDivision() {
+        return division;
     }
     
     /**

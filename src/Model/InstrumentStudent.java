@@ -19,8 +19,8 @@ public class InstrumentStudent extends Student {
      * Constructor for InstrumentStudent objects. 
      * @param id ID of student
      * @param name Name of student
-     * @param countryId Country of student
-     * @param divisionId Division of student 
+     * @param country Country of student
+     * @param division Division of student 
      * @param postalCode Postal Code of student
      * @param address Address of student   
      * @param phone Phone number of student
@@ -31,15 +31,15 @@ public class InstrumentStudent extends Student {
     public InstrumentStudent(
             int id, 
             String name, 
-            int countryId, 
-            int divisionId, 
+            String country, 
+            String division, 
             String postalCode, 
             String address, 
             String phone,
             String instrument,
             char availableOnline,
             char availableInPerson) {
-        super(id, name, countryId, divisionId, postalCode, address, phone);
+        super(id, name, country, division, postalCode, address, phone);
         this.instrument = instrument;
         this.availableOnline = availableOnline;
         this.availableInPerson = availableInPerson;

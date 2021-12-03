@@ -19,8 +19,8 @@ public class InstrumentTeacher extends Teacher {
      * Constructor for InstrumentTeacher objects. 
      * @param id ID of teacher
      * @param name Name of teacher
-     * @param countryId Country of teacher
-     * @param divisionId Division of teacher 
+     * @param country Country of teacher
+     * @param division Division of teacher 
      * @param postalCode Postal Code of teacher
      * @param address Address of teacher   
      * @param phone Phone number of teacher
@@ -33,8 +33,8 @@ public class InstrumentTeacher extends Teacher {
     public InstrumentTeacher(
             int id, 
             String name, 
-            int countryId, 
-            int divisionId, 
+            String country, 
+            String division, 
             String postalCode, 
             String address, 
             String phone,
@@ -43,7 +43,7 @@ public class InstrumentTeacher extends Teacher {
             String instrument,
             char availableOnline,
             char availableInPerson) {
-        super(id, name, countryId, divisionId, postalCode, address, phone, username, password);
+        super(id, name, country, division, postalCode, address, phone, username, password);
         this.instrument = instrument;
         this.availableOnline = availableOnline;
         this.availableInPerson = availableInPerson;
