@@ -12,6 +12,8 @@
 
 .border-pane-center {
     /*-fx-background-color: derive(blue, 70%);*/
+    -fx-background-image: url("/View/slate.jpg");
+    -fx-background-size: 100% 100%;
 }
 
 .v-box {
