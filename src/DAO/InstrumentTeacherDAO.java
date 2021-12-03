@@ -15,15 +15,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * This class is used to send queries to the customers table in the database
+ * This class is used to send queries to the instrument_teacher table in the database
  * @author Eric Matelyan
  */
 public abstract class InstrumentTeacherDAO {
     /**
-     * Select statement for all rows in the customers table. 
+     * Select statement for all rows in the instrument_teacher table. 
      * 
      */
-    public static void selectCustomers() {
+    public static void selectTeachers() {
         try {
             Data.clearTeachers();
             Connection conn = DBConnection.getConnection();
