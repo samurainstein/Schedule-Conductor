@@ -19,6 +19,38 @@ import java.sql.SQLException;
  * @author Eric Matelyan
  */
 public abstract class InstrumentTeacherDAO {
+    
+    /**
+     * Checks if username/password pair exists in the users table. 
+     * @param username Username to be checked
+     * @param password Password to be checked
+     * @return Returns the User ID if found.  Otherwise, returns 0. 
+     */
+    public static int teacherLogin(String username, String password) {
+        try {           
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "SELECT * FROM instrument_teacher "
+                                + "WHERE username = ? "
+                                + "AND password = ?";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Data.setLoggedInTeacherID(id);
+                return id;
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
     /**
      * Select statement for all rows in the instrument_teacher table. 
      * 
