@@ -10,16 +10,6 @@
 
 
 <BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
-   <left>
-      <VBox prefWidth="150.0" spacing="10.0" styleClass="border-pane-left" BorderPane.alignment="CENTER">
-         <children>
-            <Label id="nav-menu-text" text="Login" />
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
-   </left>
    <center>
       <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
          <children>
