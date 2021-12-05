@@ -15,12 +15,12 @@
          <children>
             <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" spacing="10.0" styleClass="v-box" StackPane.alignment="CENTER">
                <children>
-                  <Label id="login-text" fx:id="welcomeLabel" text="Welcome!">
+                  <Label id="login-text" text="Welcome!">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="signInLabel" stylesheets="@ScheduleConductor.css" text="Please sign in to continue">
+                  <Label stylesheets="@ScheduleConductor.css" text="Please sign in to continue">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -35,7 +35,7 @@
                         <Insets />
                      </VBox.margin>
                   </TextField>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLogin" text="Login">
+                  <Button fx:id="loginBT" mnemonicParsing="false" text="Login">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
