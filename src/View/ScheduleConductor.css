@@ -7,7 +7,7 @@
 }
 
 .border-pane-left {
-    -fx-background-color: derive(#939DAD, 10%);
+    -fx-background-color: derive(#939DAD, 30%);
 }
 
 .border-pane-center {
