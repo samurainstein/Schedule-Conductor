@@ -8,7 +8,7 @@ package Controller;
 import DAO.InstrumentTeacherDAO;
 //import Utilities.ActivityLog;
 import Utilities.Alerts;
-//import Utilities.PageLoader;
+import Utilities.PageLoader;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -20,12 +20,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * This class handles events on the Login screen
@@ -43,11 +47,18 @@ public class LoginController implements Initializable {
     @FXML
     private Label zoneIDLabel;
 
-    private String alertTitle = "Invalid username or password";
-    private String alertText = "Username or password is incorrect";
+    private Parent root;
+    private final String pageTitle;
+    private String alertTitle;
+    private String alertText;
+    private Stage stage;
     
 
-    public LoginController() {
+    public LoginController() throws IOException {
+        this.alertText = "Username or password is incorrect";
+        this.alertTitle = "Invalid username or password";
+        this.pageTitle = PageLoader.getHomeTitle();
+        this.root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
 
     }
 
@@ -82,15 +93,17 @@ public class LoginController implements Initializable {
 //    }
     
     EventHandler<KeyEvent> keyPressHandler = new EventHandler<KeyEvent>() {
-        public void handle(KeyEvent ke) {
-            if(ke.getCode() == KeyCode.ENTER ) {
+        public void handle(KeyEvent event) {
+            if(event.getCode() == KeyCode.ENTER ) {
                 String username = usernameTF.getText();
                 String password = passwordTF.getText();
                 int id = InstrumentTeacherDAO.teacherLogin(username, password);
                 if (id == 0) {
                     Alerts.loginInvalid(alertTitle, alertText);
                 } else {
-                System.out.println("Login Successful");
+                    stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                    System.out.println("Login Successful");
                 }
             }
         }
@@ -105,6 +118,8 @@ public class LoginController implements Initializable {
                     Alerts.loginInvalid(alertTitle, alertText);
             } 
             else {
+                stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
                 System.out.println("Login Successful");
             }
         }             
