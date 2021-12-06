@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.InstrumentTeacherDAO;
+import Model.Data;
 //import Utilities.ActivityLog;
 import Utilities.Alerts;
 import Utilities.PageLoader;
@@ -15,6 +16,8 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -48,26 +51,26 @@ public class LoginController implements Initializable {
     private Label zoneIDLabel;
 
     private Parent root;
-    private final String pageTitle;
+    private String pageTitle;
     private String alertTitle;
     private String alertText;
+    private ZoneId zoneID;
     private Stage stage;
-    
-
-    public LoginController() throws IOException {
-        this.alertText = "Username or password is incorrect";
-        this.alertTitle = "Invalid username or password";
-        this.pageTitle = PageLoader.getHomeTitle();
-        this.root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-
-    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ZoneId zoneID = ZoneId.systemDefault();
+//        try {
+//            root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+        alertText = "Username or password is incorrect";
+        alertTitle = "Invalid username or password";
+        pageTitle = PageLoader.getHomeTitle();
+        zoneID = ZoneId.systemDefault();
         zoneIDLabel.setText("Location: " + zoneID.toString());
         usernameTF.setOnKeyPressed(keyPressHandler);
         passwordTF.setOnKeyPressed(keyPressHandler);
@@ -101,6 +104,12 @@ public class LoginController implements Initializable {
                 if (id == 0) {
                     Alerts.loginInvalid(alertTitle, alertText);
                 } else {
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    Data.setLoggedInTeacherID(id);
                     stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
                     PageLoader.pageLoad(stage, root, pageTitle);
                     System.out.println("Login Successful");
@@ -118,6 +127,12 @@ public class LoginController implements Initializable {
                     Alerts.loginInvalid(alertTitle, alertText);
             } 
             else {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Data.setLoggedInTeacherID(id);
                 stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
                 PageLoader.pageLoad(stage, root, pageTitle);
                 System.out.println("Login Successful");
