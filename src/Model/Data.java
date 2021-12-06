@@ -22,6 +22,7 @@ public abstract class Data {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> teacherAppointments = FXCollections.observableArrayList();
     private static int loggedInTeacherId;
     
     /**
@@ -120,6 +121,7 @@ public abstract class Data {
         return allAppointments;
     }
     
+    
     /**
      * Method for adding an appointment to the list of all appointments. 
      * @param appointment Appointment to be added
@@ -163,6 +165,27 @@ public abstract class Data {
      */
     public static void clearMonthlyAppointments() {
         monthlyAppointments.clear();
+    }
+    
+    
+    /**
+     * Method for returning a list of appointments that are associated with a specific teacher ID. 
+     * @param teacherId Teacher ID to be searched
+     * @return Returns an observable list of appointments
+     */
+    public static ObservableList<Appointment> getTeacherAppointments(int teacherId) {
+        for(Appointment appointment : allAppointments) {
+            if(appointment.getTeacherId() == teacherId)
+                teacherAppointments.add(appointment);
+        }
+        return teacherAppointments;
+    }
+    
+    /**
+     * Method for clearing the list of teacher specific appointments. 
+     */
+    public static void clearTeacherAppointments() {
+        teacherAppointments.clear();
     }
     
     /**
