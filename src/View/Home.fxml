@@ -15,16 +15,32 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label text="Test" />
+                  <Label fx:id="notificationLBL" alignment="CENTER" prefWidth="225.0" text="Test" textAlignment="CENTER" wrapText="true" />
                </children>
             </VBox>
          </children>
       </StackPane>
    </center>
    <left>
-      <VBox prefWidth="150.0" styleClass="border-pane-left" BorderPane.alignment="CENTER">
+      <VBox prefWidth="150.0" styleClass="nav-v-box" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Logout" />
+            <Label id="nav-menu-label" text="Home" />
+            <Label id="nav-menu-label" text="Teachers" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" text="-Add" />
+                  <Label id="nav-menu-label" text="-Update" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" text="Students" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" text="-Add" />
+                  <Label id="nav-menu-label" text="-Update" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" text="Reports" />
+            <Label id="nav-menu-label" fx:id="logoutLabel" onMouseClicked="#logout" text="Logout" />
          </children>
       </VBox>
    </left>
