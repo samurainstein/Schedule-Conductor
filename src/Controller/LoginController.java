@@ -12,12 +12,8 @@ import Utilities.Alerts;
 import Utilities.PageLoader;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.ZoneId;
-import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,14 +21,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * This class handles events on the Login screen
@@ -62,11 +56,8 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        try {
-//            root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
+
+        Data.clearLoggedInTeacherId();
         alertText = "Username or password is incorrect";
         alertTitle = "Invalid username or password";
         pageTitle = PageLoader.getHomeTitle();
@@ -77,23 +68,6 @@ public class LoginController implements Initializable {
         loginBT.setOnKeyPressed(keyPressHandler);
         loginBT.setOnAction(actionEventHandler);
     }
-
-//    @FXML
-//    private void onLogin(ActionEvent event) throws SQLException, IOException {
-//        String username = usernameTF.getText();
-//        String password = passwordTF.getText();
-//        int id = InstrumentTeacherDAO.teacherLogin(username, password);
-//        if (id == 0) {
-//            Alerts.loginInvalid(alertTitle, alertText);
-////            ActivityLog.loginAttempt(userID, username);
-//        } else {
-//            System.out.println("Login Successful");
-////            ActivityLog.loginAttempt(userID, username);
-////            Parent root = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
-////            String pageTitle = PageLoader.getHomeTitle();
-////            PageLoader.pageLoad(event, root, pageTitle);  
-//        }
-//    }
     
     EventHandler<KeyEvent> keyPressHandler = new EventHandler<KeyEvent>() {
         public void handle(KeyEvent event) {
