@@ -5,6 +5,7 @@
  */
 package Model;
 
+import DAO.InstrumentStudentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -46,6 +47,17 @@ public abstract class Data {
      */
     public static void clearStudents() { 
         allStudents.clear();
+    }
+    
+    public static String getStudentName(int studentId) {
+        clearStudents();
+        InstrumentStudentDAO.selectStudents();
+        for(Student student: allStudents) {
+            if(student.getId() == studentId) {
+                return student.getName();
+            }
+        }
+        return null;
     }
     
     /**
@@ -203,5 +215,8 @@ public abstract class Data {
     public static int getLoggedInTeacherId() {
         return loggedInTeacherId;
     }
-
+    
+    public static void clearLoggedInTeacherId() {
+        loggedInTeacherId = 0;
+    }
 }
