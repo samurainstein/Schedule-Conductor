@@ -8,8 +8,7 @@ package Controller;
 import DAO.AppointmentDAO;
 import Model.Appointment;
 import Model.Data;
-import Utilities.PageLoader;
-import java.io.IOException;
+import Utilities.EventHandle;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -18,14 +17,10 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -70,7 +65,7 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        logoutLabel.setOnMouseClicked(logoutEventHandler); 
+        logoutLabel.setOnMouseClicked(EventHandle.navEventLogout()); 
         loggedInTeacherId = Data.getLoggedInTeacherId();
         Data.clearAppointments();
         try {
@@ -121,15 +116,15 @@ public class HomeController implements Initializable {
         }
     }    
     
-    EventHandler<MouseEvent> logoutEventHandler = new EventHandler<MouseEvent>() {
-        public void handle(MouseEvent event) {
-            try {
-                root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-            PageLoader.pageLoad(stage, root, pageTitle);
-        }
-    };
+//    EventHandler<MouseEvent> logoutEventHandler = new EventHandler<MouseEvent>() {
+//        public void handle(MouseEvent event) {
+//            try {
+//                root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+//            PageLoader.pageLoad(stage, root, pageTitle);
+//        }
+//    };
 }
