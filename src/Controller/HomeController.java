@@ -59,13 +59,19 @@ public class HomeController implements Initializable {
     private Label dateLBLtxt;
     @FXML
     private Label timeLBLtxt;
+    @FXML
+    private Label teachersLBL;
+    @FXML
+    private Label homeLBL;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        logoutLabel.setOnMouseClicked(EventHandle.navEventLogout()); 
+        homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
+        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
         loggedInTeacherId = Data.getLoggedInTeacherId();
         Data.clearAppointments();
         try {
