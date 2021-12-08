@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TeachersController">
+   <left>
+      <VBox prefWidth="150.0" styleClass="nav-v-box" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="nav-menu-label" text="Home" />
+            <Label id="nav-menu-label" text="Teachers" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" text="-Add" />
+                  <Label id="nav-menu-label" text="-Update" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" text="Students" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" text="-Add" />
+                  <Label id="nav-menu-label" text="-Update" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" text="Reports" />
+            <Label id="nav-menu-label" fx:id="logoutLabel" text="Logout" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <TableView maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="975.0" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="idCol" prefWidth="50.0" text="ID" />
+            <TableColumn fx:id="name" prefWidth="125.0" text="Name" />
+            <TableColumn fx:id="country" prefWidth="100.0" text="Country" />
+            <TableColumn fx:id="division" prefWidth="125.0" text="Division" />
+            <TableColumn fx:id="postalCode" prefWidth="75.0" text="Postal Code" />
+            <TableColumn fx:id="address" prefWidth="100.0" text="Address" />
+            <TableColumn fx:id="phone" prefWidth="100.0" text="Phone" />
+            <TableColumn fx:id="instrument" prefWidth="100.0" text="Instrument" />
+            <TableColumn fx:id="availableOnline" prefWidth="100.0" text="Online" />
+            <TableColumn fx:id="availableInPerson" prefWidth="100.0" text="In Person" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>
