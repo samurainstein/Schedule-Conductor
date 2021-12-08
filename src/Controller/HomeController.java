@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -69,8 +70,7 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        logoutLabel = new Label();
-//        logoutLabel.setOnMouseClicked(logoutEventHandler); 
+        logoutLabel.setOnMouseClicked(logoutEventHandler); 
         loggedInTeacherId = Data.getLoggedInTeacherId();
         Data.clearAppointments();
         try {
@@ -94,7 +94,6 @@ public class HomeController implements Initializable {
             timeLBLtxt.setVisible(true);
             
             Appointment appointment = teacherAppointments.get(0);
-            //FIX THIS
             int studentId = appointment.getStudentId();
             String studentName = Data.getStudentName(studentId);
             studentLBLtxt.setText(studentName);
@@ -122,31 +121,15 @@ public class HomeController implements Initializable {
         }
     }    
     
-    //This is not working for some reason.
-//    EventHandler<MouseEvent> logoutEventHandler = new EventHandler<MouseEvent>() {
-//        public void handle(MouseEvent event) {
-//            System.out.println("Logout clicked");
-//            pageTitle = PageLoader.getLoginTitle();
-//            try {
-//                root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//            stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
-//            PageLoader.pageLoad(stage, root, pageTitle);
-//        }             
-//    };
-
-    @FXML
-    private void logout(MouseEvent event) {
-        System.out.println("Logout clicked");
-        pageTitle = PageLoader.getLoginTitle();
-        try {
-            root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
+    EventHandler<MouseEvent> logoutEventHandler = new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent event) {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+            PageLoader.pageLoad(stage, root, pageTitle);
         }
-        stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-        PageLoader.pageLoad(stage, root, pageTitle);
-    }
+    };
 }
