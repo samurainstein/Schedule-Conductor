@@ -6,6 +6,11 @@
 /*    -fx-font-weight: bold;*/
 }
 
+.border-pane-center {
+    -fx-background-image: url("/View/black_chalk.jpg");
+    -fx-background-size: 100% 100%;
+}
+
 .nav-v-box {
     -fx-background-color: derive(#939DAD, 50%);
     -fx-padding: 25 5 25 5;
@@ -16,19 +21,6 @@
     -fx-padding: 0 0 0 15;
 }
 
-.border-pane-center {
-    /*-fx-background-color: derive(blue, 70%);*/
-    /*-fx-background-image: url("/View/slate.jpg");*/
-    -fx-background-image: url("/View/black_chalk.jpg");
-    /*-fx-background-image: url("/View/blue_chalk.jpg");*/
-    /*-fx-background-image: url("/View/green_chalk.jpg");*/
-    /*-fx-background-image: url("/View/wood.jpg");*/
-    /*-fx-background-image: url("/View/fabric.jpg");*/
-    /*-fx-background-image: url("/View/cork.jpg");*/
-    /*-fx-background-image: url("/View/stone.jpg");*/
-    -fx-background-size: 100% 100%;
-}
-
 .v-box {
     -fx-background-color: derive(#939DAD, 80%);
     -fx-background-radius: 16;
@@ -37,6 +29,11 @@
     -fx-border-width: 1px;
     -fx-border-radius: 10;
     -fx-opacity: 0.9;
+}
+
+.table-view {
+    -fx-font-size: 12px;
+    -fx-background-color: derive(#939DAD, 80%);
 }
 
 .label {
