@@ -5,9 +5,6 @@
  */
 package Utilities;
 
-import Model.Appointment;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import javafx.scene.control.Alert;
 
 /**
@@ -16,12 +13,17 @@ import javafx.scene.control.Alert;
  */
 public abstract class Alerts {
     
+    private static String alertText;
+    private static String alertTitle;
+    
     /**
      * Method for generating an alert to indicate an invalid login username or password. 
      * @param alertTitle Title for invalid login alert
      * @param alertText Text for invalid login alert
      */
-    public static void loginInvalid(String alertTitle, String alertText) {
+    public static void loginInvalid() {
+        alertText = "Username or password is incorrect";
+        alertTitle = "Invalid username or password";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(alertTitle);
         alert.setContentText(alertText);
