@@ -6,6 +6,7 @@
 package Model;
 
 import Utilities.DBConnection;
+import Utilities.PageLoader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javafx.application.Application;
@@ -44,7 +45,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("View/ScheduleConductor.css");
 
-        
+        stage.setTitle(PageLoader.getLoginTitle());
         stage.setScene(scene);
         stage.show();
     }    
