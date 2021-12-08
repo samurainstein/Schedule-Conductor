@@ -63,7 +63,7 @@
                </children>
             </VBox>
             <Label id="nav-menu-label" text="Reports" />
-            <Label id="nav-menu-label" fx:id="logoutLabel" onMouseClicked="#logout" text="Logout" />
+            <Label id="nav-menu-label" fx:id="logoutLabel" text="Logout" />
          </children>
       </VBox>
    </left>
