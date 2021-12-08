@@ -47,8 +47,8 @@
    <left>
       <VBox prefWidth="150.0" styleClass="nav-v-box" BorderPane.alignment="CENTER">
          <children>
-            <Label id="nav-menu-label" text="Home" />
-            <Label id="nav-menu-label" text="Teachers" />
+            <Label id="nav-menu-label" fx:id="homeLBL" text="Home" />
+            <Label id="nav-menu-label" fx:id="teachersLBL" text="Teachers" />
             <VBox styleClass="nav-sub-v-box">
                <children>
                   <Label id="nav-menu-label" text="-Add" />

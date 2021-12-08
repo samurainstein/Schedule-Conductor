@@ -4,14 +4,15 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TeachersController">
    <left>
       <VBox prefWidth="150.0" styleClass="nav-v-box" BorderPane.alignment="CENTER">
          <children>
-            <Label id="nav-menu-label" text="Home" />
-            <Label id="nav-menu-label" text="Teachers" />
+            <Label id="nav-menu-label" fx:id="homeLBL" text="Home" />
+            <Label id="nav-menu-label" fx:id="teachersLBL" text="Teachers" />
             <VBox styleClass="nav-sub-v-box">
                <children>
                   <Label id="nav-menu-label" text="-Add" />
@@ -31,19 +32,23 @@
       </VBox>
    </left>
    <center>
-      <TableView maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="975.0" BorderPane.alignment="CENTER">
-        <columns>
-            <TableColumn fx:id="idCol" prefWidth="50.0" text="ID" />
-            <TableColumn fx:id="name" prefWidth="125.0" text="Name" />
-            <TableColumn fx:id="country" prefWidth="100.0" text="Country" />
-            <TableColumn fx:id="division" prefWidth="125.0" text="Division" />
-            <TableColumn fx:id="postalCode" prefWidth="75.0" text="Postal Code" />
-            <TableColumn fx:id="address" prefWidth="100.0" text="Address" />
-            <TableColumn fx:id="phone" prefWidth="100.0" text="Phone" />
-            <TableColumn fx:id="instrument" prefWidth="100.0" text="Instrument" />
-            <TableColumn fx:id="availableOnline" prefWidth="100.0" text="Online" />
-            <TableColumn fx:id="availableInPerson" prefWidth="100.0" text="In Person" />
-        </columns>
-      </TableView>
+      <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
+         <children>
+            <TableView maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="975.0">
+              <columns>
+                  <TableColumn fx:id="idCol" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="name" prefWidth="125.0" text="Name" />
+                  <TableColumn fx:id="country" prefWidth="100.0" text="Country" />
+                  <TableColumn fx:id="division" prefWidth="125.0" text="Division" />
+                  <TableColumn fx:id="postalCode" prefWidth="75.0" text="Postal Code" />
+                  <TableColumn fx:id="address" prefWidth="100.0" text="Address" />
+                  <TableColumn fx:id="phone" prefWidth="100.0" text="Phone" />
+                  <TableColumn fx:id="instrument" prefWidth="100.0" text="Instrument" />
+                  <TableColumn fx:id="availableOnline" prefWidth="100.0" text="Online" />
+                  <TableColumn fx:id="availableInPerson" prefWidth="100.0" text="In Person" />
+              </columns>
+            </TableView>
+         </children>
+      </StackPane>
    </center>
 </BorderPane>
