@@ -5,16 +5,9 @@
  */
 package Utilities;
 
-import Model.Appointment;
-import java.io.IOException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * This class is used to load pages while the application is running. 
