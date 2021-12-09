@@ -18,8 +18,6 @@ public abstract class Alerts {
     
     /**
      * Method for generating an alert to indicate an invalid login username or password. 
-     * @param alertTitle Title for invalid login alert
-     * @param alertText Text for invalid login alert
      */
     public static void loginInvalid() {
         alertText = "Username or password is incorrect";
@@ -62,15 +60,17 @@ public abstract class Alerts {
 //        alert.showAndWait();
 //    }
 //    
-//    /**
-//     * Method for generating an alert to indicate that associated appointments should be deleted before deleting a customer. 
-//     */
-//    public static void associatedAppointment() {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Associated Appointed");
-//        alert.setContentText("Please delete all appointments associated with this customer before deleting the customer");
-//        alert.showAndWait();
-//    }
+    /**
+     * Method for generating an alert to indicate that associated appointments should be deleted before deleting a teacher. 
+     */
+    public static void associatedAppointment() {
+        alertText = "Please delete all appointments associated with this teacher before deleting the teacher";
+        alertTitle = "Associated Appointment";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(alertTitle);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
 //    
 //    /**
 //     * Method for generating an alert to indicate an upcoming appointment in the next 15 minutes. 
@@ -90,25 +90,29 @@ public abstract class Alerts {
 //        popup.showAndWait();
 //    }
 //    
-//    /**
-//     * Method for generating an alert to indicate an invalid customer selection. 
-//     */
-//    public static void customerNullAlert() {
-//        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
-//        invalidAlert.setTitle("Invalid Selection");
-//        invalidAlert.setContentText("Please select a customer");
-//        invalidAlert.showAndWait();
-//    }
-//    
-//    /**
-//     * Method for generating an alert to confirm that a customer was deleted. 
-//     */
-//    public static void customerDeleteConfirm() {
-//        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
-//        confirmAlert.setTitle("Confirmation");
-//        confirmAlert.setContentText("Customer was deleted");
-//        confirmAlert.showAndWait();
-//    }
+    /**
+     * Method for generating an alert to indicate an invalid customer selection. 
+     */
+    public static void teacherDeleteNull() {
+        alertTitle = "Invalid Selection";
+        alertText = "Please select a teacher";
+        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
+        invalidAlert.setTitle(alertTitle);
+        invalidAlert.setContentText(alertText);
+        invalidAlert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to confirm that a teacher was deleted. 
+     */
+    public static void teacherDeleteConfirm() {
+        alertTitle = "Confirmation";
+        alertText = "Teacher was deleted";
+        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle(alertTitle);
+        confirmAlert.setContentText(alertText);
+        confirmAlert.showAndWait();
+    }
 //    
 //    /**
 //     * Method for generating an alert to indicate an invalid country or division selection. 
