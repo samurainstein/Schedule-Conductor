@@ -159,25 +159,24 @@ public abstract class InstrumentTeacherDAO {
 //        }
 //    }
 //    
-//    /**
-//     * Delete statement for a row in the customers table. 
-//     * @param customerID Customer ID to be deleted
-//     */
-//    public static void deleteCustomer(int customerID) {
-//        try {
-//            Connection conn = DBConnection.getConnection();
-//            String sqlStatement = "DELETE FROM customers "
-//                                + "WHERE Customer_ID = ?;";
-//            DBQuery.setPreparedStatement(conn, sqlStatement);
-//            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
-//            preparedStatement.setInt(1,customerID);
-//            preparedStatement.execute();
-//            Data.clearCustomers();
-//        }
-//        catch(SQLException exception) {
-//            exception.printStackTrace();
-//        }
-//    }
+    /**
+     * Delete statement for a row in the instrument_teachers table. 
+     * @param teacherId Teacher ID to be deleted
+     */
+    public static void deleteTeacher(int teacherId) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "DELETE FROM instrument_teacher "
+                                + "WHERE id = ?;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setInt(1,teacherId);
+            preparedStatement.execute();
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
 //    
 //    /**
 //     * Select statement for all rows in the customers table with a specific associated Country ID. 
