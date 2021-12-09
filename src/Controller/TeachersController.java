@@ -5,13 +5,22 @@
  */
 package Controller;
 
+import DAO.InstrumentTeacherDAO;
+import Model.Data;
+import Model.InstrumentTeacher;
 import Utilities.EventHandle;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -25,27 +34,35 @@ public class TeachersController implements Initializable {
     @FXML
     private Label logoutLabel;
     @FXML
-    private TableColumn<?, ?> idCol;
+    private TableColumn<InstrumentTeacher, Integer> idCol;
     @FXML
-    private TableColumn<?, ?> name;
+    private TableColumn<InstrumentTeacher, String> nameCol;
     @FXML
-    private TableColumn<?, ?> country;
+    private TableColumn<InstrumentTeacher, String> countryCol;
     @FXML
-    private TableColumn<?, ?> division;
+    private TableColumn<InstrumentTeacher, String> divisionCol;
     @FXML
-    private TableColumn<?, ?> postalCode;
+    private TableColumn<InstrumentTeacher, String> postalCodeCol;
     @FXML
-    private TableColumn<?, ?> address;
+    private TableColumn<InstrumentTeacher, String> addressCol;
     @FXML
-    private TableColumn<?, ?> phone;
+    private TableColumn<InstrumentTeacher, String> phoneCol;
     @FXML
-    private TableColumn<?, ?> instrument;
+    private TableColumn<InstrumentTeacher, String> instrumentCol;
     @FXML
-    private TableColumn<?, ?> availableOnline;
+    private TableColumn<InstrumentTeacher, String> availableOnlineCol;
     @FXML
-    private TableColumn<?, ?> availableInPerson;
+    private TableColumn<InstrumentTeacher, String> availableInPersonCol;
     @FXML
     private Label homeLBL;
+    @FXML
+    private TableView<InstrumentTeacher> teachersTable;
+    @FXML
+    private Button addBTN;
+    @FXML
+    private Button updateBTN;
+    @FXML
+    private Button deleteBTN;
 
     /**
      * Initializes the controller class.
@@ -55,6 +72,27 @@ public class TeachersController implements Initializable {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
-    }    
-    
+
+//        addBTN.setOnAction(arg0);
+//        updateBTN.setOnAction(arg0);
+        try {
+            deleteBTN.setOnAction(EventHandle.teachersDeleteEvent(teachersTable));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
+        divisionCol.setCellValueFactory(new PropertyValueFactory<>("Division"));
+        postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("PostalCode"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
+        instrumentCol.setCellValueFactory(new PropertyValueFactory<>("Instrument"));
+        availableOnlineCol.setCellValueFactory(new PropertyValueFactory<>("AvailableOnline"));
+        availableInPersonCol.setCellValueFactory(new PropertyValueFactory<>("AvailableInPerson"));
+        InstrumentTeacherDAO.selectTeachers();
+        teachersTable.setItems(Data.getAllTeachers());
+    }
+
 }
