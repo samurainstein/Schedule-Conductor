@@ -78,6 +78,7 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.55) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: derive(grey, -60%);
     -fx-padding: 3 11 3 11;
+    -fx-pref-width: 100;
 }
 
 .table-view {
