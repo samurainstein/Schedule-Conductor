@@ -201,6 +201,25 @@ public abstract class Data {
     }
     
     /**
+     * Method for checking if any appointments are associated with a specific teacher ID. 
+     * @param teacherId Teacher ID to check
+     * @return Returns a boolean of whether any appointments are associated with the teacher ID
+     */
+    public static boolean checkAssociatedAppointments(int teacherId) {
+        boolean associated = false;
+        for(Appointment appointment : allAppointments) {
+            if(associated == true) {
+                break;
+            }
+            if(appointment.getTeacherId()== teacherId) {
+                associated = true;
+            }
+        }
+        
+        return associated;
+    }
+    
+    /**
      * Method for setting the currently logged in teacher ID. 
      * @param teacherId Teacher ID to set
      */
