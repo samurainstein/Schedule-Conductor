@@ -6,14 +6,15 @@
 package Utilities;
 
 import DAO.AppointmentDAO;
+import DAO.DivisionDAO;
 import DAO.InstrumentTeacherDAO;
+import Model.Country;
 import Model.Data;
+import Model.Division;
 import Model.InstrumentTeacher;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -126,6 +128,24 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
+    public static EventHandler<MouseEvent> navTeacherAddEvent() {
+        
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/AddTeacher.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getTeacherAddTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+        
+        return eventHandler;
+    }
+    
     public static EventHandler<MouseEvent> navLogoutEvent() {
         
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
@@ -177,4 +197,21 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
+    
+    public static EventHandler<ActionEvent> comboCountrySelectEvent(ComboBox<Country> countryCombo, ComboBox<Division> divisionCombo) throws SQLException {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                if (!(countryCombo.getSelectionModel().isEmpty())) {
+                    divisionCombo.getItems().clear();
+                    int countryIDSelection = countryCombo.getValue().getCountryID();
+                    DivisionDAO.selectFilteredDivisions(countryIDSelection);
+                    divisionCombo.setItems(Data.getFilteredDivisions());
+                    divisionCombo.setPromptText("Please Select a Division");
+                }
+            }
+        };
+        return eventHandler;
+    }
+    
 }
