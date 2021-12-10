@@ -19,7 +19,7 @@ public abstract class PageLoader {
     private static String homeTitle = "Home";
     private static String teachersTitle = "Teachers";
     private static String appointmentsTitle = "Appointments";
-    private static String customerAddTitle = "Add Customer";
+    private static String teacherAddTitle = "Add Teacher";
     private static String appointmentAddTitle = "Add Appointment";
     private static String customerUpdateTitle = "Update Customer";
     private static String appointmentUpdateTitle = "Update Appointment";
@@ -107,14 +107,14 @@ public abstract class PageLoader {
 //    public static String getAppointmentsTitle() {
 //        return appointmentsTitle;
 //    }
-//    
-//    /**
-//     * Method for returning the add customers page title. 
-//     * @return Returns the add customers page title
-//     */
-//    public static String getCustomerAddTitle() {
-//        return customerAddTitle;
-//    }
+    
+    /**
+     * Method for returning the add teacher page title. 
+     * @return Returns the add teacher page title
+     */
+    public static String getTeacherAddTitle() {
+        return teacherAddTitle;
+    }
 //    
 //    /**
 //     * Method for returning the add appointments page title. 
