@@ -12,8 +12,6 @@ import Utilities.EventHandle;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -63,6 +61,8 @@ public class TeachersController implements Initializable {
     private Button updateBTN;
     @FXML
     private Button deleteBTN;
+    @FXML
+    private Label teacherAddLBL;
 
     /**
      * Initializes the controller class.
@@ -70,8 +70,9 @@ public class TeachersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
+        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
 
 //        addBTN.setOnAction(arg0);
 //        updateBTN.setOnAction(arg0);
