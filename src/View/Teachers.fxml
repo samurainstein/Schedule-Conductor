@@ -18,15 +18,13 @@
             <Label id="nav-menu-label" fx:id="teachersLBL" text="Teachers" />
             <VBox styleClass="nav-sub-v-box">
                <children>
-                  <Label id="nav-menu-label" text="-Add" />
-                  <Label id="nav-menu-label" text="-Update" />
+                  <Label id="nav-menu-label" fx:id="teacherAddLBL" text="-Add" />
                </children>
             </VBox>
             <Label id="nav-menu-label" text="Students" />
             <VBox styleClass="nav-sub-v-box">
                <children>
                   <Label id="nav-menu-label" text="-Add" />
-                  <Label id="nav-menu-label" text="-Update" />
                </children>
             </VBox>
             <Label id="nav-menu-label" text="Reports" />
