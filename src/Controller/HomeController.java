@@ -19,9 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -30,9 +28,6 @@ import javafx.stage.Stage;
  */
 public class HomeController implements Initializable {
 
-    private String pageTitle;
-    private Parent root;
-    private Stage stage;
     private int loggedInTeacherId;
     private ObservableList<Appointment> teacherAppointments = FXCollections.observableArrayList();
     @FXML
@@ -63,6 +58,8 @@ public class HomeController implements Initializable {
     private Label teachersLBL;
     @FXML
     private Label homeLBL;
+    @FXML
+    private Label teacherAddLBL;
 
     /**
      * Initializes the controller class.
@@ -70,8 +67,9 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
+        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         loggedInTeacherId = Data.getLoggedInTeacherId();
         Data.clearAppointments();
         try {
@@ -121,16 +119,4 @@ public class HomeController implements Initializable {
             timeLBLtxt.setVisible(false);
         }
     }    
-    
-//    EventHandler<MouseEvent> logoutEventHandler = new EventHandler<MouseEvent>() {
-//        public void handle(MouseEvent event) {
-//            try {
-//                root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-//            PageLoader.pageLoad(stage, root, pageTitle);
-//        }
-//    };
 }
