@@ -31,6 +31,13 @@
     -fx-opacity: 0.9;
 }
 
+.add_update_vbox {
+    -fx-pref-width:600;
+    -fx-pref-height: 500;
+    -fx-padding: 40;
+    -fx-background-color: derive(#939DAD, 80%);
+}
+
 .table-view {
     -fx-font-size: 12px;
     -fx-background-color: derive(#939DAD, 80%);
@@ -38,6 +45,10 @@
 
 .label {
     -fx-padding: 5;
+}
+
+.add_update-label {
+    -fx-pref-width: 220;
 }
 
 #nav-menu-label {
@@ -49,9 +60,20 @@
     -fx-background-color: derive(#939DAD, 70%);
 }
 
+.text-field {
+    -fx-pref-width: 220;
+}
+
+.radio-button {
+    -fx-padding: 0 20 0 0;
+}
+
+.combo-box {
+    -fx-pref-width: 220;
+}
+
 #login-text {
     -fx-font-size: 26px;
-
 }
 
 
