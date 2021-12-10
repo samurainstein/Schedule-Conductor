@@ -20,6 +20,7 @@ public abstract class Data {
     private static ObservableList<InstrumentTeacher> allTeachers = FXCollections.observableArrayList();
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
     private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
+    private static ObservableList<Division> filteredDivisions = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
@@ -123,6 +124,29 @@ public abstract class Data {
     }
     
     /**
+     * Method for returning a list of country specific divisions. 
+     * @return Returns an observable list of country specific divisions
+     */
+    public static ObservableList<Division> getFilteredDivisions() {
+        return filteredDivisions;
+    }
+    
+    /**
+     * Method for adding a division to the list of country specific divisions. 
+     * @param division Division to be added
+     */
+    public static void addFilteredDivision(Division division) {
+        filteredDivisions.add(division);
+    }
+       
+    /**
+     * Method for clearing the list of country specific divisions. 
+     */
+    public static void clearFilteredDivisions() { 
+        filteredDivisions.clear();
+    }
+    
+    /**
      * Method for clearing the list of all divisions. 
      */
     public static void clearDivisions() {
@@ -132,7 +156,6 @@ public abstract class Data {
     public static ObservableList<Appointment> getAllAppointments() {
         return allAppointments;
     }
-    
     
     /**
      * Method for adding an appointment to the list of all appointments. 
@@ -178,7 +201,6 @@ public abstract class Data {
     public static void clearMonthlyAppointments() {
         monthlyAppointments.clear();
     }
-    
     
     /**
      * Method for returning a list of appointments that are associated with a specific teacher ID. 
