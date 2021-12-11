@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -85,8 +86,12 @@
                         <Label styleClass="add_update-label" text="Available Online" />
                         <HBox prefHeight="100.0" prefWidth="220.0">
                            <children>
-                              <RadioButton fx:id="onlineYRB" mnemonicParsing="false" text="Y" />
-                              <RadioButton fx:id="onlineNRB" mnemonicParsing="false" text="N" />
+                              <RadioButton fx:id="onlineYRB" mnemonicParsing="false" text="Y">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="onlineTGL" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="onlineNRB" mnemonicParsing="false" text="N" toggleGroup="$onlineTGL" />
                            </children>
                         </HBox>
                      </children>
@@ -96,8 +101,12 @@
                         <Label styleClass="add_update-label" text="Available In Person" />
                         <HBox maxWidth="-Infinity" prefWidth="220.0">
                            <children>
-                              <RadioButton fx:id="inPersonYRB" mnemonicParsing="false" text="Y" />
-                              <RadioButton fx:id="inPersonNRB" mnemonicParsing="false" text="N" />
+                              <RadioButton fx:id="inPersonYRB" mnemonicParsing="false" text="Y">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="inPersonTGL" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="inPersonNRB" mnemonicParsing="false" text="N" toggleGroup="$inPersonTGL" />
                            </children>
                         </HBox>
                      </children>
@@ -118,9 +127,9 @@
             </VBox>
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="975.0" spacing="100.0" StackPane.alignment="BOTTOM_CENTER">
                <children>
-                  <Button fx:id="addBTN" mnemonicParsing="false" text="Save" />
-                  <Button fx:id="updateBTN" mnemonicParsing="false" text="Clear" />
-                  <Button fx:id="deleteBTN" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="saveBTN" mnemonicParsing="false" text="Save" />
+                  <Button fx:id="clearBTN" mnemonicParsing="false" text="Clear" />
+                  <Button fx:id="cancelBTN" mnemonicParsing="false" text="Cancel" />
                </children>
                <StackPane.margin>
                   <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
