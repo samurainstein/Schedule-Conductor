@@ -23,8 +23,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -209,6 +212,41 @@ public abstract class EventHandle {
                     divisionCombo.setItems(Data.getFilteredDivisions());
                     divisionCombo.setPromptText("Please Select a Division");
                 }
+            }
+        };
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> clearBTNEvent(
+            TextField nameTF, 
+            ComboBox<Country> countryCB, 
+            ComboBox<Division> divisionCB, 
+            TextField postalTF, 
+            TextField addressTF, 
+            TextField phoneTF, 
+            TextField instrumentTF, 
+            ToggleGroup onlineTGL, 
+            RadioButton onlineNRB, 
+            ToggleGroup inPersonTGL, 
+            RadioButton inPersonNRB, 
+            TextField usernameTF, 
+            TextField passwordTF
+            ) throws SQLException {
+        
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                nameTF.setText("");
+                countryCB.getSelectionModel().clearSelection();
+                divisionCB.getItems().clear();
+                postalTF.setText("");
+                addressTF.setText("");
+                phoneTF.setText("");
+                instrumentTF.setText("");
+                onlineTGL.selectToggle(onlineNRB);
+                inPersonTGL.selectToggle(inPersonNRB);
+                usernameTF.setText("");
+                passwordTF.setText("");
             }
         };
         return eventHandler;
