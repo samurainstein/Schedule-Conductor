@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * FXML Controller class
@@ -34,12 +35,6 @@ public class AddTeacherController implements Initializable {
     private Label teachersLBL;
     @FXML
     private Label logoutLabel;
-    @FXML
-    private Button addBTN;
-    @FXML
-    private Button updateBTN;
-    @FXML
-    private Button deleteBTN;
     @FXML
     private TextField nameTF;
     @FXML
@@ -68,6 +63,16 @@ public class AddTeacherController implements Initializable {
     private TextField passwordTF;
     @FXML
     private Label teacherAddLBL;
+    @FXML
+    private Button saveBTN;
+    @FXML
+    private Button clearBTN;
+    @FXML
+    private Button cancelBTN;
+    @FXML
+    private ToggleGroup onlineTGL;
+    @FXML
+    private ToggleGroup inPersonTGL;
 
     /**
      * Initializes the controller class.
@@ -81,9 +86,28 @@ public class AddTeacherController implements Initializable {
         CountryDAO.selectCountries();
         countryCB.setItems(Data.getAllCountries());
         countryCB.setPromptText("Select a Country");
+        onlineTGL.selectToggle(onlineNRB);
+        inPersonTGL.selectToggle(inPersonNRB);
         try {
             countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));
-            //FIX THIS: Filter divisions based on country
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        try {
+            clearBTN.setOnAction(EventHandle.clearBTNEvent(
+                    nameTF,
+                    countryCB,
+                    divisionCB,
+                    postalTF,
+                    addressTF,
+                    phoneTF,
+                    instrumentTF,
+                    onlineTGL,
+                    onlineNRB, 
+                    inPersonTGL, 
+                    inPersonNRB, 
+                    usernameTF,
+                    passwordTF));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
