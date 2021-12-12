@@ -136,6 +136,7 @@ public class AddTeacherController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        
+        cancelBTN.setOnAction(EventHandle.teacherAddCancelBTNEvent());
     }
-
 }
