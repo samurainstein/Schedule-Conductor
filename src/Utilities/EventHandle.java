@@ -12,6 +12,7 @@ import Model.Country;
 import Model.Data;
 import Model.Division;
 import Model.InstrumentTeacher;
+import com.mysql.cj.util.StringUtils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -26,24 +27,22 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author Eric
  */
 public abstract class EventHandle {
-    
+
     private static Parent root;
     private static Stage stage;
     private static String pageTitle;
-    
+
     public static EventHandler<KeyEvent> loginKeyEvent(TextField usernameTF, TextField passwordTF) {
         EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
@@ -69,7 +68,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> loginActionEvent(TextField usernameTF, TextField passwordTF) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -90,13 +89,13 @@ public abstract class EventHandle {
                     PageLoader.pageLoad(stage, root, pageTitle);
                 }
             }
-            
+
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<MouseEvent> navHomeEvent() {
-        
+
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 try {
@@ -109,12 +108,12 @@ public abstract class EventHandle {
                 PageLoader.pageLoad(stage, root, pageTitle);
             }
         };
-        
+
         return eventHandler;
     }
-    
+
     public static EventHandler<MouseEvent> navTeachersEvent() {
-        
+
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 try {
@@ -127,12 +126,12 @@ public abstract class EventHandle {
                 PageLoader.pageLoad(stage, root, pageTitle);
             }
         };
-        
+
         return eventHandler;
     }
-    
+
     public static EventHandler<MouseEvent> navTeacherAddEvent() {
-        
+
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 try {
@@ -145,12 +144,12 @@ public abstract class EventHandle {
                 PageLoader.pageLoad(stage, root, pageTitle);
             }
         };
-        
+
         return eventHandler;
     }
-    
+
     public static EventHandler<MouseEvent> navLogoutEvent() {
-        
+
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 try {
@@ -163,10 +162,10 @@ public abstract class EventHandle {
                 PageLoader.pageLoad(stage, root, pageTitle);
             }
         };
-        
+
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> teachersDeleteEvent(TableView<InstrumentTeacher> teachersTable) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -200,7 +199,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> comboCountrySelectEvent(ComboBox<Country> countryCombo, ComboBox<Division> divisionCombo) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -216,23 +215,23 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> clearBTNEvent(
-            TextField nameTF, 
-            ComboBox<Country> countryCB, 
-            ComboBox<Division> divisionCB, 
-            TextField postalTF, 
-            TextField addressTF, 
-            TextField phoneTF, 
-            TextField instrumentTF, 
-            ToggleGroup onlineTGL, 
-            RadioButton onlineNRB, 
-            ToggleGroup inPersonTGL, 
-            RadioButton inPersonNRB, 
-            TextField usernameTF, 
+            TextField nameTF,
+            ComboBox<Country> countryCB,
+            ComboBox<Division> divisionCB,
+            TextField postalTF,
+            TextField addressTF,
+            TextField phoneTF,
+            TextField instrumentTF,
+            ToggleGroup onlineTGL,
+            RadioButton onlineNRB,
+            ToggleGroup inPersonTGL,
+            RadioButton inPersonNRB,
+            TextField usernameTF,
             TextField passwordTF
-            ) throws SQLException {
-        
+    ) throws SQLException {
+
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
@@ -251,5 +250,69 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
+    public static EventHandler<ActionEvent> saveBTNEvent(
+            TextField nameTF,
+            ComboBox<Country> countryCB,
+            ComboBox<Division> divisionCB,
+            TextField postalTF,
+            TextField addressTF,
+            TextField phoneTF,
+            TextField instrumentTF,
+            ToggleGroup onlineTGL,
+            RadioButton onlineNRB,
+            ToggleGroup inPersonTGL,
+            RadioButton inPersonNRB,
+            TextField usernameTF,
+            TextField passwordTF
+    ) throws SQLException {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                String name = nameTF.getText();
+                String postal = postalTF.getText();
+                String address = addressTF.getText();
+                String phone = phoneTF.getText();
+                String instrument = instrumentTF.getText();
+                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                char onlineRadioChar = onlineRadio.getText().charAt(0);
+                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+                String username = usernameTF.getText();
+                String password = passwordTF.getText();
+
+                if (StringUtils.isEmptyOrWhitespaceOnly(name)
+                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
+                        || StringUtils.isEmptyOrWhitespaceOnly(address)
+                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
+                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)
+                        || StringUtils.isEmptyOrWhitespaceOnly(username)
+                        || StringUtils.isEmptyOrWhitespaceOnly(password)) {
+                    Alerts.invalidFields();
+                    return;
+                }
+
+                try {
+                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                    InstrumentTeacherDAO.insertTeacher(name, country, division, postal, address, phone,
+                            instrument, onlineRadioChar, inPersonRadioChar, username, password);
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+                                } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getTeachersTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                } catch (NullPointerException ex) {
+                    Alerts.countryOrDivisionNullAlert();
+                }
+
+            }
+        };
+        return eventHandler;
+    }
+
 }
