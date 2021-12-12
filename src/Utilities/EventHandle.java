@@ -165,6 +165,24 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
+    
+    public static EventHandler<ActionEvent> teachersAddEvent() {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/AddTeacher.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getTeacherAddTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        return eventHandler;
+    }
 
     public static EventHandler<ActionEvent> teachersDeleteEvent(TableView<InstrumentTeacher> teachersTable) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
@@ -312,6 +330,24 @@ public abstract class EventHandle {
 
             }
         };
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> teacherAddCancelBTNEvent() {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getTeachersTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
         return eventHandler;
     }
 
