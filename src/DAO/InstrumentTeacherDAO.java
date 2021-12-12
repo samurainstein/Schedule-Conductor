@@ -102,33 +102,63 @@ public abstract class InstrumentTeacherDAO {
             exception.printStackTrace();
         }
     }
-//    /**
-//     * Insert statement for adding a row to the customers table. 
-//     * @param name Name data for the new customer
-//     * @param address Address data for the new customer
-//     * @param postalCode Postal Code data for the new customer
-//     * @param phone Phone data for the new customer
-//     * @param divisionID Division ID for the new customer
-//     */
-//    public static void insertCustomer(String name, String address, String postalCode, String phone, int divisionID) {
-//        try {
-//            Connection conn = DBConnection.getConnection();
-//            String sqlStatement = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID) "
-//                                + "VALUES(?, ?, ?, ?, ?);";
-//            DBQuery.setPreparedStatement(conn, sqlStatement);
-//            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
-//            preparedStatement.setString(1, name);
-//            preparedStatement.setString(2, address);
-//            preparedStatement.setString(3, postalCode);
-//            preparedStatement.setString(4, phone);
-//            preparedStatement.setInt(5, divisionID);
-//            preparedStatement.execute();
+    
+    /**
+     * Insert statement for adding a row to the instrument_teacher table. 
+     * @param name Name for the new teacher
+     * @param country Country name for the new teacher
+     * @param division Division name for the new teacher
+     * @param postal Postal code for the new teacher
+     * @param address Address for the new teacher
+     * @param phone Phone number for the new teacher
+     * @param instrument Instrument for the new teacher
+     * @param availableOnline Online availability for the new teacher
+     * @param availableInPerson In person availability for the new teacher
+     * @param username Username for the new teacher
+     * @param password Password for the new teacher
+     */
+    public static void insertTeacher(
+            String name,
+            String country,
+            String division,
+            String postal,
+            String address,
+            String phone,
+            String instrument,
+            char availableOnline,
+            char availableInPerson,
+            String username,
+            String password) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "INSERT INTO instrument_teacher(name, country, division, postal_code, address, phone, "
+                                       + "instrument, available_online, available_in_person, username, password) "
+                                        + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, country);
+            preparedStatement.setString(3, division);
+            preparedStatement.setString(4, postal);
+            preparedStatement.setString(5, address);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, instrument);
+            String online = String.valueOf(availableOnline);
+            preparedStatement.setString(8, online);
+            String inPerson = String.valueOf(availableInPerson);
+            preparedStatement.setString(9, inPerson);
+            preparedStatement.setString(10, username);
+            preparedStatement.setString(11, password);
+            
+            preparedStatement.execute();
 //            Data.clearCustomers();
-//        }
-//        catch(SQLException exception) {
-//            exception.printStackTrace();
-//        }
-//    }
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
 //    /**
 //     * Set statement for updating a row in the customers table. 
 //     * @param name Updated name data for the new customer
