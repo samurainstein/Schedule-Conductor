@@ -113,25 +113,29 @@ public abstract class Alerts {
         confirmAlert.setContentText(alertText);
         confirmAlert.showAndWait();
     }
-//    
-//    /**
-//     * Method for generating an alert to indicate an invalid country or division selection. 
-//     */
-//    public static void countryOrDivisionNullAlert() {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Invalid Selection");
-//        alert.setContentText("Please select a country and division");
-//        alert.showAndWait();
-//    }
-//    
-//    /**
-//     * Method for generating an alert to indicate all fields weren't filled in. 
-//     */
-//    public static void invalidFields() {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Insufficient Information");
-//        alert.setContentText("Please fill in all fields");
-//        alert.showAndWait();
-//    }
+    
+    /**
+     * Method for generating an alert to indicate an invalid country or division selection. 
+     */
+    public static void countryOrDivisionNullAlert() {
+        alertTitle = "Invalid Selection";
+        alertText = "Please select a country and division";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(alertTitle);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to indicate all fields weren't filled in. 
+     */
+    public static void invalidFields() {
+        alertTitle = "Insufficient Information";
+        alertText = "Please fill in all fields";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(alertTitle);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
     
 }
