@@ -13,6 +13,8 @@ import Utilities.EventHandle;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -83,16 +85,20 @@ public class AddTeacherController implements Initializable {
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+
         CountryDAO.selectCountries();
         countryCB.setItems(Data.getAllCountries());
         countryCB.setPromptText("Select a Country");
+        
         onlineTGL.selectToggle(onlineNRB);
         inPersonTGL.selectToggle(inPersonNRB);
+
         try {
             countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         try {
             clearBTN.setOnAction(EventHandle.clearBTNEvent(
                     nameTF,
@@ -103,14 +109,33 @@ public class AddTeacherController implements Initializable {
                     phoneTF,
                     instrumentTF,
                     onlineTGL,
-                    onlineNRB, 
-                    inPersonTGL, 
-                    inPersonNRB, 
+                    onlineNRB,
+                    inPersonTGL,
+                    inPersonNRB,
                     usernameTF,
                     passwordTF));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }    
-    
+
+        try {
+            saveBTN.setOnAction(EventHandle.saveBTNEvent(
+                    nameTF,
+                    countryCB,
+                    divisionCB,
+                    postalTF,
+                    addressTF,
+                    phoneTF,
+                    instrumentTF,
+                    onlineTGL,
+                    onlineNRB,
+                    inPersonTGL,
+                    inPersonNRB,
+                    usernameTF,
+                    passwordTF));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
