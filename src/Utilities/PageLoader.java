@@ -5,6 +5,12 @@
  */
 package Utilities;
 
+import Controller.UpdateTeacherController;
+import Model.InstrumentTeacher;
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,7 +27,7 @@ public abstract class PageLoader {
     private static String appointmentsTitle = "Appointments";
     private static String teacherAddTitle = "Add Teacher";
     private static String appointmentAddTitle = "Add Appointment";
-    private static String customerUpdateTitle = "Update Customer";
+    private static String teacherUpdateTitle = "Update Teacher";
     private static String appointmentUpdateTitle = "Update Appointment";
     private static String reportsTitle = "Reports";
     
@@ -40,23 +46,24 @@ public abstract class PageLoader {
         stage.show();
     }
     
-//    /**
-//     * This method loads the customer update page, and passes data from the main customers page. 
-//     * @param event Event object that was generated from an event in the application
-//     * @param loader The loader object of the page to be loaded
-//     * @param pageTitle The title of the page that will be set to the new screen
-//     * @param selectedCustomer The customer that is being passed to the update page
-//     */
-//    public static void custUpdatePageLoad(ActionEvent event, FXMLLoader loader, String pageTitle, Customer selectedCustomer) throws IOException {
-//        Parent root = loader.load();
-//        CustomerUpdateController updateCont = loader.getController();
-//        updateCont.passCustomerData(selectedCustomer);
-//        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-//        Scene scene = new Scene(root);
-//        stage.setTitle(pageTitle);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
+    /**
+     * This method loads the teacher update page, and passes data from the main teachers page. 
+     * @param event Event object that was generated from an event in the application
+     * @param loader The loader object of the page to be loaded
+     * @param pageTitle The title of the page that will be set to the new screen
+     * @param selectedTeacher The teacher that is being passed to the update page
+     */
+    public static void teachUpdatePageLoad(ActionEvent event, FXMLLoader loader, String pageTitle, InstrumentTeacher selectedTeacher) throws IOException {
+        Parent root = loader.load();
+        UpdateTeacherController updateCont = loader.getController();
+        updateCont.passCustomerData(selectedTeacher);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("View/ScheduleConductor.css");
+        stage.setTitle(pageTitle);
+        stage.setScene(scene);
+        stage.show();
+    }
     
 //    /**
 //     * This method loads the appointment update page, and passes data from the main appointments page. 
@@ -123,15 +130,15 @@ public abstract class PageLoader {
 //    public static String getAppointmentAddTitle() {
 //        return appointmentAddTitle;
 //    }
-//    
-//    /**
-//     * Method for returning the update customers page title. 
-//     * @return Returns the update customers page title
-//     */
-//    public static String getCustomerUpdateTitle() {
-//        return customerUpdateTitle;
-//    }
-//    
+    
+    /**
+     * Method for returning the update teachers page title. 
+     * @return Returns the update teachers page title
+     */
+    public static String getTeacherUpdateTitle() {
+        return teacherUpdateTitle;
+    }
+    
 //    /**
 //     * Method for returning the update appointments page title. 
 //     * @return Returns the update appointments page title
