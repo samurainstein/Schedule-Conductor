@@ -75,7 +75,7 @@ public class TeachersController implements Initializable {
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
 
         addBTN.setOnAction(EventHandle.teachersAddEvent());
-//        updateBTN.setOnAction(arg0);
+        updateBTN.setOnAction(EventHandle.teachersUpdateEvent(teachersTable));
         try {
             deleteBTN.setOnAction(EventHandle.teachersDeleteEvent(teachersTable));
         } catch (SQLException ex) {
