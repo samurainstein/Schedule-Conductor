@@ -16,6 +16,8 @@ import com.mysql.cj.util.StringUtils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -217,6 +219,26 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
+    
+    public static EventHandler<ActionEvent> teachersUpdateEvent(TableView<InstrumentTeacher> teachersTable) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateTeacher.fxml"));
+                    InstrumentTeacher selectedTeacher = teachersTable.getSelectionModel().getSelectedItem();
+                    String pageTitle = PageLoader.getTeacherUpdateTitle();
+                    try {
+                        PageLoader.teachUpdatePageLoad(event, loader, pageTitle, selectedTeacher);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (NullPointerException exception) {
+                    Alerts.teacherDeleteNull();
+                }
+            }
+        };
+        return eventHandler;
+    }
 
     public static EventHandler<ActionEvent> comboCountrySelectEvent(ComboBox<Country> countryCombo, ComboBox<Division> divisionCombo) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
@@ -277,10 +299,8 @@ public abstract class EventHandle {
             TextField addressTF,
             TextField phoneTF,
             TextField instrumentTF,
-            ToggleGroup onlineTGL,
-            RadioButton onlineNRB,
+            ToggleGroup onlineTGL, 
             ToggleGroup inPersonTGL,
-            RadioButton inPersonNRB,
             TextField usernameTF,
             TextField passwordTF
     ) throws SQLException {
@@ -293,6 +313,7 @@ public abstract class EventHandle {
                 String address = addressTF.getText();
                 String phone = phoneTF.getText();
                 String instrument = instrumentTF.getText();
+                //FIX THIS:  Returns both Y or both N.  Does not register a Y/N split.
                 RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
                 char onlineRadioChar = onlineRadio.getText().charAt(0);
                 RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
