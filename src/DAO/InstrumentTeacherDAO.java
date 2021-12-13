@@ -77,7 +77,7 @@ public abstract class InstrumentTeacherDAO {
                 String phone = resultSet.getString("phone");
                 String instrument = resultSet.getString("instrument");
                 char availableOnline = resultSet.getString("available_online").charAt(0);
-                char availableInPerson = resultSet.getString("available_online").charAt(0);
+                char availableInPerson = resultSet.getString("available_in_person").charAt(0);
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
 
