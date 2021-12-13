@@ -128,9 +128,7 @@ public class AddTeacherController implements Initializable {
                     phoneTF,
                     instrumentTF,
                     onlineTGL,
-                    onlineNRB,
                     inPersonTGL,
-                    inPersonNRB,
                     usernameTF,
                     passwordTF));
         } catch (SQLException ex) {
