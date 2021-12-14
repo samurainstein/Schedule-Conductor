@@ -21,13 +21,19 @@
                   <Label id="nav-menu-label" fx:id="teacherAddLBL" text="-Add" />
                </children>
             </VBox>
-            <Label id="nav-menu-label" text="Students" />
+            <Label id="nav-menu-label" fx:id="studentsLBL" text="Students" />
             <VBox styleClass="nav-sub-v-box">
                <children>
-                  <Label id="nav-menu-label" text="-Add" />
+                  <Label id="nav-menu-label" fx:id="studentsAddLBL" text="-Add" />
                </children>
             </VBox>
-            <Label id="nav-menu-label" text="Reports" />
+            <Label id="nav-menu-label" fx:id="appointmentsLBL" text="Appointments" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" fx:id="appointmentAddLBL" text="-Add" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" fx:id="reportsLBL" text="Reports" />
             <Label id="nav-menu-label" fx:id="logoutLabel" text="Logout" />
          </children>
       </VBox>
