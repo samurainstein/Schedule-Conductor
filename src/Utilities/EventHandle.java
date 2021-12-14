@@ -354,7 +354,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> teacherAddCancelBTNEvent() {
+    public static EventHandler<ActionEvent> teacherCancelBTNEvent() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
