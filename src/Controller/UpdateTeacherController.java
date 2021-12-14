@@ -111,7 +111,7 @@ public class UpdateTeacherController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        cancelBTN.setOnAction(EventHandle.teacherAddCancelBTNEvent());
+        cancelBTN.setOnAction(EventHandle.teacherCancelBTNEvent());
         
         try {
             countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));

@@ -135,6 +135,6 @@ public class AddTeacherController implements Initializable {
             ex.printStackTrace();
         }
         
-        cancelBTN.setOnAction(EventHandle.teacherAddCancelBTNEvent());
+        cancelBTN.setOnAction(EventHandle.teacherCancelBTNEvent());
     }
 }
