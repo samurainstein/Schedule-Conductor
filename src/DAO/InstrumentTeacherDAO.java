@@ -159,36 +159,61 @@ public abstract class InstrumentTeacherDAO {
         }
     }
     
-//    /**
-//     * Set statement for updating a row in the customers table. 
-//     * @param name Updated name data for the new customer
-//     * @param address Updated address data for the new customer
-//     * @param postalCode Updated postal Code data for the new customer
-//     * @param phone Updated phone data for the new customer
-//     * @param divisionID Updated Division ID for the new customer
-//     * @param customerID Customer ID to be updated
-//     */
-//    public static void updateCustomer(String name, String address, String postalCode, String phone, int divisionID, int customerID) {
-//        try {
-//            Connection conn = DBConnection.getConnection();
-//            String sqlStatement = "UPDATE customers "
-//                                + "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? "
-//                                + "WHERE Customer_ID = ?;";
-//            DBQuery.setPreparedStatement(conn, sqlStatement);
-//            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
-//            preparedStatement.setString(1, name);
-//            preparedStatement.setString(2, address);
-//            preparedStatement.setString(3, postalCode);
-//            preparedStatement.setString(4, phone);
-//            preparedStatement.setInt(5, divisionID);
-//            preparedStatement.setInt(6, customerID);
-//            preparedStatement.execute();
-//        }
-//        catch(SQLException exception) {
-//            exception.printStackTrace();
-//        }
-//    }
-//    
+    /**
+     * Set statement for updating a row in the instrument_teacher table. 
+     * @param id Teacher ID to be updated
+     * @param name Updated name data for the teacher
+     * @param country Updated country data for the teacher
+     * @param division Updated Division for the teacher
+     * @param postal Updated postal Code data for the teacher
+     * @param address Updated address data for the teacher
+     * @param phone Updated phone data for the teacher
+     * @param instrument Updated instrument data for the teacher
+     * @param availableOnline Updated online availability data for the teacher
+     * @param availableInPerson Updated in person availability data for the teacher
+     * @param username Updated username data for the teacher
+     * @param password Updated password data for the teacher
+     */
+    public static void updateTeacher(
+            int id, 
+            String name,
+            String country,
+            String division,
+            String postal,
+            String address,
+            String phone,
+            String instrument,
+            char availableOnline,
+            char availableInPerson,
+            String username,
+            String password)  {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "UPDATE instrument_teacher "
+                                + "SET name = ?, country = ?, division = ?, postal_code = ?, address = ?, phone = ?, "
+                                + "instrument = ?, available_online = ?, available_in_person = ?, username = ?, password = ? "
+                                + "WHERE id = ?;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, country);
+            preparedStatement.setString(3, division);
+            preparedStatement.setString(4, postal);
+            preparedStatement.setString(5, address);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, instrument);
+            preparedStatement.setString(8, String.valueOf(availableOnline));
+            preparedStatement.setString(9, String.valueOf(availableInPerson));
+            preparedStatement.setString(10, username);
+            preparedStatement.setString(11, password);
+            preparedStatement.setInt(12, id);
+            preparedStatement.execute();
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
     /**
      * Delete statement for a row in the instrument_teachers table. 
      * @param teacherId Teacher ID to be deleted
