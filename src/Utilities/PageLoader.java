@@ -24,6 +24,7 @@ public abstract class PageLoader {
     private static String loginTitle = "Login";
     private static String homeTitle = "Home";
     private static String teachersTitle = "Teachers";
+    private static String studentsTitle = "Students";
     private static String appointmentsTitle = "Appointments";
     private static String teacherAddTitle = "Add Teacher";
     private static String appointmentAddTitle = "Add Appointment";
@@ -105,6 +106,14 @@ public abstract class PageLoader {
      */
     public static String getTeachersTitle() {
         return teachersTitle;
+    }
+    
+    /**
+     * Method for returning the students page title. 
+     * @return Returns the students page title
+     */
+    public static String getStudentsTitle() {
+        return studentsTitle;
     }
 //    
 //    /**
