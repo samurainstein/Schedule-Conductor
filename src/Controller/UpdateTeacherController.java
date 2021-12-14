@@ -81,6 +81,16 @@ public class UpdateTeacherController implements Initializable {
     private Button cancelBTN;
     @FXML
     private TextField idTF;
+    @FXML
+    private Label studentsLBL;
+    @FXML
+    private Label studentAddLBL;
+    @FXML
+    private Label appointmentsLBL;
+    @FXML
+    private Label appointmentAddLBL;
+    @FXML
+    private Label reportsLBL;
 
     /**
      * Initializes the controller class.
@@ -91,6 +101,7 @@ public class UpdateTeacherController implements Initializable {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         saveBTN.setOnAction(EventHandle.updateSaveBTNEvent(

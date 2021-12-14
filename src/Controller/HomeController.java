@@ -60,6 +60,16 @@ public class HomeController implements Initializable {
     private Label homeLBL;
     @FXML
     private Label teacherAddLBL;
+    @FXML
+    private Label studentsLBL;
+    @FXML
+    private Label studentAddLBL;
+    @FXML
+    private Label appointmentsLBL;
+    @FXML
+    private Label appointmentAddLBL;
+    @FXML
+    private Label reportsLBL;
 
     /**
      * Initializes the controller class.
@@ -69,7 +79,9 @@ public class HomeController implements Initializable {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        
         loggedInTeacherId = Data.getLoggedInTeacherId();
         Data.clearAppointments();
         try {

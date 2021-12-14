@@ -63,6 +63,16 @@ public class TeachersController implements Initializable {
     private Button deleteBTN;
     @FXML
     private Label teacherAddLBL;
+    @FXML
+    private Label studentsAddLBL;
+    @FXML
+    private Label appointmentsLBL;
+    @FXML
+    private Label appointmentAddLBL;
+    @FXML
+    private Label reportsLBL;
+    @FXML
+    private Label studentsLBL;
 
     /**
      * Initializes the controller class.
@@ -72,6 +82,7 @@ public class TeachersController implements Initializable {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
 
         addBTN.setOnAction(EventHandle.teachersAddEvent());

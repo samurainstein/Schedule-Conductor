@@ -75,6 +75,16 @@ public class AddTeacherController implements Initializable {
     private ToggleGroup onlineTGL;
     @FXML
     private ToggleGroup inPersonTGL;
+    @FXML
+    private Label studentsLBL;
+    @FXML
+    private Label studentAddLBL;
+    @FXML
+    private Label appointmentsLBL;
+    @FXML
+    private Label appointmentAddLBL;
+    @FXML
+    private Label reportsLBL;
 
     /**
      * Initializes the controller class.
@@ -84,6 +94,7 @@ public class AddTeacherController implements Initializable {
         homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
 
         CountryDAO.selectCountries();
