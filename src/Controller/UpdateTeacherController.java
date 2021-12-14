@@ -93,6 +93,20 @@ public class UpdateTeacherController implements Initializable {
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
+        saveBTN.setOnAction(EventHandle.updateSaveBTNEvent(
+                idTF, 
+                nameTF, 
+                countryCB, 
+                divisionCB, 
+                postalTF, 
+                addressTF, 
+                phoneTF, 
+                instrumentTF, 
+                onlineTGL, 
+                inPersonTGL, 
+                usernameTF, 
+                passwordTF));
+        
         try {
             clearBTN.setOnAction(EventHandle.clearBTNEvent(
                     nameTF, 
