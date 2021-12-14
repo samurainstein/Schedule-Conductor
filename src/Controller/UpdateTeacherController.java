@@ -15,6 +15,8 @@ import Utilities.EventHandle;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -92,6 +94,26 @@ public class UpdateTeacherController implements Initializable {
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         try {
+            clearBTN.setOnAction(EventHandle.clearBTNEvent(
+                    nameTF, 
+                    countryCB, 
+                    divisionCB, 
+                    postalTF, 
+                    addressTF, 
+                    phoneTF, 
+                    instrumentTF, 
+                    onlineTGL, 
+                    onlineNRB, 
+                    inPersonTGL, 
+                    inPersonNRB, 
+                    usernameTF, 
+                    passwordTF));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        cancelBTN.setOnAction(EventHandle.teacherAddCancelBTNEvent());
+        
+        try {
             countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -101,8 +123,6 @@ public class UpdateTeacherController implements Initializable {
     public void passCustomerData(InstrumentTeacher teacher) {
         idTF.setText(Integer.toString(teacher.getId()));
         nameTF.setText(teacher.getName());
-//        countryCB
-//        divisionCB
         postalTF.setText(teacher.getPostalCode());
         addressTF.setText(teacher.getAddress());
         phoneTF.setText(teacher.getPhone());
