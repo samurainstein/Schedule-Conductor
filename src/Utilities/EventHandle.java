@@ -313,7 +313,6 @@ public abstract class EventHandle {
                 String address = addressTF.getText();
                 String phone = phoneTF.getText();
                 String instrument = instrumentTF.getText();
-                //FIX THIS:  Returns both Y or both N.  Does not register a Y/N split.
                 RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
                 char onlineRadioChar = onlineRadio.getText().charAt(0);
                 RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
@@ -369,6 +368,66 @@ public abstract class EventHandle {
             }
         };
 
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> updateSaveBTNEvent(
+            TextField idTF, 
+            TextField nameTF,
+            ComboBox<Country> countryCB,
+            ComboBox<Division> divisionCB,
+            TextField postalTF,
+            TextField addressTF,
+            TextField phoneTF,
+            TextField instrumentTF,
+            ToggleGroup onlineTGL, 
+            ToggleGroup inPersonTGL,
+            TextField usernameTF,
+            TextField passwordTF) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                    int id = Integer.parseInt(idTF.getText());
+                    String name = nameTF.getText();
+                    String postal = postalTF.getText();
+                    String address = addressTF.getText();
+                    String phone = phoneTF.getText();
+                    String instrument = instrumentTF.getText();
+                    RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                    char onlineRadioChar = onlineRadio.getText().charAt(0);
+                    RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                    char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+                    String username = usernameTF.getText();
+                    String password = passwordTF.getText();
+                    
+                    if (StringUtils.isEmptyOrWhitespaceOnly(name)
+                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
+                        || StringUtils.isEmptyOrWhitespaceOnly(address)
+                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
+                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)
+                        || StringUtils.isEmptyOrWhitespaceOnly(username)
+                        || StringUtils.isEmptyOrWhitespaceOnly(password)) {
+                    Alerts.invalidFields();
+                    return;
+                    }
+                    
+                    try {
+                        String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                        String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                        InstrumentTeacherDAO.updateTeacher(id, name, country, division, postal, address, phone,
+                                instrument, onlineRadioChar, inPersonRadioChar, username, password);
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        pageTitle = PageLoader.getTeachersTitle();
+                        stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                        PageLoader.pageLoad(stage, root, pageTitle);
+                    } catch (NullPointerException ex) {
+                        Alerts.countryOrDivisionNullAlert();
+                    }                  
+                }
+            };
         return eventHandler;
     }
 
