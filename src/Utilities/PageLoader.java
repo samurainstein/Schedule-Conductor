@@ -27,6 +27,7 @@ public abstract class PageLoader {
     private static String studentsTitle = "Students";
     private static String appointmentsTitle = "Appointments";
     private static String teacherAddTitle = "Add Teacher";
+    private static String studentAddTitle = "Add Student";
     private static String appointmentAddTitle = "Add Appointment";
     private static String teacherUpdateTitle = "Update Teacher";
     private static String appointmentUpdateTitle = "Update Appointment";
@@ -109,11 +110,27 @@ public abstract class PageLoader {
     }
     
     /**
+     * Method for returning the add teacher page title. 
+     * @return Returns the add teacher page title
+     */
+    public static String getTeacherAddTitle() {
+        return teacherAddTitle;
+    }
+    
+    /**
      * Method for returning the students page title. 
      * @return Returns the students page title
      */
     public static String getStudentsTitle() {
         return studentsTitle;
+    }
+    
+    /**
+     * Method for returning the add student page title. 
+     * @return Returns the add student page title
+     */
+    public static String getStudentAddTitle() {
+        return studentAddTitle;
     }
 //    
 //    /**
@@ -124,13 +141,7 @@ public abstract class PageLoader {
 //        return appointmentsTitle;
 //    }
     
-    /**
-     * Method for returning the add teacher page title. 
-     * @return Returns the add teacher page title
-     */
-    public static String getTeacherAddTitle() {
-        return teacherAddTitle;
-    }
+    
 //    
 //    /**
 //     * Method for returning the add appointments page title. 
