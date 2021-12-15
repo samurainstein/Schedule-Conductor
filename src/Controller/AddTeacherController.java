@@ -112,7 +112,7 @@ public class AddTeacherController implements Initializable {
         }
 
         try {
-            clearBTN.setOnAction(EventHandle.clearBTNEvent(
+            clearBTN.setOnAction(EventHandle.teachAddClearBTN(
                     nameTF,
                     countryCB,
                     divisionCB,
@@ -131,7 +131,7 @@ public class AddTeacherController implements Initializable {
         }
 
         try {
-            saveBTN.setOnAction(EventHandle.saveBTNEvent(
+            saveBTN.setOnAction(EventHandle.teachAddSaveBTN(
                     nameTF,
                     countryCB,
                     divisionCB,
@@ -147,6 +147,6 @@ public class AddTeacherController implements Initializable {
             ex.printStackTrace();
         }
         
-        cancelBTN.setOnAction(EventHandle.teacherCancelBTNEvent());
+        cancelBTN.setOnAction(EventHandle.teachCancelBTN());
     }
 }

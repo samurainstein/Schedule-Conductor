@@ -105,7 +105,7 @@ public class UpdateTeacherController implements Initializable {
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
-        saveBTN.setOnAction(EventHandle.updateSaveBTNEvent(
+        saveBTN.setOnAction(EventHandle.teachUpdtSaveBTN(
                 idTF, 
                 nameTF, 
                 countryCB, 
@@ -120,7 +120,7 @@ public class UpdateTeacherController implements Initializable {
                 passwordTF));
         
         try {
-            clearBTN.setOnAction(EventHandle.clearBTNEvent(
+            clearBTN.setOnAction(EventHandle.teachAddClearBTN(
                     nameTF, 
                     countryCB, 
                     divisionCB, 
@@ -137,7 +137,7 @@ public class UpdateTeacherController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        cancelBTN.setOnAction(EventHandle.teacherCancelBTNEvent());
+        cancelBTN.setOnAction(EventHandle.teachCancelBTN());
         
         try {
             countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));

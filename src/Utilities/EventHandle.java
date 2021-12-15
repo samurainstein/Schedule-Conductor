@@ -206,7 +206,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> teachersAddEvent() {
+    public static EventHandler<ActionEvent> teachersAddBTN() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -224,7 +224,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
 
-    public static EventHandler<ActionEvent> teachersDeleteEvent(TableView<InstrumentTeacher> teachersTable) throws SQLException {
+    public static EventHandler<ActionEvent> teachersDeleteBTN(TableView<InstrumentTeacher> teachersTable) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
@@ -258,7 +258,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> teachersUpdateEvent(TableView<InstrumentTeacher> teachersTable) {
+    public static EventHandler<ActionEvent> teachersUpdateBTN(TableView<InstrumentTeacher> teachersTable) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 try {
@@ -294,7 +294,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
 
-    public static EventHandler<ActionEvent> clearBTNEvent(
+    public static EventHandler<ActionEvent> teachAddClearBTN(
             TextField nameTF,
             ComboBox<Country> countryCB,
             ComboBox<Division> divisionCB,
@@ -329,7 +329,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
 
-    public static EventHandler<ActionEvent> saveBTNEvent(
+    public static EventHandler<ActionEvent> teachAddSaveBTN(
             TextField nameTF,
             ComboBox<Country> countryCB,
             ComboBox<Division> divisionCB,
@@ -391,7 +391,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> teacherCancelBTNEvent() {
+    public static EventHandler<ActionEvent> teachCancelBTN() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -409,7 +409,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> updateSaveBTNEvent(
+    public static EventHandler<ActionEvent> teachUpdtSaveBTN(
             TextField idTF, 
             TextField nameTF,
             ComboBox<Country> countryCB,
@@ -469,7 +469,7 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> studentDeleteEvent(TableView<InstrumentStudent> studentsTable) throws SQLException {
+    public static EventHandler<ActionEvent> studentDeleteBTN(TableView<InstrumentStudent> studentsTable) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
