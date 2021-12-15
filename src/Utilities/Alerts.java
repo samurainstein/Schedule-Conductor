@@ -91,7 +91,7 @@ public abstract class Alerts {
 //    }
 //    
     /**
-     * Method for generating an alert to indicate an invalid customer selection. 
+     * Method for generating an alert to indicate an invalid teacher selection. 
      */
     public static void teacherDeleteNull() {
         alertTitle = "Invalid Selection";
@@ -108,6 +108,30 @@ public abstract class Alerts {
     public static void teacherDeleteConfirm() {
         alertTitle = "Confirmation";
         alertText = "Teacher was deleted";
+        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle(alertTitle);
+        confirmAlert.setContentText(alertText);
+        confirmAlert.showAndWait();
+    }
+    
+     /**
+     * Method for generating an alert to indicate an invalid teacher selection. 
+     */
+    public static void studentDeleteNull() {
+        alertTitle = "Invalid Selection";
+        alertText = "Please select a student";
+        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
+        invalidAlert.setTitle(alertTitle);
+        invalidAlert.setContentText(alertText);
+        invalidAlert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to confirm that a teacher was deleted. 
+     */
+    public static void studentDeleteConfirm() {
+        alertTitle = "Confirmation";
+        alertText = "Student was deleted";
         Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmAlert.setTitle(alertTitle);
         confirmAlert.setContentText(alertText);
