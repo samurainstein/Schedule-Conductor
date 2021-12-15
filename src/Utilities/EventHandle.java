@@ -7,10 +7,12 @@ package Utilities;
 
 import DAO.AppointmentDAO;
 import DAO.DivisionDAO;
+import DAO.InstrumentStudentDAO;
 import DAO.InstrumentTeacherDAO;
 import Model.Country;
 import Model.Data;
 import Model.Division;
+import Model.InstrumentStudent;
 import Model.InstrumentTeacher;
 import com.mysql.cj.util.StringUtils;
 import java.io.IOException;
@@ -216,12 +218,12 @@ public abstract class EventHandle {
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
-                    boolean checkAssociated = Data.checkAssociatedAppointments(id);
+                    boolean checkAssociated = Data.checkTeachAssocAppt(id);
                     if (checkAssociated == true) {
                         Alerts.associatedAppointment();
                     } else {
 
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this customer?");
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this teacher?");
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.isPresent() && result.get() == ButtonType.OK) {
                             InstrumentTeacherDAO.deleteTeacher(id);
@@ -446,6 +448,40 @@ public abstract class EventHandle {
                     }                  
                 }
             };
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> studentDeleteEvent(TableView<InstrumentStudent> studentsTable) throws SQLException {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                try {
+                    InstrumentStudent student = studentsTable.getSelectionModel().getSelectedItem();
+                    int id = student.getId();
+                    try {
+                        AppointmentDAO.selectAppointments();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    boolean checkAssociated = Data.checkStudAssocAppt(id);
+                    if (checkAssociated == true) {
+                        Alerts.associatedAppointment();
+                    } else {
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this student?");
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            InstrumentStudentDAO.deleteStudent(id);
+                            InstrumentStudentDAO.selectStudents();
+                            studentsTable.setItems(Data.getAllStudents());
+                            Alerts.studentDeleteConfirm();
+                        }
+                    }
+                } catch (NullPointerException exception) {
+                    Alerts.studentDeleteNull();
+                }
+            }
+        };
         return eventHandler;
     }
 
