@@ -502,5 +502,23 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
+    
+    public static EventHandler<ActionEvent> studentCancelBTN() {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getStudentsTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        return eventHandler;
+    }
 
 }

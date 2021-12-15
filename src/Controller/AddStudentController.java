@@ -86,6 +86,8 @@ public class AddStudentController implements Initializable {
         studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        
+        cancelBTN.setOnAction(EventHandle.studentCancelBTN());
     }    
     
 }
