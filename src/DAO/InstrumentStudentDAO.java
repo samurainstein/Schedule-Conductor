@@ -66,4 +66,23 @@ public class InstrumentStudentDAO {
         }
     }
     
+    /**
+     * Delete statement for a row in the instrument_students table. 
+     * @param studentId Student ID to be deleted
+     */
+    public static void deleteStudent(int studentId) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "DELETE FROM instrument_student "
+                                + "WHERE id = ?;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setInt(1,studentId);
+            preparedStatement.execute();
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
 }
