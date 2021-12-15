@@ -5,9 +5,16 @@
  */
 package Controller;
 
+import DAO.CountryDAO;
+import Model.Country;
+import Model.Data;
+import Model.Division;
 import Utilities.EventHandle;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -45,9 +52,9 @@ public class AddStudentController implements Initializable {
     @FXML
     private TextField nameTF;
     @FXML
-    private ComboBox<?> countryCB;
+    private ComboBox<Country> countryCB;
     @FXML
-    private ComboBox<?> divisionCB;
+    private ComboBox<Division> divisionCB;
     @FXML
     private TextField postalTF;
     @FXML
@@ -87,7 +94,51 @@ public class AddStudentController implements Initializable {
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
+        CountryDAO.selectCountries();
+        countryCB.setItems(Data.getAllCountries());
+        countryCB.setPromptText("Select a Country");
+        
+        onlineTGL.selectToggle(onlineNRB);
+        inPersonTGL.selectToggle(inPersonNRB);
+
+        try {
+            countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
         cancelBTN.setOnAction(EventHandle.studentCancelBTN());
+        try {
+            clearBTN.setOnAction(EventHandle.studentAddClearBTN(
+                    nameTF,
+                    countryCB,
+                    divisionCB,
+                    postalTF,
+                    addressTF,
+                    phoneTF,
+                    instrumentTF,
+                    onlineTGL,
+                    onlineNRB,
+                    inPersonTGL,
+                    inPersonNRB));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            saveBTN.setOnAction(EventHandle.studentAddSaveBTN(
+                    nameTF, 
+                    countryCB, 
+                    divisionCB, 
+                    postalTF, 
+                    addressTF, 
+                    phoneTF, 
+                    instrumentTF, 
+                    onlineTGL, 
+                    inPersonTGL));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }    
     
 }
