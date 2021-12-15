@@ -521,4 +521,91 @@ public abstract class EventHandle {
         return eventHandler;
     }
 
+    public static EventHandler<ActionEvent> studentAddClearBTN(
+            TextField nameTF,
+            ComboBox<Country> countryCB,
+            ComboBox<Division> divisionCB,
+            TextField postalTF,
+            TextField addressTF,
+            TextField phoneTF,
+            TextField instrumentTF,
+            ToggleGroup onlineTGL,
+            RadioButton onlineNRB,
+            ToggleGroup inPersonTGL,
+            RadioButton inPersonNRB
+    ) throws SQLException {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                nameTF.setText("");
+                countryCB.getSelectionModel().clearSelection();
+                divisionCB.getItems().clear();
+                postalTF.setText("");
+                addressTF.setText("");
+                phoneTF.setText("");
+                instrumentTF.setText("");
+                onlineTGL.selectToggle(onlineNRB);
+                inPersonTGL.selectToggle(inPersonNRB);
+            }
+        };
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> studentAddSaveBTN(
+            TextField nameTF,
+            ComboBox<Country> countryCB,
+            ComboBox<Division> divisionCB,
+            TextField postalTF,
+            TextField addressTF,
+            TextField phoneTF,
+            TextField instrumentTF,
+            ToggleGroup onlineTGL, 
+            ToggleGroup inPersonTGL
+    ) throws SQLException {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                String name = nameTF.getText();
+                String postal = postalTF.getText();
+                String address = addressTF.getText();
+                String phone = phoneTF.getText();
+                String instrument = instrumentTF.getText();
+                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                char onlineRadioChar = onlineRadio.getText().charAt(0);
+                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+
+                if (StringUtils.isEmptyOrWhitespaceOnly(name)
+                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
+                        || StringUtils.isEmptyOrWhitespaceOnly(address)
+                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
+                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)) {
+                    Alerts.invalidFields();
+                    return;
+                }
+
+                try {
+                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                    InstrumentStudentDAO.insertStudent(name, country, division, postal, address, phone,
+                            instrument, onlineRadioChar, inPersonRadioChar);
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
+                                } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getStudentsTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                } catch (NullPointerException ex) {
+                    Alerts.countryOrDivisionNullAlert();
+                }
+
+            }
+        };
+        return eventHandler;
+    }
+    
 }
