@@ -85,4 +85,54 @@ public class InstrumentStudentDAO {
         }
     }
     
+    /**
+     * Insert statement for adding a row to the instrument_student table. 
+     * @param name Name for the new student
+     * @param country Country name for the new student
+     * @param division Division name for the new student
+     * @param postal Postal code for the new student
+     * @param address Address for the new student
+     * @param phone Phone number for the new student
+     * @param instrument Instrument for the new student
+     * @param availableOnline Online availability for the new student
+     * @param availableInPerson In person availability for the new student
+     */
+    public static void insertStudent(
+            String name,
+            String country,
+            String division,
+            String postal,
+            String address,
+            String phone,
+            String instrument,
+            char availableOnline,
+            char availableInPerson) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "INSERT INTO instrument_student(name, country, division, postal_code, address, phone, "
+                                       + "instrument, available_online, available_in_person) "
+                                        + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, country);
+            preparedStatement.setString(3, division);
+            preparedStatement.setString(4, postal);
+            preparedStatement.setString(5, address);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, instrument);
+            String online = String.valueOf(availableOnline);
+            preparedStatement.setString(8, online);
+            String inPerson = String.valueOf(availableInPerson);
+            preparedStatement.setString(9, inPerson);
+            
+            preparedStatement.execute();
+//            Data.clearCustomers();
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
 }
