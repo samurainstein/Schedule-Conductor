@@ -227,13 +227,27 @@ public abstract class Data {
      * @param teacherId Teacher ID to check
      * @return Returns a boolean of whether any appointments are associated with the teacher ID
      */
-    public static boolean checkAssociatedAppointments(int teacherId) {
+    public static boolean checkTeachAssocAppt(int teacherId) {
         boolean associated = false;
         for(Appointment appointment : allAppointments) {
             if(associated == true) {
                 break;
             }
             if(appointment.getTeacherId()== teacherId) {
+                associated = true;
+            }
+        }
+        
+        return associated;
+    }
+    
+    public static boolean checkStudAssocAppt(int studentId) {
+        boolean associated = false;
+        for(Appointment appointment : allAppointments) {
+            if(associated == true) {
+                break;
+            }
+            if(appointment.getStudentId()== studentId) {
                 associated = true;
             }
         }
