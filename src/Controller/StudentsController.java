@@ -89,11 +89,11 @@ public class StudentsController implements Initializable {
 
 //        addBTN.setOnAction(EventHandle.teachersAddEvent());
 //        updateBTN.setOnAction(EventHandle.teachersUpdateEvent(studentsTable));
-//        try {
-//            deleteBTN.setOnAction(EventHandle.teachersDeleteEvent(studentsTable));
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            deleteBTN.setOnAction(EventHandle.studentDeleteEvent(studentsTable));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
