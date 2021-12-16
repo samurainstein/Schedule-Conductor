@@ -146,7 +146,7 @@ public class UpdateTeacherController implements Initializable {
         }
     }
 
-    public void passCustomerData(InstrumentTeacher teacher) {
+    public void passTeacherData(InstrumentTeacher teacher) {
         idTF.setText(Integer.toString(teacher.getId()));
         nameTF.setText(teacher.getName());
         postalTF.setText(teacher.getPostalCode());
