@@ -5,7 +5,9 @@
  */
 package Utilities;
 
+import Controller.UpdateStudentController;
 import Controller.UpdateTeacherController;
+import Model.InstrumentStudent;
 import Model.InstrumentTeacher;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -30,6 +32,7 @@ public abstract class PageLoader {
     private static String studentAddTitle = "Add Student";
     private static String appointmentAddTitle = "Add Appointment";
     private static String teacherUpdateTitle = "Update Teacher";
+    private static String studentUpdateTitle = "Update Student";
     private static String appointmentUpdateTitle = "Update Appointment";
     private static String reportsTitle = "Reports";
     
@@ -58,7 +61,26 @@ public abstract class PageLoader {
     public static void teachUpdatePageLoad(ActionEvent event, FXMLLoader loader, String pageTitle, InstrumentTeacher selectedTeacher) throws IOException {
         Parent root = loader.load();
         UpdateTeacherController updateCont = loader.getController();
-        updateCont.passCustomerData(selectedTeacher);
+        updateCont.passTeacherData(selectedTeacher);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("View/ScheduleConductor.css");
+        stage.setTitle(pageTitle);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    /**
+     * This method loads the student update page, and passes data from the main students page. 
+     * @param event Event object that was generated from an event in the application
+     * @param loader The loader object of the page to be loaded
+     * @param pageTitle The title of the page that will be set to the new screen
+     * @param selectedStudent The student that is being passed to the update page
+     */
+    public static void studentUpdatePageLoad(ActionEvent event, FXMLLoader loader, String pageTitle, InstrumentStudent selectedStudent) throws IOException {
+        Parent root = loader.load();
+        UpdateStudentController updateCont = loader.getController();
+        updateCont.passStudentData(selectedStudent);
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("View/ScheduleConductor.css");
@@ -152,11 +174,19 @@ public abstract class PageLoader {
 //    }
     
     /**
-     * Method for returning the update teachers page title. 
+     * Method for returning the update teacher page title. 
      * @return Returns the update teachers page title
      */
     public static String getTeacherUpdateTitle() {
         return teacherUpdateTitle;
+    }
+    
+    /**
+     * Method for returning the update student page title. 
+     * @return Returns the update student page title
+     */
+    public static String getStudentUpdateTitle() {
+        return studentUpdateTitle;
     }
     
 //    /**
