@@ -469,6 +469,24 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
+    public static EventHandler<ActionEvent> studentsAddBTN() {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/AddStudent.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getStudentAddTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        return eventHandler;
+    }
+    
     public static EventHandler<ActionEvent> studentsUpdateBTN(TableView<InstrumentStudent> studentsTable) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
