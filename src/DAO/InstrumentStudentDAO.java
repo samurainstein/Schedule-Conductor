@@ -135,4 +135,53 @@ public class InstrumentStudentDAO {
         }
     }
     
+    /**
+     * Set statement for updating a row in the instrumen_student table. 
+     * @param id student ID to be updated
+     * @param name Updated name data for the student
+     * @param country Updated country data for the student
+     * @param division Updated Division for the student
+     * @param postal Updated postal Code data for the student
+     * @param address Updated address data for the student
+     * @param phone Updated phone data for the student
+     * @param instrument Updated instrument data for the student
+     * @param availableOnline Updated online availability data for the student
+     * @param availableInPerson Updated in person availability data for the student
+     */
+    public static void updateStudent(
+            int id, 
+            String name,
+            String country,
+            String division,
+            String postal,
+            String address,
+            String phone,
+            String instrument,
+            char availableOnline,
+            char availableInPerson)  {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "UPDATE instrument_student "
+                                + "SET name = ?, country = ?, division = ?, postal_code = ?, address = ?, phone = ?, "
+                                + "instrument = ?, available_online = ?, available_in_person = ? "
+                                + "WHERE id = ?;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, country);
+            preparedStatement.setString(3, division);
+            preparedStatement.setString(4, postal);
+            preparedStatement.setString(5, address);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, instrument);
+            preparedStatement.setString(8, String.valueOf(availableOnline));
+            preparedStatement.setString(9, String.valueOf(availableInPerson));
+            preparedStatement.setInt(10, id);
+            preparedStatement.execute();
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
 }
