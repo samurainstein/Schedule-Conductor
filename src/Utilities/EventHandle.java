@@ -469,6 +469,26 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
+    public static EventHandler<ActionEvent> studentsUpdateBTN(TableView<InstrumentStudent> studentsTable) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateStudent.fxml"));
+                    InstrumentStudent selectedStudent = studentsTable.getSelectionModel().getSelectedItem();
+                    String pageTitle = PageLoader.getStudentUpdateTitle();
+                    try {
+                        PageLoader.studentUpdatePageLoad(event, loader, pageTitle, selectedStudent);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (NullPointerException exception) {
+                    Alerts.teacherDeleteNull();
+                }
+            }
+        };
+        return eventHandler;
+    }
+    
     public static EventHandler<ActionEvent> studentDeleteBTN(TableView<InstrumentStudent> studentsTable) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -605,6 +625,60 @@ public abstract class EventHandle {
 
             }
         };
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> studentUpdateSaveBTN(
+            TextField idTF, 
+            TextField nameTF,
+            ComboBox<Country> countryCB,
+            ComboBox<Division> divisionCB,
+            TextField postalTF,
+            TextField addressTF,
+            TextField phoneTF,
+            TextField instrumentTF,
+            ToggleGroup onlineTGL, 
+            ToggleGroup inPersonTGL) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent event) {
+                    int id = Integer.parseInt(idTF.getText());
+                    String name = nameTF.getText();
+                    String postal = postalTF.getText();
+                    String address = addressTF.getText();
+                    String phone = phoneTF.getText();
+                    String instrument = instrumentTF.getText();
+                    RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                    char onlineRadioChar = onlineRadio.getText().charAt(0);
+                    RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                    char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+                    
+                    if (StringUtils.isEmptyOrWhitespaceOnly(name)
+                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
+                        || StringUtils.isEmptyOrWhitespaceOnly(address)
+                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
+                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)) {
+                    Alerts.invalidFields();
+                    return;
+                    }
+                    
+                    try {
+                        String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                        String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                        InstrumentStudentDAO.updateStudent(id, name, country, division, postal, address, phone,
+                                instrument, onlineRadioChar, inPersonRadioChar);
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        pageTitle = PageLoader.getStudentsTitle();
+                        stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                        PageLoader.pageLoad(stage, root, pageTitle);
+                    } catch (NullPointerException ex) {
+                        Alerts.countryOrDivisionNullAlert();
+                    }                  
+                }
+            };
         return eventHandler;
     }
     
