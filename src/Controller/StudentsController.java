@@ -88,8 +88,8 @@ public class StudentsController implements Initializable {
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
 
-//        addBTN.setOnAction(EventHandle.teachersAddBTN());
-//        updateBTN.setOnAction(EventHandle.teachersUpdateBTN(studentsTable));
+        addBTN.setOnAction(EventHandle.studentsAddBTN());
+        updateBTN.setOnAction(EventHandle.studentsUpdateBTN(studentsTable));
         try {
             deleteBTN.setOnAction(EventHandle.studentDeleteBTN(studentsTable));
         } catch (SQLException ex) {
