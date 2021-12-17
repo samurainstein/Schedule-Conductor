@@ -9,6 +9,7 @@ import DAO.AppointmentDAO;
 import DAO.DivisionDAO;
 import DAO.InstrumentStudentDAO;
 import DAO.InstrumentTeacherDAO;
+import Model.Appointment;
 import Model.Country;
 import Model.Data;
 import Model.Division;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -717,5 +719,77 @@ public abstract class EventHandle {
             };
         return eventHandler;
     }
+    
+    public static EventHandler<Event> appointmentsAllTab(TableView<Appointment> allViewTable) {
+
+        EventHandler<Event> eventHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+                allViewTable.setItems(Data.getAllAppointments());
+            }
+        };
+
+        return eventHandler;
+    }
+    
+    public static EventHandler<Event> appointmentsMonthTab(TableView<Appointment> monthViewTable) {
+
+        EventHandler<Event> eventHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                Data.clearMonthlyAppointments();
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Data.filterMonthlyAppointments();
+                monthViewTable.setItems(Data.getMonthlyAppointments());
+            }
+        };
+
+        return eventHandler;
+    }
+    
+    public static EventHandler<Event> appointmentsWeekTab(TableView<Appointment> weekViewTable) {
+
+        EventHandler<Event> eventHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                Data.clearWeeklyAppointments();
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Data.filterWeeklyAppointments();
+                weekViewTable.setItems(Data.getWeeklyAppointments());
+            }
+        };
+
+        return eventHandler;
+    }
+    
+    public static EventHandler<Event> appointmentsDayTab(TableView<Appointment> dayViewTable) {
+
+        EventHandler<Event> eventHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                Data.clearDailyAppointments();
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Data.filterDailyAppointments();
+                dayViewTable.setItems(Data.getDailyAppointments());
+            }
+        };
+
+        return eventHandler;
+    }
+    
     
 }
