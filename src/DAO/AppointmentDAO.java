@@ -45,11 +45,13 @@ public class AppointmentDAO {
                 LocalDateTime start = startTimestamp.toLocalDateTime();
                 Timestamp endTimestamp = resultSet.getTimestamp("End");
                 LocalDateTime end = endTimestamp.toLocalDateTime();
-                int studentId = resultSet.getInt("Student_ID");
+                String teacherName = resultSet.getString("Teacher_name");
                 int teacherId = resultSet.getInt("Teacher_ID");
+                String studentName = resultSet.getString("Student");
+                int studentId = resultSet.getInt("Student_ID");                
 
                 Appointment appointment = new Appointment(appointmentID, title, description, 
-                            location, start, end, studentId, teacherId);
+                            location, start, end, teacherName, teacherId, studentName, studentId);
 
                 Data.addAppointment(appointment);
             }
