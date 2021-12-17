@@ -19,8 +19,11 @@ public class Appointment {
     private String location;
     private LocalDateTime start;
     private LocalDateTime end;
-    private int studentId;
+    private String teacherName;
     private int teacherId;
+    private String studentName;
+    private int studentId;
+    
     
     /**
      * Constructor for Appointment objects. 
@@ -31,19 +34,24 @@ public class Appointment {
      * @param location Location of appointment
      * @param start Start date and time of appointment
      * @param end End date and time of appointment
-     * @param studentId student ID associated with appointment
+     * @param teacherName teacher Name associated with appointment
      * @param teacherId teacher ID associated with appointment
+     * @param studentName student Name associated with appointment
+     * @param studentId student ID associated with appointment
+     
      */
     public Appointment(int appointmentID, String title, String description,String location, 
-            LocalDateTime start, LocalDateTime end, int studentId, int teacherId) {
+            LocalDateTime start, LocalDateTime end, String teacherName, int teacherId, String studentName, int studentId) {
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;
         this.location = location;
         this.start = start;
         this.end = end;
-        this.studentId = studentId;
+        this.teacherName = teacherName;
         this.teacherId = teacherId;
+        this.studentName = studentName;
+        this.studentId = studentId;
     }
     
     /**
@@ -95,11 +103,11 @@ public class Appointment {
     }
     
     /**
-     * Method for getting the associated student ID of an appointment. 
-     * @return Returns a student ID
+     * Method for getting the associated teacher name of an appointment. 
+     * @return Returns a teacher ID
      */
-    public int getStudentId() {
-        return studentId;
+    public String getTeacherName() {
+        return teacherName;
     }
     
     /**
@@ -109,5 +117,23 @@ public class Appointment {
     public int getTeacherId() {
         return teacherId;
     }
+    
+    /**
+     * Method for getting the associated student name of an appointment. 
+     * @return Returns a teacher ID
+     */
+    public String getStudentName() {
+        return studentName;
+    }
+    
+    /**
+     * Method for getting the associated student ID of an appointment. 
+     * @return Returns a student ID
+     */
+    public int getStudentId() {
+        return studentId;
+    }
+    
+    
     
 }
