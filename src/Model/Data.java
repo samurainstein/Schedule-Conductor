@@ -6,6 +6,8 @@
 package Model;
 
 import DAO.InstrumentStudentDAO;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,6 +26,7 @@ public abstract class Data {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> dailyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> teacherAppointments = FXCollections.observableArrayList();
     private static int loggedInTeacherId;
     
@@ -173,6 +176,72 @@ public abstract class Data {
     }
     
     /**
+     * Method for filtering all appointments in the current day. 
+     */
+    public static void filterDailyAppointments() {
+        LocalDate today = LocalDate.now();
+        for(Appointment appointment : allAppointments) {
+            if(appointment.getStart().toLocalDate().equals(today))
+                dailyAppointments.add(appointment);
+        }
+    }
+    
+    /**
+     * Method for returning a list of appointments in the current day. 
+     * @return Returns an observable list of appointments in the current day
+     */
+    public static ObservableList<Appointment> getDailyAppointments() {
+        return dailyAppointments;
+    }
+    
+    /**
+     * Method for clearing the list of appointments in the current day. 
+     */
+    public static void clearDailyAppointments() {
+        dailyAppointments.clear();
+    }
+    
+    /**
+     * Method for filtering all appointments in the current week. 
+     */
+    public static void filterWeeklyAppointments() {
+        LocalDate startDate = LocalDate.now(); 
+        DayOfWeek dayOfWeek = startDate.getDayOfWeek();
+        switch (dayOfWeek) {
+            case MONDAY:
+                break;
+            case TUESDAY:
+                startDate = startDate.minusDays(1);
+                break;
+            case WEDNESDAY:
+                startDate = startDate.minusDays(2);
+                break;
+            case THURSDAY:
+                startDate = startDate.minusDays(3);
+                break;
+            case FRIDAY:
+                startDate = startDate.minusDays(4);
+                break;
+            case SATURDAY:
+                startDate = startDate.minusDays(5);
+                break;
+            case SUNDAY:
+                startDate = startDate.minusDays(6);
+                break;
+            default:
+                break;
+        }
+        
+        LocalDate endDate = startDate.plusDays(6);
+        for(Appointment appointment : allAppointments) {
+            LocalDate appointmentDate = appointment.getStart().toLocalDate();
+            if((appointmentDate.isEqual(startDate) || appointmentDate.isAfter(startDate)) && 
+                (appointmentDate.isEqual(endDate) || appointmentDate.isBefore(endDate)))
+                weeklyAppointments.add(appointment);
+                }
+    }
+    
+    /**
      * Method for returning a list of appointments in the current week. 
      * @return Returns an observable list of appointments in the current week
      */
@@ -185,6 +254,18 @@ public abstract class Data {
      */
     public static void clearWeeklyAppointments() {
         weeklyAppointments.clear();
+    }
+    
+    /**
+     * Method for filtering all appointments in the current month. 
+     */
+    public static void filterMonthlyAppointments() {
+        LocalDate today = LocalDate.now();
+        int monthOfYear = today.getMonthValue();
+        for(Appointment appointment : allAppointments) {
+            if(appointment.getStart().getMonthValue() == monthOfYear)
+                monthlyAppointments.add(appointment);
+        }
     }
     
     /**
