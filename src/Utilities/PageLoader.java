@@ -154,14 +154,14 @@ public abstract class PageLoader {
     public static String getStudentAddTitle() {
         return studentAddTitle;
     }
-//    
-//    /**
-//     * Method for returning the appointments page title. 
-//     * @return Returns the appointments page title
-//     */
-//    public static String getAppointmentsTitle() {
-//        return appointmentsTitle;
-//    }
+    
+    /**
+     * Method for returning the appointments page title. 
+     * @return Returns the appointments page title
+     */
+    public static String getAppointmentsTitle() {
+        return appointmentsTitle;
+    }
     
     
 //    
