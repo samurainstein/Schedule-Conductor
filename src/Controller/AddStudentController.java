@@ -92,6 +92,7 @@ public class AddStudentController implements Initializable {
         teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
         studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
+        appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         CountryDAO.selectCountries();
