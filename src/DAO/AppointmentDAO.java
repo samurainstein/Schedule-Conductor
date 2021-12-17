@@ -30,7 +30,7 @@ public class AppointmentDAO {
         try {
             Data.clearAppointments();
             Connection conn = DBConnection.getConnection();
-            String sqlStatement = "SELECT Appointment_ID, Title, Description, Location, Start, End, Student_ID, Teacher_ID "
+            String sqlStatement = "SELECT * "
                                 + "FROM appointments;";
             DBQuery.setPreparedStatement(conn, sqlStatement);
             PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
@@ -45,7 +45,7 @@ public class AppointmentDAO {
                 LocalDateTime start = startTimestamp.toLocalDateTime();
                 Timestamp endTimestamp = resultSet.getTimestamp("End");
                 LocalDateTime end = endTimestamp.toLocalDateTime();
-                String teacherName = resultSet.getString("Teacher_name");
+                String teacherName = resultSet.getString("Teacher");
                 int teacherId = resultSet.getInt("Teacher_ID");
                 String studentName = resultSet.getString("Student");
                 int studentId = resultSet.getInt("Student_ID");                
