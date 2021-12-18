@@ -102,6 +102,7 @@ public class UpdateStudentController implements Initializable {
         studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         saveBTN.setOnAction(EventHandle.studentUpdateSaveBTN(

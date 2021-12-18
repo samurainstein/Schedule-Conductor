@@ -148,6 +148,7 @@ public class AppointmentsController implements Initializable {
         studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         allIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));

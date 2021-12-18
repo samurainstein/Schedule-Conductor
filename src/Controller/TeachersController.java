@@ -85,6 +85,7 @@ public class TeachersController implements Initializable {
         studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
         studentsAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
 
         addBTN.setOnAction(EventHandle.teachersAddBTN());
