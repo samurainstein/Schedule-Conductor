@@ -162,4 +162,14 @@ public abstract class Alerts {
         alert.showAndWait();
     }
     
+    /**
+     * Method for generating an alert to indicate an invalid appointment selection. 
+     */
+    public static void appointmentNullAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Selection");
+        alert.setContentText("Please select an appointment");
+        alert.showAndWait();
+    }
+    
 }
