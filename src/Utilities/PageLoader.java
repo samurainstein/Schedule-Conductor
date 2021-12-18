@@ -164,14 +164,14 @@ public abstract class PageLoader {
     }
     
     
-//    
-//    /**
-//     * Method for returning the add appointments page title. 
-//     * @return Returns the add appointments page title
-//     */
-//    public static String getAppointmentAddTitle() {
-//        return appointmentAddTitle;
-//    }
+    
+    /**
+     * Method for returning the add appointments page title. 
+     * @return Returns the add appointments page title
+     */
+    public static String getAppointmentAddTitle() {
+        return appointmentAddTitle;
+    }
     
     /**
      * Method for returning the update teacher page title. 
