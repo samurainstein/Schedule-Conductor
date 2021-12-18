@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -133,6 +134,8 @@ public class AppointmentsController implements Initializable {
     private TableColumn<Appointment, String> allTeacherCol;
     @FXML
     private TableColumn<Appointment, String> allStudentCol;
+    @FXML
+    private TabPane appointmentsTabPane;
 
     /**
      * Initializes the controller class.
@@ -147,7 +150,7 @@ public class AppointmentsController implements Initializable {
         appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
-        allIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        allIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         allTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         allDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         allLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -156,7 +159,7 @@ public class AppointmentsController implements Initializable {
         allTeacherCol.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
         allStudentCol.setCellValueFactory(new PropertyValueFactory<>("studentName"));
         
-        monthIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        monthIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         monthTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         monthDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         monthLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -165,7 +168,7 @@ public class AppointmentsController implements Initializable {
         monthTeacherCol.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
         monthStudentCol.setCellValueFactory(new PropertyValueFactory<>("studentName"));
         
-        weekIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        weekIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         weekTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         weekDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         weekLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -174,7 +177,7 @@ public class AppointmentsController implements Initializable {
         weekTeacherCol.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
         weekStudentCol.setCellValueFactory(new PropertyValueFactory<>("studentName"));
         
-        dayIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        dayIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         dayTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         dayDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         dayLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -195,6 +198,8 @@ public class AppointmentsController implements Initializable {
         monthTab.setOnSelectionChanged(EventHandle.appointmentsMonthTab(monthApptTable));
         weekTab.setOnSelectionChanged(EventHandle.appointmentsWeekTab(weekApptTable));
         dayTab.setOnSelectionChanged(EventHandle.appointmentsDayTab(dayApptTable));
+        
+        deleteBTN.setOnAction(EventHandle.appointmentsDeleteBTN(allApptTable, monthApptTable, weekApptTable, dayApptTable));
     }    
     
 }
