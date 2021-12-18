@@ -43,7 +43,7 @@
    <center>
       <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
          <children>
-            <TabPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+            <TabPane fx:id="appointmentsTabPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
                <tabs>
                   <Tab fx:id="allTab" text="All Appointments">
                      <content>
