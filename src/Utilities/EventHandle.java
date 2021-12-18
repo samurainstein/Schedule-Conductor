@@ -153,8 +153,8 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
-     public static EventHandler<MouseEvent> navStudentsEvent() {
+
+    public static EventHandler<MouseEvent> navStudentsEvent() {
 
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -171,8 +171,8 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-     
-     public static EventHandler<MouseEvent> navStudentAddEvent() {
+
+    public static EventHandler<MouseEvent> navStudentAddEvent() {
 
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -189,8 +189,8 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-     
-     public static EventHandler<MouseEvent> navAppointmentsEvent() {
+
+    public static EventHandler<MouseEvent> navAppointmentsEvent() {
 
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -225,7 +225,7 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> teachersAddBTN() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
@@ -277,7 +277,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> teachersUpdateBTN(TableView<InstrumentTeacher> teachersTable) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -357,7 +357,7 @@ public abstract class EventHandle {
             TextField addressTF,
             TextField phoneTF,
             TextField instrumentTF,
-            ToggleGroup onlineTGL, 
+            ToggleGroup onlineTGL,
             ToggleGroup inPersonTGL,
             TextField usernameTF,
             TextField passwordTF
@@ -396,7 +396,7 @@ public abstract class EventHandle {
                             instrument, onlineRadioChar, inPersonRadioChar, username, password);
                     try {
                         root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
-                                } catch (IOException ex) {
+                    } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                     pageTitle = PageLoader.getTeachersTitle();
@@ -410,7 +410,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> teachCancelBTN() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
@@ -428,9 +428,9 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> teachUpdtSaveBTN(
-            TextField idTF, 
+            TextField idTF,
             TextField nameTF,
             ComboBox<Country> countryCB,
             ComboBox<Division> divisionCB,
@@ -438,26 +438,26 @@ public abstract class EventHandle {
             TextField addressTF,
             TextField phoneTF,
             TextField instrumentTF,
-            ToggleGroup onlineTGL, 
+            ToggleGroup onlineTGL,
             ToggleGroup inPersonTGL,
             TextField usernameTF,
             TextField passwordTF) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    int id = Integer.parseInt(idTF.getText());
-                    String name = nameTF.getText();
-                    String postal = postalTF.getText();
-                    String address = addressTF.getText();
-                    String phone = phoneTF.getText();
-                    String instrument = instrumentTF.getText();
-                    RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
-                    char onlineRadioChar = onlineRadio.getText().charAt(0);
-                    RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
-                    char inPersonRadioChar = inPersonRadio.getText().charAt(0);
-                    String username = usernameTF.getText();
-                    String password = passwordTF.getText();
-                    
-                    if (StringUtils.isEmptyOrWhitespaceOnly(name)
+            public void handle(ActionEvent event) {
+                int id = Integer.parseInt(idTF.getText());
+                String name = nameTF.getText();
+                String postal = postalTF.getText();
+                String address = addressTF.getText();
+                String phone = phoneTF.getText();
+                String instrument = instrumentTF.getText();
+                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                char onlineRadioChar = onlineRadio.getText().charAt(0);
+                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+                String username = usernameTF.getText();
+                String password = passwordTF.getText();
+
+                if (StringUtils.isEmptyOrWhitespaceOnly(name)
                         || StringUtils.isEmptyOrWhitespaceOnly(postal)
                         || StringUtils.isEmptyOrWhitespaceOnly(address)
                         || StringUtils.isEmptyOrWhitespaceOnly(phone)
@@ -466,29 +466,29 @@ public abstract class EventHandle {
                         || StringUtils.isEmptyOrWhitespaceOnly(password)) {
                     Alerts.invalidFields();
                     return;
-                    }
-                    
-                    try {
-                        String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
-                        String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
-                        InstrumentTeacherDAO.updateTeacher(id, name, country, division, postal, address, phone,
-                                instrument, onlineRadioChar, inPersonRadioChar, username, password);
-                        try {
-                            root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        pageTitle = PageLoader.getTeachersTitle();
-                        stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                        PageLoader.pageLoad(stage, root, pageTitle);
-                    } catch (NullPointerException ex) {
-                        Alerts.countryOrDivisionNullAlert();
-                    }                  
                 }
-            };
+
+                try {
+                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                    InstrumentTeacherDAO.updateTeacher(id, name, country, division, postal, address, phone,
+                            instrument, onlineRadioChar, inPersonRadioChar, username, password);
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getTeachersTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                } catch (NullPointerException ex) {
+                    Alerts.countryOrDivisionNullAlert();
+                }
+            }
+        };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> studentsAddBTN() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
@@ -506,7 +506,7 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> studentsUpdateBTN(TableView<InstrumentStudent> studentsTable) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -526,7 +526,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> studentDeleteBTN(TableView<InstrumentStudent> studentsTable) throws SQLException {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -560,7 +560,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> studentCancelBTN() {
 
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
@@ -609,7 +609,7 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> studentAddSaveBTN(
             TextField nameTF,
             ComboBox<Country> countryCB,
@@ -618,7 +618,7 @@ public abstract class EventHandle {
             TextField addressTF,
             TextField phoneTF,
             TextField instrumentTF,
-            ToggleGroup onlineTGL, 
+            ToggleGroup onlineTGL,
             ToggleGroup inPersonTGL
     ) throws SQLException {
 
@@ -651,7 +651,7 @@ public abstract class EventHandle {
                             instrument, onlineRadioChar, inPersonRadioChar);
                     try {
                         root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
-                                } catch (IOException ex) {
+                    } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                     pageTitle = PageLoader.getStudentsTitle();
@@ -665,9 +665,9 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
-    
+
     public static EventHandler<ActionEvent> studentUpdateSaveBTN(
-            TextField idTF, 
+            TextField idTF,
             TextField nameTF,
             ComboBox<Country> countryCB,
             ComboBox<Division> divisionCB,
@@ -675,51 +675,51 @@ public abstract class EventHandle {
             TextField addressTF,
             TextField phoneTF,
             TextField instrumentTF,
-            ToggleGroup onlineTGL, 
+            ToggleGroup onlineTGL,
             ToggleGroup inPersonTGL) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    int id = Integer.parseInt(idTF.getText());
-                    String name = nameTF.getText();
-                    String postal = postalTF.getText();
-                    String address = addressTF.getText();
-                    String phone = phoneTF.getText();
-                    String instrument = instrumentTF.getText();
-                    RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
-                    char onlineRadioChar = onlineRadio.getText().charAt(0);
-                    RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
-                    char inPersonRadioChar = inPersonRadio.getText().charAt(0);
-                    
-                    if (StringUtils.isEmptyOrWhitespaceOnly(name)
+            public void handle(ActionEvent event) {
+                int id = Integer.parseInt(idTF.getText());
+                String name = nameTF.getText();
+                String postal = postalTF.getText();
+                String address = addressTF.getText();
+                String phone = phoneTF.getText();
+                String instrument = instrumentTF.getText();
+                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                char onlineRadioChar = onlineRadio.getText().charAt(0);
+                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+
+                if (StringUtils.isEmptyOrWhitespaceOnly(name)
                         || StringUtils.isEmptyOrWhitespaceOnly(postal)
                         || StringUtils.isEmptyOrWhitespaceOnly(address)
                         || StringUtils.isEmptyOrWhitespaceOnly(phone)
                         || StringUtils.isEmptyOrWhitespaceOnly(instrument)) {
                     Alerts.invalidFields();
                     return;
-                    }
-                    
-                    try {
-                        String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
-                        String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
-                        InstrumentStudentDAO.updateStudent(id, name, country, division, postal, address, phone,
-                                instrument, onlineRadioChar, inPersonRadioChar);
-                        try {
-                            root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        pageTitle = PageLoader.getStudentsTitle();
-                        stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                        PageLoader.pageLoad(stage, root, pageTitle);
-                    } catch (NullPointerException ex) {
-                        Alerts.countryOrDivisionNullAlert();
-                    }                  
                 }
-            };
+
+                try {
+                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                    InstrumentStudentDAO.updateStudent(id, name, country, division, postal, address, phone,
+                            instrument, onlineRadioChar, inPersonRadioChar);
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getStudentsTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                } catch (NullPointerException ex) {
+                    Alerts.countryOrDivisionNullAlert();
+                }
+            }
+        };
         return eventHandler;
     }
-    
+
     public static EventHandler<Event> appointmentsAllTab(TableView<Appointment> allViewTable) {
 
         EventHandler<Event> eventHandler = new EventHandler<Event>() {
@@ -736,7 +736,7 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
+
     public static EventHandler<Event> appointmentsMonthTab(TableView<Appointment> monthViewTable) {
 
         EventHandler<Event> eventHandler = new EventHandler<Event>() {
@@ -754,7 +754,7 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
+
     public static EventHandler<Event> appointmentsWeekTab(TableView<Appointment> weekViewTable) {
 
         EventHandler<Event> eventHandler = new EventHandler<Event>() {
@@ -772,7 +772,7 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
+
     public static EventHandler<Event> appointmentsDayTab(TableView<Appointment> dayViewTable) {
 
         EventHandler<Event> eventHandler = new EventHandler<Event>() {
@@ -790,6 +790,63 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-    
-    
+
+    public static EventHandler<ActionEvent> appointmentsDeleteBTN(
+            TableView<Appointment> allApptTable,
+            TableView<Appointment> monthApptTable,
+            TableView<Appointment> weekApptTable,
+            TableView<Appointment> dayApptTable) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                TableView<Appointment> currentTable = dayApptTable;
+                if (allApptTable.getSelectionModel().getSelectedItem() == null) {
+                    if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
+                        if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
+                            if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
+                                Alerts.appointmentNullAlert();
+                            } else {
+                                currentTable = dayApptTable;
+                            }
+                        } else {
+                            currentTable = weekApptTable;
+                        }
+                    } else {
+                        currentTable = monthApptTable;
+                    }
+                } else {
+                    currentTable = allApptTable;
+                }
+
+                Appointment appointment = currentTable.getSelectionModel().getSelectedItem();
+                int appointmentID = appointment.getAppointmentID();
+//                    allViewTable.setItems(Data.getAllAppointments());
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this appointment?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    try {
+                        AppointmentDAO.deleteAppointment(appointmentID);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    try {
+                        AppointmentDAO.selectAppointments();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getAppointmentsTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+//                    currentTable.setItems(Data.getAllAppointments());
+//                        Alerts.appointmentDeleteConfirm(appointmentID, type);
+                }
+            }
+        };
+        return eventHandler;
+    }
+
 }
