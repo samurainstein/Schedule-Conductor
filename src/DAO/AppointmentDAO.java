@@ -60,4 +60,24 @@ public class AppointmentDAO {
                 exception.printStackTrace();
         }  
     }
+    
+    /**
+     * Delete statement for a row in the appointments table. 
+     * @param appointmentID Appointment ID to be deleted
+     */
+    public static void deleteAppointment(int appointmentID) throws SQLException {
+        try {
+            Connection conn = DBConnection.getConnection();
+  
+            String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = ?;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setInt(1, appointmentID);
+            preparedStatement.execute();
+            
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
