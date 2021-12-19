@@ -30,6 +30,7 @@ public abstract class Data {
     private static ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> dailyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> teacherAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> studentAppointments = FXCollections.observableArrayList();
     private static ObservableList<ZonedDateTime> zonedAppointmentTimes = FXCollections.observableArrayList();
     private static ObservableList<LocalTime> appointmentTimes = FXCollections.observableArrayList();
     private static ObservableList<String> locations = FXCollections.observableArrayList();
@@ -388,7 +389,7 @@ public abstract class Data {
     public static ObservableList<String> getLocations() {
         if(locations.size() == 0) {
             locations.add("In-Studio");
-            locations.add("In_Home");
+            locations.add("In-Home");
             locations.add("Online");
         }
         return locations;
@@ -403,4 +404,81 @@ public abstract class Data {
         }
         return lengths;
     }
+    
+    public static boolean checkTeacherOverlap(int teacherID, LocalTime startTime, LocalTime endTime, LocalDate startDate) {
+        boolean overlap = false;
+        teacherAppointments.clear();
+        for(Appointment appointment : allAppointments) {
+            if(appointment.getTeacherId() == teacherID) {
+                teacherAppointments.add(appointment);
+            }
+        }
+        for(Appointment appointment : teacherAppointments) {
+            if(overlap == true) {
+                break;
+            }
+            LocalTime teachStartTime = appointment.getStart().toLocalTime();
+            LocalTime teachEndTime = appointment.getEnd().toLocalTime();
+            LocalDate teachStartDate = appointment.getStart().toLocalDate();
+            if(teachStartDate.equals(startDate)) {
+                System.out.println("dates match");
+                if(startTime.equals(teachStartTime)  || endTime.equals(teachEndTime)) {
+                    System.out.println("if(startTime.equals(custStartTime)  || endTime.equals(custEndTime)) OVERLAP!");
+                    overlap = true;  
+                }
+                else if(startTime.isAfter(teachStartTime) && startTime.isBefore(teachEndTime)) /*&& endTime.equals(custEndTime))*/  {
+                    System.out.println("if(startTime.isAfter(custStartTime) && startTime.isBefore(custEndTime)) OVERLAP!");
+                    overlap = true;
+                }
+                else if(endTime.isAfter(teachStartTime) && endTime.isBefore(teachEndTime)) {
+                    System.out.println("if(endTime.isAfter(custStartTime) && endTime.isBefore(custEndTime)) OVERLAP!");
+                    overlap = true;
+                }
+                else {
+                    System.out.println("NO OVERLAP!"); 
+                    overlap = false;
+                }
+            }
+        }             
+        return overlap;
+    }
+    
+    public static boolean checkStudentOverlap(int studentID, LocalTime startTime, LocalTime endTime, LocalDate startDate) {
+        boolean overlap = false;
+        studentAppointments.clear();
+        for(Appointment appointment : allAppointments) {
+            if(appointment.getStudentId() == studentID) {
+                studentAppointments.add(appointment);
+            }
+        }
+        for(Appointment appointment : studentAppointments) {
+            if(overlap == true) {
+                break;
+            }
+            LocalTime studentStartTime = appointment.getStart().toLocalTime();
+            LocalTime studentEndTime = appointment.getEnd().toLocalTime();
+            LocalDate studentStartDate = appointment.getStart().toLocalDate();
+            if(studentStartDate.equals(startDate)) {
+                System.out.println("dates match");
+                if(startTime.equals(studentStartTime)  || endTime.equals(studentEndTime)) {
+                    System.out.println("if(startTime.equals(custStartTime)  || endTime.equals(custEndTime)) OVERLAP!");
+                    overlap = true;  
+                }
+                else if(startTime.isAfter(studentStartTime) && startTime.isBefore(studentEndTime)) /*&& endTime.equals(custEndTime))*/  {
+                    System.out.println("if(startTime.isAfter(custStartTime) && startTime.isBefore(custEndTime)) OVERLAP!");
+                    overlap = true;
+                }
+                else if(endTime.isAfter(studentStartTime) && endTime.isBefore(studentEndTime)) {
+                    System.out.println("if(endTime.isAfter(custStartTime) && endTime.isBefore(custEndTime)) OVERLAP!");
+                    overlap = true;
+                }
+                else {
+                    System.out.println("NO OVERLAP!"); 
+                    overlap = false;
+                }
+            }
+        }             
+        return overlap;
+    }
+    
 }
