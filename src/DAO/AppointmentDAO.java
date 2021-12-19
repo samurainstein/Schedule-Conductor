@@ -62,6 +62,52 @@ public class AppointmentDAO {
     }
     
     /**
+     * Insert statement for adding a row to the appointments table. 
+     * @param title Title data for the new appointment
+     * @param description Description data for the new appointment
+     * @param location Location data for the new appointment
+     * @param start Start timestamp for the new appointment
+     * @param end End timestamp for the new appointment
+     * @param teacherName Associated teacher name for the new appointment
+     * @param teacherID Associated teacher ID for the new appointment
+     * @param studentName Associated student name for the new appointment
+     * @param studentID Associated student ID for the new appointment
+     */
+    public static void insertAppointment(
+            String title, 
+            String description, 
+            String location,  
+            LocalDateTime start, 
+            LocalDateTime end, 
+            String teacherName, 
+            int teacherID, 
+            String studentName, 
+            int studentID) {
+            try {
+                Connection conn = DBConnection.getConnection();
+                String sqlStatement = "INSERT INTO appointments(Title, Description, Location, Start, End, Teacher, Teacher_ID, Student, Student_ID ) " 
+                                    +"Values(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                DBQuery.setPreparedStatement(conn, sqlStatement);
+                PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+                preparedStatement.setString(1, title);
+                preparedStatement.setString(2, description);
+                preparedStatement.setString(3, location);
+                preparedStatement.setTimestamp(4, Timestamp.valueOf(start));
+                preparedStatement.setTimestamp(5, Timestamp.valueOf(end));
+                preparedStatement.setString(6, teacherName);
+                preparedStatement.setInt(7, teacherID);
+                preparedStatement.setString(8, studentName);
+                preparedStatement.setInt(9, studentID);
+                preparedStatement.execute();
+                
+            }
+            catch(SQLException exception) {
+                exception.printStackTrace();
+            }
+            
+    }
+    
+    /**
      * Delete statement for a row in the appointments table. 
      * @param appointmentID Appointment ID to be deleted
      */
