@@ -104,6 +104,19 @@ public class AddAppointmentController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        try {
+            saveBTN.setOnAction(EventHandle.appointmentAddSaveBTN(
+                    titleTF,
+                    descriptionTA,
+                    locationCB,
+                    dateDP,
+                    timeCB,
+                    lengthCB,
+                    teacherCB,
+                    studentCB));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         
         locationCB.setItems(Data.getLocations());
         locationCB.setPromptText("Select a location");
