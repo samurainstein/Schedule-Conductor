@@ -49,17 +49,19 @@ public abstract class Alerts {
 //            confirmAlert.setContentText("Appointment was deleted\n" + "Appointment ID: " + appointmentID + "\n" + "Appointment Type: " + type);
 //            confirmAlert.showAndWait();
 //    }
-//    
-//    /**
-//     * Method for generating an alert to indicate that the entered appointment conflicts with another appointment. 
-//     */
-//    public static void appointmentOverlap() {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Appointment overlap");
-//        alert.setContentText("Selected time overlaps with another appointment.  Please select a different time");
-//        alert.showAndWait();
-//    }
-//    
+    
+    /**
+     * Method for generating an alert to indicate that the entered appointment conflicts with another appointment. 
+     */
+    public static void appointmentOverlap() {
+        alertText = "Selected time overlaps with another appointment.  Please select a different time";
+        alertTitle = "Appointment overlap";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(alertTitle);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
+    
     /**
      * Method for generating an alert to indicate that associated appointments should be deleted before deleting a teacher. 
      */
