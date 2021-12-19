@@ -18,6 +18,7 @@ import Model.InstrumentTeacher;
 import com.mysql.cj.util.StringUtils;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +31,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
@@ -864,5 +867,107 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
+    
+    public static EventHandler<ActionEvent> appointmentCancelBTN() {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getAppointmentsTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        return eventHandler;
+    }
+
+    public static EventHandler<ActionEvent> appointmentAddClearBTN(
+            TextField titleTF, 
+            TextArea descriptionTA, 
+            ComboBox<String> locationCB, 
+            DatePicker dateDP, 
+            ComboBox<LocalTime> timeCB, 
+            ComboBox<String> lengthCB, 
+            ComboBox<InstrumentTeacher> teacherCB,
+            ComboBox<InstrumentStudent> studentCB
+            ) throws SQLException {
+
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                titleTF.setText("");
+                descriptionTA.setText("");
+                locationCB.getSelectionModel().clearSelection();
+                dateDP.setValue(null);
+                timeCB.getSelectionModel().clearSelection();
+                lengthCB.getSelectionModel().clearSelection();
+                teacherCB.getSelectionModel().clearSelection();
+                studentCB.getSelectionModel().clearSelection();
+                
+            }
+        };
+        return eventHandler;
+    }
+
+//    public static EventHandler<ActionEvent> appointmentAddSaveBTN(
+//            TextField nameTF,
+//            ComboBox<Country> countryCB,
+//            ComboBox<Division> divisionCB,
+//            TextField postalTF,
+//            TextField addressTF,
+//            TextField phoneTF,
+//            TextField instrumentTF,
+//            ToggleGroup onlineTGL,
+//            ToggleGroup inPersonTGL
+//    ) throws SQLException {
+//
+//        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent event) {
+//
+//                String name = nameTF.getText();
+//                String postal = postalTF.getText();
+//                String address = addressTF.getText();
+//                String phone = phoneTF.getText();
+//                String instrument = instrumentTF.getText();
+//                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+//                char onlineRadioChar = onlineRadio.getText().charAt(0);
+//                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+//                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+//
+//                if (StringUtils.isEmptyOrWhitespaceOnly(name)
+//                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
+//                        || StringUtils.isEmptyOrWhitespaceOnly(address)
+//                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
+//                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)) {
+//                    Alerts.invalidFields();
+//                    return;
+//                }
+//
+//                try {
+//                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+//                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+//                    InstrumentStudentDAO.insertStudent(name, country, division, postal, address, phone,
+//                            instrument, onlineRadioChar, inPersonRadioChar);
+//                    try {
+//                        root = FXMLLoader.load(getClass().getResource("/View/Students.fxml"));
+//                    } catch (IOException ex) {
+//                        ex.printStackTrace();
+//                    }
+//                    pageTitle = PageLoader.getStudentsTitle();
+//                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+//                    PageLoader.pageLoad(stage, root, pageTitle);
+//                } catch (NullPointerException ex) {
+//                    Alerts.countryOrDivisionNullAlert();
+//                }
+//
+//            }
+//        };
+//        return eventHandler;
+//    }
 
 }
