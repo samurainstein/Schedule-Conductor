@@ -200,6 +200,7 @@ public class AppointmentsController implements Initializable {
         weekTab.setOnSelectionChanged(EventHandle.appointmentsWeekTab(weekApptTable));
         dayTab.setOnSelectionChanged(EventHandle.appointmentsDayTab(dayApptTable));
         
+        addBTN.setOnAction(EventHandle.appointmentsAddBTN());
         deleteBTN.setOnAction(EventHandle.appointmentsDeleteBTN(allApptTable, monthApptTable, weekApptTable, dayApptTable));
     }    
     
