@@ -8,6 +8,8 @@ package Model;
 import DAO.InstrumentStudentDAO;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -28,6 +30,10 @@ public abstract class Data {
     private static ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> dailyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> teacherAppointments = FXCollections.observableArrayList();
+    private static ObservableList<ZonedDateTime> zonedAppointmentTimes = FXCollections.observableArrayList();
+    private static ObservableList<LocalTime> appointmentTimes = FXCollections.observableArrayList();
+    private static ObservableList<String> locations = FXCollections.observableArrayList();
+    private static ObservableList<String> lengths = FXCollections.observableArrayList();
     private static int loggedInTeacherId;
     
     /**
@@ -337,6 +343,29 @@ public abstract class Data {
     }
     
     /**
+     * Method for returning a list of all EST business hour appointment times. 
+     * @return Returns an observable list of EST business hour appointment times
+     */
+    public static ObservableList<ZonedDateTime> getAllAppointmentTimes() {
+        return zonedAppointmentTimes;
+    }
+    
+    /**
+     * Method for adding an appointment time to the list of appointment times. 
+     * @param appointmentTime Appointment time to be added
+     */
+    public static void addAppointmentTime(ZonedDateTime appointmentTime) {
+        zonedAppointmentTimes.add(appointmentTime);
+    }
+    
+    /**
+     * Method for clearing the list of appointment times.  
+     */
+    public static void clearAppointmentTimes() {
+        zonedAppointmentTimes.clear();
+    }
+    
+    /**
      * Method for setting the currently logged in teacher ID. 
      * @param teacherId Teacher ID to set
      */
@@ -354,5 +383,24 @@ public abstract class Data {
     
     public static void clearLoggedInTeacherId() {
         loggedInTeacherId = 0;
+    }
+    
+    public static ObservableList<String> getLocations() {
+        if(locations.size() == 0) {
+            locations.add("In-Studio");
+            locations.add("In_Home");
+            locations.add("Online");
+        }
+        return locations;
+    }
+    
+    public static ObservableList<String> getLengths() {
+        if(lengths.size() == 0) {
+            lengths.add("30 Minutes");
+            lengths.add("1 Hour");
+            lengths.add("1 Hour 30 Minutes");
+            lengths.add("2 Hours");
+        }
+        return lengths;
     }
 }
