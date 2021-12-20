@@ -18,10 +18,13 @@ import Model.InstrumentTeacher;
 import Utilities.DateAndTime;
 import Utilities.EventHandle;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -106,6 +109,32 @@ public class UpdateAppointmentController implements Initializable {
         InstrumentStudentDAO.selectStudents();
         teacherCB.setItems(Data.getAllTeachers());
         studentCB.setItems(Data.getAllStudents());
+        
+        cancelBTN.setOnAction(EventHandle.appointmentCancelBTN());
+        try {
+            clearBTN.setOnAction(EventHandle.appointmentAddClearBTN(
+                    titleTF, 
+                    descriptionTA, 
+                    locationCB, 
+                    dateDP, 
+                    timeCB, 
+                    lengthCB, 
+                    teacherCB, 
+                    studentCB));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        saveBTN.setOnAction(EventHandle.appointmentUpdateSaveBTN(
+                idTF, 
+                titleTF,
+                descriptionTA,
+                locationCB,
+                dateDP,
+                timeCB,
+                lengthCB,
+                teacherCB,
+                studentCB
+        ));
     }    
     
     public void passAppointmentData(Appointment appointment) {
