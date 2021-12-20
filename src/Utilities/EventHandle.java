@@ -1011,5 +1011,24 @@ public abstract class EventHandle {
 
         return eventHandler;
     }
-
+    
+    public static EventHandler<ActionEvent> appointmentUpdateBTN(TableView<Appointment> appointmentsTable) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateAppointment.fxml"));
+                    Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+                    String pageTitle = PageLoader.getAppointmentUpdateTitle();
+                    try {
+                        PageLoader.appointmentUpdatePageLoad(event, loader, pageTitle, selectedAppointment);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (NullPointerException exception) {
+                    Alerts.appointmentNullAlert();
+                }
+            }
+        };
+        return eventHandler;
+    }
 }
