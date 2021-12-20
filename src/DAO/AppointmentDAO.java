@@ -108,6 +108,55 @@ public class AppointmentDAO {
     }
     
     /**
+     * Set statement for updating a row in the appointments table. 
+     * @param id Appointment ID to be updated
+     * @param title Updated title data for the row
+     * @param description Updated description data for the row
+     * @param location Updated location data for the row
+     * @param start Updated start timestamp for the row
+     * @param end Updated end timestamp for the row
+     * @param teacherName Updated associated teacher name for the row
+     * @param teacherID Updated associated teacher ID for the row
+     * @param studentName Updated associated student name for the row
+     * @param studentID Updated associated student ID for the row
+     */
+    public static void updateAppointment(
+            int id,
+            String title, 
+            String description, 
+            String location,  
+            LocalDateTime start, 
+            LocalDateTime end, 
+            String teacherName, 
+            int teacherID, 
+            String studentName, 
+            int studentID) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "UPDATE appointments "
+                                + "SET Title = ?, Description = ?, Location = ?, "
+                                + "Start = ?, End = ?, Teacher = ?, Teacher_ID = ?, Student = ?, Student_ID = ? "
+                                + "Where Appointment_ID = ?;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, description);
+            preparedStatement.setString(3, location);
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(start));
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(end));
+            preparedStatement.setString(6, teacherName);
+            preparedStatement.setInt(7, teacherID);
+            preparedStatement.setString(8, studentName);
+            preparedStatement.setInt(9, studentID);
+            preparedStatement.setInt(10, id);
+            preparedStatement.execute();
+        }
+        catch(SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
+    /**
      * Delete statement for a row in the appointments table. 
      * @param appointmentID Appointment ID to be deleted
      */
