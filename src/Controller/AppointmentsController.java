@@ -202,7 +202,7 @@ public class AppointmentsController implements Initializable {
         
         addBTN.setOnAction(EventHandle.appointmentsAddBTN());
         deleteBTN.setOnAction(EventHandle.appointmentsDeleteBTN(allApptTable, monthApptTable, weekApptTable, dayApptTable));
-        updateBTN.setOnAction(EventHandle.appointmentUpdateBTN(allApptTable));
+        updateBTN.setOnAction(EventHandle.appointmentUpdateBTN(allApptTable, monthApptTable, weekApptTable, dayApptTable));
     }    
     
 }

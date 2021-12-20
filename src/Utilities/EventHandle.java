@@ -1012,12 +1012,34 @@ public abstract class EventHandle {
         return eventHandler;
     }
     
-    public static EventHandler<ActionEvent> appointmentUpdateBTN(TableView<Appointment> appointmentsTable) {
+    public static EventHandler<ActionEvent> appointmentUpdateBTN( 
+        TableView<Appointment> allApptTable,
+            TableView<Appointment> monthApptTable,
+            TableView<Appointment> weekApptTable,
+            TableView<Appointment> dayApptTable) {
         EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                TableView<Appointment> currentTable = dayApptTable;
+                if (allApptTable.getSelectionModel().getSelectedItem() == null) {
+                    if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
+                        if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
+                            if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
+                                Alerts.appointmentNullAlert();
+                            } else {
+                                currentTable = dayApptTable;
+                            }
+                        } else {
+                            currentTable = weekApptTable;
+                        }
+                    } else {
+                        currentTable = monthApptTable;
+                    }
+                } else {
+                    currentTable = allApptTable;
+                }
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateAppointment.fxml"));
-                    Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+                    Appointment selectedAppointment = currentTable.getSelectionModel().getSelectedItem();
                     String pageTitle = PageLoader.getAppointmentUpdateTitle();
                     try {
                         PageLoader.appointmentUpdatePageLoad(event, loader, pageTitle, selectedAppointment);
