@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UpdateAppointmentController">
+    <left>
+      <VBox prefWidth="150.0" styleClass="nav-v-box" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="nav-menu-label" fx:id="homeLBL" text="Home" />
+            <Label id="nav-menu-label" fx:id="teachersLBL" text="Teachers" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" fx:id="teacherAddLBL" text="-Add" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" fx:id="studentsLBL" text="Students" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" fx:id="studentAddLBL" text="-Add" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" fx:id="appointmentsLBL" text="Appointments" />
+            <VBox styleClass="nav-sub-v-box">
+               <children>
+                  <Label id="nav-menu-label" fx:id="appointmentAddLBL" text="-Add" />
+               </children>
+            </VBox>
+            <Label id="nav-menu-label" fx:id="reportsLBL" text="Reports" />
+            <Label id="nav-menu-label" fx:id="logoutLabel" text="Logout" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
+         <children>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" styleClass="add_update_vbox">
+               <children>
+                  <HBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="ID" />
+                        <TextField fx:id="idTF" disable="true" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Title" />
+                        <TextField fx:id="titleTF" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="11.0" prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Description" />
+                        <TextArea fx:id="descriptionTA" prefHeight="150.0" prefWidth="220.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="111.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Location" />
+                        <ComboBox fx:id="locationCB" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="211.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Date" />
+                        <DatePicker fx:id="dateDP" prefWidth="220.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Time" />
+                        <ComboBox fx:id="timeCB" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="50.0" layoutY="248.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Length" />
+                        <ComboBox fx:id="lengthCB" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="409.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Teacher" />
+                        <ComboBox fx:id="teacherCB" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="426.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="add_update-label" text="Student" />
+                        <ComboBox fx:id="studentCB" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="975.0" spacing="100.0" StackPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <Button fx:id="saveBTN" mnemonicParsing="false" text="Save" />
+                  <Button fx:id="clearBTN" mnemonicParsing="false" text="Clear" />
+                  <Button fx:id="cancelBTN" mnemonicParsing="false" text="Cancel" />
+               </children>
+               <StackPane.margin>
+                  <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
+               </StackPane.margin>
+            </HBox>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
