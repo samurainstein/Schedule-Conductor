@@ -5,8 +5,10 @@
  */
 package Utilities;
 
+import Controller.UpdateAppointmentController;
 import Controller.UpdateStudentController;
 import Controller.UpdateTeacherController;
+import Model.Appointment;
 import Model.InstrumentStudent;
 import Model.InstrumentTeacher;
 import java.io.IOException;
@@ -107,6 +109,25 @@ public abstract class PageLoader {
 //        stage.show();
 //    }
     
+        /**
+     * This method loads the appointment update page, and passes data from the main appointments page. 
+     * @param event Event object that was generated from an event in the application
+     * @param loader The loader object of the page to be loaded
+     * @param pageTitle The title of the page that will be set to the new screen
+     * @param selectedAppointment The appointment that is being passed to the update page
+     */
+    public static void appointmentUpdatePageLoad(ActionEvent event, FXMLLoader loader, String pageTitle, Appointment selectedAppointment) throws IOException {
+        Parent root = loader.load();
+        UpdateAppointmentController updateCont = loader.getController();
+        updateCont.passAppointmentData(selectedAppointment);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("View/ScheduleConductor.css");
+        stage.setTitle(pageTitle);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
     /**
      * Method for returning the login page title. 
      * @return Returns the login page title
@@ -189,13 +210,13 @@ public abstract class PageLoader {
         return studentUpdateTitle;
     }
     
-//    /**
-//     * Method for returning the update appointments page title. 
-//     * @return Returns the update appointments page title
-//     */
-//    public static String getAppointmentUpdateTitle() {
-//        return appointmentUpdateTitle;
-//    }
+    /**
+     * Method for returning the update appointments page title. 
+     * @return Returns the update appointments page title
+     */
+    public static String getAppointmentUpdateTitle() {
+        return appointmentUpdateTitle;
+    }
 //    
 //    /**
 //     * Method for returning the reports page title. 
