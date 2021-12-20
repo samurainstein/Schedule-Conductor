@@ -967,7 +967,16 @@ public abstract class EventHandle {
                     if (!teacherOverlap && !studentOverlap) {
                         LocalDateTime start = LocalDateTime.of(date, startTime);
                         LocalDateTime end = LocalDateTime.of(date, endTime);
-                        AppointmentDAO.insertAppointment(title, description, location, start, end, teacherName, teacherId, studentName, studentId);
+                        AppointmentDAO.insertAppointment(
+                                title, 
+                                description, 
+                                location, 
+                                start, 
+                                end, 
+                                teacherName, 
+                                teacherId, 
+                                studentName, 
+                                studentId);
 
                         Parent root;
                         try {
@@ -1049,6 +1058,93 @@ public abstract class EventHandle {
                 } catch (NullPointerException exception) {
                     Alerts.appointmentNullAlert();
                 }
+            }
+        };
+        return eventHandler;
+    }
+    
+    public static EventHandler<ActionEvent> appointmentUpdateSaveBTN(
+            TextField idTF, 
+            TextField titleTF,
+            TextArea descriptionTA,
+            ComboBox<String> locationCB,
+            DatePicker dateDP,
+            ComboBox<LocalTime> timeCB,
+            ComboBox<String> lengthCB,
+            ComboBox<InstrumentTeacher> teacherCB,
+            ComboBox<InstrumentStudent> studentCB) {
+        EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                int id = Integer.parseInt(idTF.getText());
+                String title = titleTF.getText();
+                String description = descriptionTA.getText();
+                String location = locationCB.getSelectionModel().getSelectedItem();
+                LocalDate date = dateDP.getValue();
+                LocalTime startTime = timeCB.getValue();
+                LocalTime endTime = timeCB.getValue();
+                String length = lengthCB.getSelectionModel().getSelectedItem();
+                InstrumentTeacher teacher = teacherCB.getSelectionModel().getSelectedItem();
+                InstrumentStudent student = studentCB.getSelectionModel().getSelectedItem();
+                
+                if (StringUtils.isEmptyOrWhitespaceOnly(title)
+                    || StringUtils.isEmptyOrWhitespaceOnly(description)) {
+                    Alerts.invalidFields();
+                    return;
+                }
+                
+                try {
+                    if (length.matches("30 Minutes")) {
+                        endTime = startTime.plusMinutes(30);
+                    } else if (length.matches("1 Hour")) {
+                        endTime = startTime.plusHours(1);
+                    } else if (length.matches("1 Hour 30 Minutes")) {
+                        endTime = startTime.plusMinutes(30);
+                        endTime = startTime.plusHours(1);
+                    } else if (length.matches("2 Hours")) {
+                        endTime = startTime.plusHours(2);
+                    }
+                    String teacherName = teacher.getName();
+                    int teacherId = teacher.getId();
+                    String studentName = student.getName();
+                    int studentId = student.getId();
+                    AppointmentDAO.selectAppointments();
+                    Boolean teacherOverlap = Data.checkTeacherOverlap(teacherId, startTime, endTime, date);
+                    Boolean studentOverlap = Data.checkStudentOverlap(studentId, startTime, endTime, date);
+                    if (!teacherOverlap && !studentOverlap) {
+                        LocalDateTime start = LocalDateTime.of(date, startTime);
+                        LocalDateTime end = LocalDateTime.of(date, endTime);
+                        AppointmentDAO.updateAppointment(
+                                id,
+                                title,
+                                description,
+                                location,
+                                start,
+                                end,
+                                teacherName,
+                                teacherId,
+                                studentName,
+                                studentId);
+
+                        Parent root;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                            String pageTitle = PageLoader.getAppointmentsTitle();
+                            PageLoader.pageLoad(stage, root, pageTitle);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        
+                    } else {
+                        Alerts.appointmentOverlap();
+                    }
+
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                } catch (NullPointerException exception) {
+                    Alerts.invalidFields();
+                }
+
             }
         };
         return eventHandler;
