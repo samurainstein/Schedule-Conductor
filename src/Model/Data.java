@@ -481,4 +481,36 @@ public abstract class Data {
         return overlap;
     }
     
+    /**
+     * Method for returning a instrumentTeacher object from the list of all teachers by teacher ID. 
+     * @param teacherID Teacher ID to be searched
+     * @return Returns a teacher object
+     */
+    public static InstrumentTeacher getTeacherObject(int teacherID) {
+        InstrumentTeacher teacherObject = null;
+        for(InstrumentTeacher teacher : allTeachers) {
+            if(teacher.getId() == teacherID) {
+                teacherObject = teacher;
+                break;
+            }
+        }
+        return teacherObject;
+    }
+    
+    /**
+     * Method for returning a InstrumentStudent object from the list of all students by student ID. 
+     * @param studentID Student ID to be searched
+     * @return Returns a student object
+     */
+    public static InstrumentStudent getStudentObject(int studentID) {
+        InstrumentStudent studentObject = null;
+        for(InstrumentStudent student : allStudents) {
+            if(student.getId() == studentID) {
+                studentObject = student;
+                break;
+            }
+        }
+        return studentObject;
+    }
+    
 }
