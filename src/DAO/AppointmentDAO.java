@@ -175,4 +175,29 @@ public abstract class AppointmentDAO {
             exception.printStackTrace();
         }
     }
+    
+    /**
+     * Select statement for all rows in the appointments table with a specified type, during a specific month. 
+     * @param location Location of appointments to be queried
+     * @param start Start timestamp for designated month
+     * @param end End timestamp for designated month
+     */
+    public static int getTotalsReport(String location, LocalDateTime start, LocalDateTime end) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        int count = 0;
+        String sqlStatement = "SELECT COUNT(*) FROM appointments "
+                            + "WHERE location = ? AND "
+                            + "Start BETWEEN ? and ?;";
+        DBQuery.setPreparedStatement(conn, sqlStatement);
+        PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+        preparedStatement.setString(1, location);
+        preparedStatement.setTimestamp(2, Timestamp.valueOf(start));
+        preparedStatement.setTimestamp(3, Timestamp.valueOf(end));
+        preparedStatement.execute();
+        ResultSet resultSet = preparedStatement.getResultSet();
+        while(resultSet.next()) {
+            count = resultSet.getInt("COUNT(*)");
+        }
+        return count;
+    }
 }
