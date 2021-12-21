@@ -228,6 +228,24 @@ public abstract class EventHandle {
         };
         return eventHandler;
     }
+    
+    public static EventHandler<MouseEvent> navReportsEvent() {
+
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getAppointmentsTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        return eventHandler;
+    }
 
     public static EventHandler<MouseEvent> navLogoutEvent() {
 
