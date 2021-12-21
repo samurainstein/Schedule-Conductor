@@ -105,6 +105,7 @@ public class UpdateTeacherController implements Initializable {
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
         appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         saveBTN.setOnAction(EventHandle.teachUpdtSaveBTN(

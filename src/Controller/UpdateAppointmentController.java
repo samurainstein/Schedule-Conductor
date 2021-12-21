@@ -98,6 +98,7 @@ public class UpdateAppointmentController implements Initializable {
         studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
         appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
         logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
         
         locationCB.setItems(Data.getLocations());
