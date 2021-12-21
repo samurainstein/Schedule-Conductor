@@ -19,7 +19,7 @@ import java.sql.SQLException;
  *
  * @author Eric
  */
-public class InstrumentStudentDAO {
+public abstract class InstrumentStudentDAO {
     
     /**
      * Select statement for all rows in the instrument_student table. 

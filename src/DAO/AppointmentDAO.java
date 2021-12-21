@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
  *
  * @author Eric
  */
-public class AppointmentDAO {
+public abstract class AppointmentDAO {
     
     /**
      * Select statement for all rows in the appointments table. 
