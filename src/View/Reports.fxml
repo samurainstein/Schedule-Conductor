@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -61,53 +62,36 @@
                            </children></VBox>
                      </content>
                   </Tab>
-                  <Tab fx:id="monthTab" text="Monthly">
-                    <content>
-                      <TableView fx:id="monthApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                           <columns>
-                              <TableColumn fx:id="monthIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="monthTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="monthDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="monthLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="monthStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="monthEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="monthTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="monthStudentCol" prefWidth="135.4285888671875" text="Student" />
-                           </columns>
-                      </TableView>
+                  <Tab fx:id="studentsByInstTAB" text="Students By Instrument">
+                      <content>
+                        <VBox>
+                           <children>
+                                <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                    <columns>
+                                        <TableColumn fx:id="idCol" prefWidth="30.5" text="ID" />
+                                        <TableColumn fx:id="nameCol" prefWidth="132.0" text="Name" />
+                                        <TableColumn fx:id="countryCol" prefWidth="114.5" text="Country" />
+                                        <TableColumn fx:id="divisionCol" prefWidth="109.0" text="Division" />
+                                        <TableColumn fx:id="instrumentCol" prefWidth="93.0" text="Instrument" />
+                                        <TableColumn fx:id="availableOnlineCol" prefWidth="52.0" text="Online" />
+                                        <TableColumn fx:id="availableInPersonCol" prefWidth="68.0" text="In Person" />
+                                    </columns>
+                                </TableView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" styleClass="h-box">
+                                 <children>
+                                    <ComboBox fx:id="instrumentCB" prefWidth="150.0" />
+                                    <Button fx:id="runBTN2" mnemonicParsing="false" text="Run" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
                     </content>                     
-                  </Tab>
-                  <Tab fx:id="weekTab" text="Weekly">
-                    <content>
-                      <TableView fx:id="weekApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                           <columns>
-                              <TableColumn fx:id="weekIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="weekTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="weekDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="weekLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="weekStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="weekEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="weekTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="weekStudentCol" prefWidth="135.4285888671875" text="Student" />
-                           </columns>
-                        </TableView>
-                    </content>                     
-                  </Tab>
-                  <Tab fx:id="dayTab" text="Daily">
-                     <content>
-                        <TableView fx:id="dayApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                           <columns>
-                              <TableColumn fx:id="dayIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="dayTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="dayDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="dayLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="dayStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="dayEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="dayTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="dayStudentCol" prefWidth="135.4285888671875" text="Student" />
-                           </columns>
-                        </TableView>
-                     </content>
                   </Tab>
                </tabs>
             </TabPane>
