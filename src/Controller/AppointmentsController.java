@@ -8,20 +8,33 @@ package Controller;
 import DAO.AppointmentDAO;
 import Model.Appointment;
 import Model.Data;
-import Utilities.EventHandle;
+import Utilities.Alerts;
+import Utilities.EventHandlerNavMenu;
+import Utilities.PageLoader;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -137,20 +150,23 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TabPane appointmentsTabPane;
 
+    private Parent root;
+    private String pageTitle;
+    private Stage stage;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
-        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
-        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
-        studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
-        appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
-        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
-        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
+        teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
+        studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
+        appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
+        logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());
         
         allIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         allTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -194,16 +210,165 @@ public class AppointmentsController implements Initializable {
         catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
         allApptTable.setItems(Data.getAllAppointments());
-        allTab.setOnSelectionChanged(EventHandle.appointmentsAllTab(allApptTable));
-        monthTab.setOnSelectionChanged(EventHandle.appointmentsMonthTab(monthApptTable));
-        weekTab.setOnSelectionChanged(EventHandle.appointmentsWeekTab(weekApptTable));
-        dayTab.setOnSelectionChanged(EventHandle.appointmentsDayTab(dayApptTable));
         
-        addBTN.setOnAction(EventHandle.appointmentsAddBTN());
-        deleteBTN.setOnAction(EventHandle.appointmentsDeleteBTN(allApptTable, monthApptTable, weekApptTable, dayApptTable));
-        updateBTN.setOnAction(EventHandle.appointmentUpdateBTN(allApptTable, monthApptTable, weekApptTable, dayApptTable));
+        EventHandler<Event> clickAllTabHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                allApptTable.setItems(Data.getAllAppointments());
+            }
+        };
+
+        EventHandler<Event> clickMonthTabHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                Data.clearMonthlyAppointments();
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Data.filterMonthlyAppointments();
+                monthApptTable.setItems(Data.getMonthlyAppointments());
+            }
+        };
+
+        EventHandler<Event> clickWeekTabHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                Data.clearWeeklyAppointments();
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Data.filterWeeklyAppointments();
+                weekApptTable.setItems(Data.getWeeklyAppointments());
+            }
+        };
+        
+        EventHandler<Event> clickDayTabHandler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                Data.clearDailyAppointments();
+                try {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Data.filterDailyAppointments();
+                dayApptTable.setItems(Data.getDailyAppointments());
+            }
+        };
+        
+        EventHandler<ActionEvent> clickAddBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getAppointmentAddTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        EventHandler<ActionEvent> clickUpdateBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                TableView<Appointment> currentTable = dayApptTable;
+                if (allApptTable.getSelectionModel().getSelectedItem() == null) {
+                    if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
+                        if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
+                            if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
+                                Alerts.appointmentNullAlert();
+                            } else {
+                                currentTable = dayApptTable;
+                            }
+                        } else {
+                            currentTable = weekApptTable;
+                        }
+                    } else {
+                        currentTable = monthApptTable;
+                    }
+                } else {
+                    currentTable = allApptTable;
+                }
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateAppointment.fxml"));
+                    Appointment selectedAppointment = currentTable.getSelectionModel().getSelectedItem();
+                    String pageTitle = PageLoader.getAppointmentUpdateTitle();
+                    try {
+                        PageLoader.appointmentUpdatePageLoad(event, loader, pageTitle, selectedAppointment);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (NullPointerException exception) {
+                    Alerts.appointmentNullAlert();
+                }
+            }
+        };
+        
+        EventHandler<ActionEvent> clickDeleteBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                TableView<Appointment> currentTable = dayApptTable;
+                if (allApptTable.getSelectionModel().getSelectedItem() == null) {
+                    if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
+                        if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
+                            if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
+                                Alerts.appointmentNullAlert();
+                            } else {
+                                currentTable = dayApptTable;
+                            }
+                        } else {
+                            currentTable = weekApptTable;
+                        }
+                    } else {
+                        currentTable = monthApptTable;
+                    }
+                } else {
+                    currentTable = allApptTable;
+                }
+
+                Appointment appointment = currentTable.getSelectionModel().getSelectedItem();
+                int appointmentID = appointment.getAppointmentID();
+//                    allViewTable.setItems(Data.getAllAppointments());
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this appointment?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    try {
+                        AppointmentDAO.deleteAppointment(appointmentID);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    try {
+                        AppointmentDAO.selectAppointments();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getAppointmentsTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+//                    currentTable.setItems(Data.getAllAppointments());
+//                        Alerts.appointmentDeleteConfirm(appointmentID, type);
+                }
+            }
+        };
+        
+        allTab.setOnSelectionChanged(clickAllTabHandler);
+        monthTab.setOnSelectionChanged(clickMonthTabHandler);
+        weekTab.setOnSelectionChanged(clickWeekTabHandler);
+        dayTab.setOnSelectionChanged(clickDayTabHandler);
+        
+        addBTN.setOnAction(clickAddBtnHandler);
+        deleteBTN.setOnAction(clickDeleteBtnHandler);
+        updateBTN.setOnAction(clickUpdateBtnHandler);
     }    
     
 }

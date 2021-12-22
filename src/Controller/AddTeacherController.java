@@ -6,23 +6,35 @@
 package Controller;
 
 import DAO.CountryDAO;
+import DAO.DivisionDAO;
+import DAO.InstrumentTeacherDAO;
 import Model.Country;
 import Model.Data;
 import Model.Division;
-import Utilities.EventHandle;
+import Utilities.Alerts;
+import Utilities.EventHandlerNavMenu;
+import Utilities.PageLoader;
+import com.mysql.cj.util.StringUtils;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -86,70 +98,123 @@ public class AddTeacherController implements Initializable {
     @FXML
     private Label reportsLBL;
 
+    private Parent root;
+    private String pageTitle;
+    private Stage stage;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
-        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
-        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
-        studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
-        appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
-        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
-        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
+        teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
+        studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
+        appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
+        logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());
 
         CountryDAO.selectCountries();
         countryCB.setItems(Data.getAllCountries());
         countryCB.setPromptText("Select a Country");
-        
+
         onlineTGL.selectToggle(onlineNRB);
         inPersonTGL.selectToggle(inPersonNRB);
 
-        try {
-            countryCB.setOnAction(EventHandle.comboCountrySelectEvent(countryCB, divisionCB));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        EventHandler<ActionEvent> comboCountryHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
 
-        try {
-            clearBTN.setOnAction(EventHandle.teachAddClearBTN(
-                    nameTF,
-                    countryCB,
-                    divisionCB,
-                    postalTF,
-                    addressTF,
-                    phoneTF,
-                    instrumentTF,
-                    onlineTGL,
-                    onlineNRB,
-                    inPersonTGL,
-                    inPersonNRB,
-                    usernameTF,
-                    passwordTF));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+                if (!(countryCB.getSelectionModel().isEmpty())) {
+                    divisionCB.getItems().clear();
+                    int countryIDSelection = countryCB.getValue().getCountryID();
+                    DivisionDAO.selectFilteredDivisions(countryIDSelection);
+                    divisionCB.setItems(Data.getFilteredDivisions());
+                    divisionCB.setPromptText("Please Select a Division");
+                }
+            }
+        };
 
-        try {
-            saveBTN.setOnAction(EventHandle.teachAddSaveBTN(
-                    nameTF,
-                    countryCB,
-                    divisionCB,
-                    postalTF,
-                    addressTF,
-                    phoneTF,
-                    instrumentTF,
-                    onlineTGL,
-                    inPersonTGL,
-                    usernameTF,
-                    passwordTF));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-        cancelBTN.setOnAction(EventHandle.teachCancelBTN());
+        EventHandler<ActionEvent> clickClearBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                nameTF.setText("");
+                countryCB.getSelectionModel().clearSelection();
+                divisionCB.getItems().clear();
+                postalTF.setText("");
+                addressTF.setText("");
+                phoneTF.setText("");
+                instrumentTF.setText("");
+                onlineTGL.selectToggle(onlineNRB);
+                inPersonTGL.selectToggle(inPersonNRB);
+                usernameTF.setText("");
+                passwordTF.setText("");
+            }
+        };
+
+        EventHandler<ActionEvent> clickSaveBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                String name = nameTF.getText();
+                String postal = postalTF.getText();
+                String address = addressTF.getText();
+                String phone = phoneTF.getText();
+                String instrument = instrumentTF.getText();
+                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+                char onlineRadioChar = onlineRadio.getText().charAt(0);
+                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+                String username = usernameTF.getText();
+                String password = passwordTF.getText();
+
+                if (StringUtils.isEmptyOrWhitespaceOnly(name)
+                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
+                        || StringUtils.isEmptyOrWhitespaceOnly(address)
+                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
+                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)
+                        || StringUtils.isEmptyOrWhitespaceOnly(username)
+                        || StringUtils.isEmptyOrWhitespaceOnly(password)) {
+                    Alerts.invalidFields();
+                    return;
+                }
+
+                try {
+                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                    InstrumentTeacherDAO.insertTeacher(name, country, division, postal, address, phone,
+                            instrument, onlineRadioChar, inPersonRadioChar, username, password);
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    pageTitle = PageLoader.getTeachersTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                } catch (NullPointerException ex) {
+                    Alerts.countryOrDivisionNullAlert();
+                }
+            }
+        };
+
+        EventHandler<ActionEvent> clickCancelBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getTeachersTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        countryCB.setOnAction(comboCountryHandler);
+        clearBTN.setOnAction(clickClearBtnHandler);
+        saveBTN.setOnAction(clickSaveBtnHandler);
+        cancelBTN.setOnAction(clickCancelBtnHandler);
     }
 }

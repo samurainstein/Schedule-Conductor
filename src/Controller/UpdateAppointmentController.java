@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAO.AppointmentDAO;
 import DAO.CountryDAO;
 import DAO.DivisionDAO;
 import DAO.InstrumentStudentDAO;
@@ -15,8 +16,12 @@ import Model.Data;
 import Model.Division;
 import Model.InstrumentStudent;
 import Model.InstrumentTeacher;
+import Utilities.Alerts;
 import Utilities.DateAndTime;
-import Utilities.EventHandle;
+import Utilities.EventHandlerNavMenu;
+import Utilities.PageLoader;
+import com.mysql.cj.util.StringUtils;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -27,14 +32,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -85,21 +96,25 @@ public class UpdateAppointmentController implements Initializable {
     private Button clearBTN;
     @FXML
     private Button cancelBTN;
+    
+    private Parent root;
+    private String pageTitle;
+    private Stage stage;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
-        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
-        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
-        studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
-        appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
-        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
-        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
+        teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
+        studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
+        appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
+        logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());
         
         locationCB.setItems(Data.getLocations());
         DateAndTime.setAppointmentTimes();
@@ -111,31 +126,111 @@ public class UpdateAppointmentController implements Initializable {
         teacherCB.setItems(Data.getAllTeachers());
         studentCB.setItems(Data.getAllStudents());
         
-        cancelBTN.setOnAction(EventHandle.appointmentCancelBTN());
-        try {
-            clearBTN.setOnAction(EventHandle.appointmentAddClearBTN(
-                    titleTF, 
-                    descriptionTA, 
-                    locationCB, 
-                    dateDP, 
-                    timeCB, 
-                    lengthCB, 
-                    teacherCB, 
-                    studentCB));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        saveBTN.setOnAction(EventHandle.appointmentUpdateSaveBTN(
-                idTF, 
-                titleTF,
-                descriptionTA,
-                locationCB,
-                dateDP,
-                timeCB,
-                lengthCB,
-                teacherCB,
-                studentCB
-        ));
+        EventHandler<ActionEvent> clickCancelBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                pageTitle = PageLoader.getAppointmentsTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
+        };
+
+        EventHandler<ActionEvent> clickClearBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+
+                titleTF.setText("");
+                descriptionTA.setText("");
+                locationCB.getSelectionModel().clearSelection();
+                dateDP.setValue(null);
+                timeCB.getSelectionModel().clearSelection();
+                lengthCB.getSelectionModel().clearSelection();
+                teacherCB.getSelectionModel().clearSelection();
+                studentCB.getSelectionModel().clearSelection();
+
+            }
+        };
+        
+        EventHandler<ActionEvent> clickSaveBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                int id = Integer.parseInt(idTF.getText());
+                String title = titleTF.getText();
+                String description = descriptionTA.getText();
+                String location = locationCB.getSelectionModel().getSelectedItem();
+                LocalDate date = dateDP.getValue();
+                LocalTime startTime = timeCB.getValue();
+                LocalTime endTime = timeCB.getValue();
+                String length = lengthCB.getSelectionModel().getSelectedItem();
+                InstrumentTeacher teacher = teacherCB.getSelectionModel().getSelectedItem();
+                InstrumentStudent student = studentCB.getSelectionModel().getSelectedItem();
+                
+                if (StringUtils.isEmptyOrWhitespaceOnly(title)
+                    || StringUtils.isEmptyOrWhitespaceOnly(description)) {
+                    Alerts.invalidFields();
+                    return;
+                }
+                
+                try {
+                    if (length.matches("30 Minutes")) {
+                        endTime = startTime.plusMinutes(30);
+                    } else if (length.matches("1 Hour")) {
+                        endTime = startTime.plusHours(1);
+                    } else if (length.matches("1 Hour 30 Minutes")) {
+                        endTime = startTime.plusMinutes(30);
+                        endTime = startTime.plusHours(1);
+                    } else if (length.matches("2 Hours")) {
+                        endTime = startTime.plusHours(2);
+                    }
+                    String teacherName = teacher.getName();
+                    int teacherId = teacher.getId();
+                    String studentName = student.getName();
+                    int studentId = student.getId();
+                    AppointmentDAO.selectAppointments();
+                    Boolean teacherOverlap = Data.checkTeacherOverlap(teacherId, startTime, endTime, date);
+                    Boolean studentOverlap = Data.checkStudentOverlap(studentId, startTime, endTime, date);
+                    if (!teacherOverlap && !studentOverlap) {
+                        LocalDateTime start = LocalDateTime.of(date, startTime);
+                        LocalDateTime end = LocalDateTime.of(date, endTime);
+                        AppointmentDAO.updateAppointment(
+                                id,
+                                title,
+                                description,
+                                location,
+                                start,
+                                end,
+                                teacherName,
+                                teacherId,
+                                studentName,
+                                studentId);
+
+                        Parent root;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                            String pageTitle = PageLoader.getAppointmentsTitle();
+                            PageLoader.pageLoad(stage, root, pageTitle);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        
+                    } else {
+                        Alerts.appointmentOverlap();
+                    }
+
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                } catch (NullPointerException exception) {
+                    Alerts.invalidFields();
+                }
+            }
+        };
+        
+        cancelBTN.setOnAction(clickCancelBtnHandler);
+            clearBTN.setOnAction(clickClearBtnHandler);
+        saveBTN.setOnAction(clickSaveBtnHandler);
     }    
     
     public void passAppointmentData(Appointment appointment) {

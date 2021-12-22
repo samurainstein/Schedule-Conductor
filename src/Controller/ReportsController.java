@@ -10,7 +10,7 @@ import DAO.InstrumentStudentDAO;
 import Model.Data;
 import Model.InstrumentStudent;
 import Utilities.DateAndTime;
-import Utilities.EventHandle;
+import Utilities.EventHandlerNavMenu;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -94,15 +94,15 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
-        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
-        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
-        studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
-        appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
-        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
-        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());        
+        homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
+        teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
+        studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
+        appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
+        logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());        
         
         locationCB.setItems(Data.getLocations());
         monthCB.setItems(DateAndTime.getAllMonths());
@@ -140,7 +140,6 @@ public class ReportsController implements Initializable {
                 }
             }
         };
-        studentsByInstTAB.setOnSelectionChanged(stdntByInstTab);
         
         EventHandler apptTotalsHandler = new EventHandler() {
             @Override
@@ -158,7 +157,6 @@ public class ReportsController implements Initializable {
                 }
             }
         };
-        runBTN.setOnAction(apptTotalsHandler);
         
         EventHandler studentsByInstHandler = new EventHandler() {
             @Override
@@ -173,6 +171,9 @@ public class ReportsController implements Initializable {
                 }
             }
         };
+        
+        studentsByInstTAB.setOnSelectionChanged(stdntByInstTab);
+        runBTN.setOnAction(apptTotalsHandler);
         runBTN2.setOnAction(studentsByInstHandler);
     }
 }

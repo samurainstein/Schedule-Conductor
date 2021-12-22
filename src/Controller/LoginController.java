@@ -7,15 +7,15 @@ package Controller;
 
 import DAO.InstrumentTeacherDAO;
 import Model.Data;
-//import Utilities.ActivityLog;
 import Utilities.Alerts;
-import Utilities.EventHandle;
+import Utilities.EventHandlerNavMenu;
 import Utilities.PageLoader;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -60,53 +61,57 @@ public class LoginController implements Initializable {
         pageTitle = PageLoader.getHomeTitle();
         zoneID = ZoneId.systemDefault();
         zoneIDLabel.setText("Location: " + zoneID.toString());
+
+        EventHandler<KeyEvent> pressEnterHandler = new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    String username = usernameTF.getText();
+                    String password = passwordTF.getText();
+                    int id = InstrumentTeacherDAO.teacherLogin(username, password);
+                    if (id == 0) {
+                        Alerts.loginInvalid();
+                    } else {
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        Data.setLoggedInTeacherID(id);
+                        pageTitle = PageLoader.getHomeTitle();
+                        stage = (Stage) ((Node) keyEvent.getTarget()).getScene().getWindow();
+                        PageLoader.pageLoad(stage, root, pageTitle);
+                    }
+                }
+            }
+        };
+
+        EventHandler<ActionEvent> clickLoginBtnHandler = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                String username = usernameTF.getText();
+                String password = passwordTF.getText();
+                int id = InstrumentTeacherDAO.teacherLogin(username, password);
+                if (id == 0) {
+                    Alerts.loginInvalid();
+                } else {
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    Data.setLoggedInTeacherID(id);
+                    pageTitle = PageLoader.getHomeTitle();
+                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    PageLoader.pageLoad(stage, root, pageTitle);
+                }
+            }
+
+        };
         
-        usernameTF.setOnKeyPressed(EventHandle.loginKeyEvent(usernameTF, passwordTF));
-        passwordTF.setOnKeyPressed(EventHandle.loginKeyEvent(usernameTF, passwordTF));
-        loginBT.setOnKeyPressed(EventHandle.loginKeyEvent(usernameTF, passwordTF));
-        loginBT.setOnAction(EventHandle.loginActionEvent(usernameTF, passwordTF));
+        usernameTF.setOnKeyPressed(pressEnterHandler);
+        passwordTF.setOnKeyPressed(pressEnterHandler);
+        loginBT.setOnKeyPressed(pressEnterHandler);
+        loginBT.setOnAction(clickLoginBtnHandler);
     }
     
-//    EventHandler<KeyEvent> keyPressHandler = new EventHandler<KeyEvent>() {
-//        public void handle(KeyEvent event) {
-//            if(event.getCode() == KeyCode.ENTER ) {
-//                String username = usernameTF.getText();
-//                String password = passwordTF.getText();
-//                int id = InstrumentTeacherDAO.teacherLogin(username, password);
-//                if (id == 0) {
-//                    Alerts.loginInvalid();
-//                } else {
-//                    try {
-//                        root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-//                    } catch (IOException ex) {
-//                        ex.printStackTrace();
-//                    }
-//                    Data.setLoggedInTeacherID(id);
-//                    stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
-//                    PageLoader.pageLoad(stage, root, pageTitle);
-//                }
-//            }
-//        }
-//    };
-    
-//    EventHandler<ActionEvent> actionEventHandler = new EventHandler<ActionEvent>() {
-//        public void handle(ActionEvent event) {
-//            String username = usernameTF.getText();
-//            String password = passwordTF.getText();
-//            int id = InstrumentTeacherDAO.teacherLogin(username, password);
-//            if (id == 0) {
-//                    Alerts.loginInvalid();
-//            } 
-//            else {
-//                try {
-//                    root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//                Data.setLoggedInTeacherID(id);
-//                stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
-//                PageLoader.pageLoad(stage, root, pageTitle);
-//            }
-//        }             
-//    };
 }

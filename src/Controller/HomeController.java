@@ -8,7 +8,7 @@ package Controller;
 import DAO.AppointmentDAO;
 import Model.Appointment;
 import Model.Data;
-import Utilities.EventHandle;
+import Utilities.EventHandlerNavMenu;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -76,15 +76,15 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        homeLBL.setOnMouseClicked(EventHandle.navHomeEvent());
-        teachersLBL.setOnMouseClicked(EventHandle.navTeachersEvent());
-        teacherAddLBL.setOnMouseClicked(EventHandle.navTeacherAddEvent());
-        studentsLBL.setOnMouseClicked(EventHandle.navStudentsEvent());
-        studentAddLBL.setOnMouseClicked(EventHandle.navStudentAddEvent());
-        appointmentsLBL.setOnMouseClicked(EventHandle.navAppointmentsEvent());
-        appointmentAddLBL.setOnMouseClicked(EventHandle.navAppointmentAddEvent());
-        reportsLBL.setOnMouseClicked(EventHandle.navReportsEvent());
-        logoutLabel.setOnMouseClicked(EventHandle.navLogoutEvent());
+        homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
+        teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
+        teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
+        studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
+        studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
+        appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
+        appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
+        reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
+        logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());
         
         loggedInTeacherId = Data.getLoggedInTeacherId();
         Data.clearAppointments();
