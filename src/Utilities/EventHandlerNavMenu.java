@@ -5,40 +5,11 @@
  */
 package Utilities;
 
-import DAO.AppointmentDAO;
-import DAO.DivisionDAO;
-import DAO.InstrumentStudentDAO;
-import DAO.InstrumentTeacherDAO;
-import Model.Appointment;
-import Model.Country;
-import Model.Data;
-import Model.Division;
-import Model.InstrumentStudent;
-import Model.InstrumentTeacher;
-import com.mysql.cj.util.StringUtils;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Optional;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
