@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -184,4 +186,69 @@ public abstract class InstrumentStudentDAO {
         }
     }
     
+    /**
+     * Select statement to get all of the different types of appointments in the
+     * appointments table.
+     *
+     */
+    public static void selectStudentInstruments() throws SQLException {
+        try {
+            Data.clearInstruments();
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "SELECT instrument from instrument_student;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                String instrument = resultSet.getString("instrument");
+                Data.addInstruments(instrument);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Select statement for all rows in the appointments table with a specified
+     * type, during a specific month.
+     *
+     * @param instrumentSearch Instrument to be searched
+     */
+    public static void selectStudentsByInstrument(String instrumentSearch) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        String sqlStatement = "SELECT * FROM instrument_student "
+                + "WHERE instrument = ?;";
+        DBQuery.setPreparedStatement(conn, sqlStatement);
+        PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+        preparedStatement.setString(1, instrumentSearch);
+        preparedStatement.execute();
+        ResultSet resultSet = preparedStatement.getResultSet();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            String country = resultSet.getString("country");
+            String division = resultSet.getString("division");
+            String postalCode = resultSet.getString("postal_code");
+            String address = resultSet.getString("address");
+            String phone = resultSet.getString("phone");
+            String instrument = resultSet.getString("instrument");
+            char availableOnline = resultSet.getString("available_online").charAt(0);
+            char availableInPerson = resultSet.getString("available_online").charAt(0);
+
+            InstrumentStudent student = new InstrumentStudent(
+                    id,
+                    name,
+                    country,
+                    division,
+                    postalCode,
+                    address,
+                    phone,
+                    instrument,
+                    availableOnline,
+                    availableInPerson);
+            Data.addInstrumentStudents(student);
+        }
+    }
 }
+    
