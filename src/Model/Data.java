@@ -35,6 +35,8 @@ public abstract class Data {
     private static ObservableList<LocalTime> appointmentTimes = FXCollections.observableArrayList();
     private static ObservableList<String> locations = FXCollections.observableArrayList();
     private static ObservableList<String> lengths = FXCollections.observableArrayList();
+    private static ObservableList<String> instruments = FXCollections.observableArrayList();
+    private static ObservableList<InstrumentStudent> instrumentStudents = FXCollections.observableArrayList();
     private static int loggedInTeacherId;
     
     /**
@@ -511,6 +513,52 @@ public abstract class Data {
             }
         }
         return studentObject;
+    }
+    
+    /**
+     * Method for returning a list of all instruments in the database. 
+     * @return Returns an observable list of all instruments
+     */
+    public static ObservableList<String> getAllInstruments() {
+        return instruments;
+    }
+    
+    /**
+     * Method for adding an instrument to the list of all instruments. 
+     * @param instrument Type of instrument to add
+     */
+    public static void addInstruments(String instrument) {
+        instruments.add(instrument);
+    }
+    
+    /**
+     * Method for clearing the list of all instruments. 
+     */
+    public static void clearInstruments() {
+        instruments.clear();
+    }
+    
+    /**
+     * Method for returning a list of all instrument students in the database. 
+     * @return Returns an observable list of all instrument students
+     */
+    public static ObservableList<InstrumentStudent> getInstrumentStudents() {
+        return instrumentStudents;
+    }
+    
+    /**
+     * Method for adding an instrument to the list of all instrument students. 
+     * @param instrumentStudent Type of instrument student to add
+     */
+    public static void addInstrumentStudents(InstrumentStudent instrumentStudent) {
+        instrumentStudents.add(instrumentStudent);
+    }
+    
+    /**
+     * Method for clearing the list of all instrument students. 
+     */
+    public static void clearInstrumentStudents() {
+        instrumentStudents.clear();
     }
     
 }
