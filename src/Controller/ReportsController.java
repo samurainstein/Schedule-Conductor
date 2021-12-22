@@ -6,27 +6,20 @@
 package Controller;
 
 import DAO.AppointmentDAO;
-import DAO.InstrumentTeacherDAO;
+import DAO.InstrumentStudentDAO;
 import Model.Data;
-import Utilities.Alerts;
+import Model.InstrumentStudent;
 import Utilities.DateAndTime;
 import Utilities.EventHandle;
-import Utilities.PageLoader;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -34,8 +27,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -63,66 +55,6 @@ public class ReportsController implements Initializable {
     @FXML
     private Label logoutLabel;
     @FXML
-    private Tab monthTab;
-    @FXML
-    private TableView<?> monthApptTable;
-    @FXML
-    private TableColumn<?, ?> monthIdCol;
-    @FXML
-    private TableColumn<?, ?> monthTitleCol;
-    @FXML
-    private TableColumn<?, ?> monthDescriptionCol;
-    @FXML
-    private TableColumn<?, ?> monthLocationCol;
-    @FXML
-    private TableColumn<?, ?> monthStartCol;
-    @FXML
-    private TableColumn<?, ?> monthEndCol;
-    @FXML
-    private TableColumn<?, ?> monthTeacherCol;
-    @FXML
-    private TableColumn<?, ?> monthStudentCol;
-    @FXML
-    private Tab weekTab;
-    @FXML
-    private TableView<?> weekApptTable;
-    @FXML
-    private TableColumn<?, ?> weekIdCol;
-    @FXML
-    private TableColumn<?, ?> weekTitleCol;
-    @FXML
-    private TableColumn<?, ?> weekDescriptionCol;
-    @FXML
-    private TableColumn<?, ?> weekLocationCol;
-    @FXML
-    private TableColumn<?, ?> weekStartCol;
-    @FXML
-    private TableColumn<?, ?> weekEndCol;
-    @FXML
-    private TableColumn<?, ?> weekTeacherCol;
-    @FXML
-    private TableColumn<?, ?> weekStudentCol;
-    @FXML
-    private Tab dayTab;
-    @FXML
-    private TableView<?> dayApptTable;
-    @FXML
-    private TableColumn<?, ?> dayIdCol;
-    @FXML
-    private TableColumn<?, ?> dayTitleCol;
-    @FXML
-    private TableColumn<?, ?> dayDescriptionCol;
-    @FXML
-    private TableColumn<?, ?> dayLocationCol;
-    @FXML
-    private TableColumn<?, ?> dayStartCol;
-    @FXML
-    private TableColumn<?, ?> dayEndCol;
-    @FXML
-    private TableColumn<?, ?> dayTeacherCol;
-    @FXML
-    private TableColumn<?, ?> dayStudentCol;
-    @FXML
     private TabPane reportsTabPane;
     @FXML
     private Tab apptTotals;
@@ -134,6 +66,28 @@ public class ReportsController implements Initializable {
     private Button runBTN;
     @FXML
     private Label totalNumLBL;
+    @FXML
+    private Tab studentsByInstTAB;
+    @FXML
+    private TableView<InstrumentStudent> studentsTable;
+    @FXML
+    private TableColumn<InstrumentStudent, Integer> idCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> nameCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> countryCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> divisionCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> instrumentCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> availableOnlineCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> availableInPersonCol;
+    @FXML
+    private ComboBox<String> instrumentCB;
+    @FXML
+    private Button runBTN2;
 
     /**
      * Initializes the controller class.
@@ -153,6 +107,41 @@ public class ReportsController implements Initializable {
         locationCB.setItems(Data.getLocations());
         monthCB.setItems(DateAndTime.getAllMonths());
         
+        idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
+        divisionCol.setCellValueFactory(new PropertyValueFactory<>("Division"));
+        instrumentCol.setCellValueFactory(new PropertyValueFactory<>("Instrument"));
+        availableOnlineCol.setCellValueFactory(new PropertyValueFactory<>("AvailableOnline"));
+        availableInPersonCol.setCellValueFactory(new PropertyValueFactory<>("AvailableInPerson"));
+        
+//        EventHandler apptTotals = new EventHandler() {
+//            @Override
+//            public void handle(Event arg0) {
+//                    locationCB.getItems().clear();
+//                    monthCB.getItems().clear();
+//                    locationCB.setItems(Data.getLocations());
+//                    monthCB.setItems(DateAndTime.getAllMonths());  
+//                    locationCB.setPromptText("Select a location");
+//                    monthCB.setPromptText("Select a month");
+//            }
+//        };
+//        studentsByInstTAB.setOnSelectionChanged(apptTotals);
+        
+        EventHandler stdntByInstTab = new EventHandler() {
+            @Override
+            public void handle(Event arg0) {
+                try {
+                    instrumentCB.setItems(Data.getAllInstruments());
+                    instrumentCB.setPromptText("Select and instrument");
+                    InstrumentStudentDAO.selectStudentInstruments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        studentsByInstTAB.setOnSelectionChanged(stdntByInstTab);
+        
         EventHandler apptTotalsHandler = new EventHandler() {
             @Override
             public void handle(Event arg0) {
@@ -170,6 +159,21 @@ public class ReportsController implements Initializable {
             }
         };
         runBTN.setOnAction(apptTotalsHandler);
+        
+        EventHandler studentsByInstHandler = new EventHandler() {
+            @Override
+            public void handle(Event arg0) {
+                studentsTable.getItems().clear();
+                try {
+                    String instrumentSearch = instrumentCB.getSelectionModel().getSelectedItem();
+                    InstrumentStudentDAO.selectStudentsByInstrument(instrumentSearch);
+                    studentsTable.setItems(Data.getInstrumentStudents());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        runBTN2.setOnAction(studentsByInstHandler);
     }
 }
 
