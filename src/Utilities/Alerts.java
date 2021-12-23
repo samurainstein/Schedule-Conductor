@@ -17,40 +17,6 @@ public abstract class Alerts {
     private static String alertTitle;
     
     /**
-     * Method for generating an alert to indicate an invalid login username or password. 
-     */
-    public static void loginInvalid() {
-        alertText = "Username or password is incorrect";
-        alertTitle = "Invalid username or password";
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(alertTitle);
-        alert.setContentText(alertText);
-        alert.showAndWait();
-    }
-    
-//    /**
-//     * Method for generating an alert to indicate an invalid appointment selection. 
-//     */
-//    public static void appointmentNullAlert() {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Invalid Selection");
-//        alert.setContentText("Please select an appointment");
-//        alert.showAndWait();
-//    }
-//    
-//    /**
-//     * Method for generating an alert to confirm that an appointment was deleted. 
-//     * @param appointmentID ID of appointment that was deleted
-//     * @param type Type of appointment that was deleted
-//     */
-//    public static void appointmentDeleteConfirm(int appointmentID, String type) {
-//        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
-//            confirmAlert.setTitle("Confirmation");
-//            confirmAlert.setContentText("Appointment was deleted\n" + "Appointment ID: " + appointmentID + "\n" + "Appointment Type: " + type);
-//            confirmAlert.showAndWait();
-//    }
-    
-    /**
      * Method for generating an alert to indicate that the entered appointment conflicts with another appointment. 
      */
     public static void appointmentOverlap() {
@@ -73,73 +39,7 @@ public abstract class Alerts {
         alert.setContentText(alertText);
         alert.showAndWait();
     }
-//    
-//    /**
-//     * Method for generating an alert to indicate an upcoming appointment in the next 15 minutes. 
-//     */
-//    public static void appointmentUpcomingAlert(Appointment appointment) {
-//        int appointmentID = appointment.getAppointmentID();
-//        LocalTime appointmentTime = appointment.getStart().toLocalTime();
-//        LocalDate appointmentDate = appointment.getStart().toLocalDate();
-//        String popupTitle = "Appointment Notification";
-//        String popupText = "You have an appointment in the next 15 minutes.\n" +
-//                            "Appointment ID: " + appointmentID + "\n" + 
-//                            "Date: " + appointmentDate + "\n" +
-//                            "Time: " + appointmentTime;
-//        Alert popup = new Alert(Alert.AlertType.INFORMATION);
-//        popup.setTitle(popupTitle);
-//        popup.setContentText(popupText);
-//        popup.showAndWait();
-//    }
-//    
-    /**
-     * Method for generating an alert to indicate an invalid teacher selection. 
-     */
-    public static void teacherDeleteNull() {
-        alertTitle = "Invalid Selection";
-        alertText = "Please select a teacher";
-        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
-        invalidAlert.setTitle(alertTitle);
-        invalidAlert.setContentText(alertText);
-        invalidAlert.showAndWait();
-    }
-    
-    /**
-     * Method for generating an alert to confirm that a teacher was deleted. 
-     */
-    public static void teacherDeleteConfirm() {
-        alertTitle = "Confirmation";
-        alertText = "Teacher was deleted";
-        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
-        confirmAlert.setTitle(alertTitle);
-        confirmAlert.setContentText(alertText);
-        confirmAlert.showAndWait();
-    }
-    
-     /**
-     * Method for generating an alert to indicate an invalid teacher selection. 
-     */
-    public static void studentDeleteNull() {
-        alertTitle = "Invalid Selection";
-        alertText = "Please select a student";
-        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
-        invalidAlert.setTitle(alertTitle);
-        invalidAlert.setContentText(alertText);
-        invalidAlert.showAndWait();
-    }
-    
-    /**
-     * Method for generating an alert to confirm that a teacher was deleted. 
-     */
-    public static void studentDeleteConfirm() {
-        alertTitle = "Confirmation";
-        alertText = "Student was deleted";
-        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
-        confirmAlert.setTitle(alertTitle);
-        confirmAlert.setContentText(alertText);
-        confirmAlert.showAndWait();
-    }
-    
+
     /**
      * Method for generating an alert to indicate an invalid country or division selection. 
      */
@@ -162,16 +62,5 @@ public abstract class Alerts {
         alert.setTitle(alertTitle);
         alert.setContentText(alertText);
         alert.showAndWait();
-    }
-    
-    /**
-     * Method for generating an alert to indicate an invalid appointment selection. 
-     */
-    public static void appointmentNullAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid Selection");
-        alert.setContentText("Please select an appointment");
-        alert.showAndWait();
-    }
-    
+    }    
 }

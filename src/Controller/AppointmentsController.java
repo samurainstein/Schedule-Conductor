@@ -282,7 +282,7 @@ public class AppointmentsController implements Initializable {
                     if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
                         if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
                             if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
-                                Alerts.appointmentNullAlert();
+                                alertNull();
                             } else {
                                 currentTable = dayApptTable;
                             }
@@ -305,7 +305,7 @@ public class AppointmentsController implements Initializable {
                         ex.printStackTrace();
                     }
                 } catch (NullPointerException exception) {
-                    Alerts.appointmentNullAlert();
+                    alertNull();
                 }
             }
         };
@@ -317,7 +317,7 @@ public class AppointmentsController implements Initializable {
                     if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
                         if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
                             if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
-                                Alerts.appointmentNullAlert();
+                                alertNull();
                             } else {
                                 currentTable = dayApptTable;
                             }
@@ -369,6 +369,17 @@ public class AppointmentsController implements Initializable {
         addBTN.setOnAction(clickAddBtnHandler);
         deleteBTN.setOnAction(clickDeleteBtnHandler);
         updateBTN.setOnAction(clickUpdateBtnHandler);
-    }    
+    }
+
+    /**
+     * Method for generating an alert to indicate an invalid appointment
+     * selection.
+     */
+    public static void alertNull() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Selection");
+        alert.setContentText("Please select an appointment");
+        alert.showAndWait();
+    }
     
 }

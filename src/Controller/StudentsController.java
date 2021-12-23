@@ -145,7 +145,7 @@ public class StudentsController implements Initializable {
                         ex.printStackTrace();
                     }
                 } catch (NullPointerException exception) {
-                    Alerts.teacherDeleteNull();
+                    alertNull();
                 }
             }
         };
@@ -172,11 +172,11 @@ public class StudentsController implements Initializable {
                             InstrumentStudentDAO.deleteStudent(id);
                             InstrumentStudentDAO.selectStudents();
                             studentsTable.setItems(Data.getAllStudents());
-                            Alerts.studentDeleteConfirm();
+                            alertDeleteConfirm();
                         }
                     }
                 } catch (NullPointerException exception) {
-                    Alerts.studentDeleteNull();
+                    alertNull();
                 }
             }
         };
@@ -184,5 +184,29 @@ public class StudentsController implements Initializable {
         addBTN.setOnAction(clickAddBtnHandler);
         updateBTN.setOnAction(clickUpdateBtnHandler);
         deleteBTN.setOnAction(clickDeleteBtnHandler);
+    }
+    
+    /**
+     * Method for generating an alert to indicate an invalid teacher selection. 
+     */
+    public static void alertNull() {
+        String alertTitle = "Invalid Selection";
+        String alertText = "Please select a student";
+        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
+        invalidAlert.setTitle(alertTitle);
+        invalidAlert.setContentText(alertText);
+        invalidAlert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to confirm that a teacher was deleted. 
+     */
+    public static void alertDeleteConfirm() {
+        String alertTitle = "Confirmation";
+        String alertText = "Student was deleted";
+        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle(alertTitle);
+        confirmAlert.setContentText(alertText);
+        confirmAlert.showAndWait();
     }
 }

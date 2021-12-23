@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -70,7 +71,7 @@ public class LoginController implements Initializable {
                     String password = passwordTF.getText();
                     int id = InstrumentTeacherDAO.teacherLogin(username, password);
                     if (id == 0) {
-                        Alerts.loginInvalid();
+                        alertInvalidLogin();
                     } else {
                         try {
                             root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
@@ -92,7 +93,7 @@ public class LoginController implements Initializable {
                 String password = passwordTF.getText();
                 int id = InstrumentTeacherDAO.teacherLogin(username, password);
                 if (id == 0) {
-                    Alerts.loginInvalid();
+                    alertInvalidLogin();
                 } else {
                     try {
                         root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
@@ -114,4 +115,15 @@ public class LoginController implements Initializable {
         loginBT.setOnAction(clickLoginBtnHandler);
     }
     
+    /**
+     * Method for generating an alert to indicate an invalid login username or password. 
+     */
+    public static void alertInvalidLogin() {
+        String alertText = "Username or password is incorrect";
+        String alertTitle = "Invalid username or password";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(alertTitle);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
 }

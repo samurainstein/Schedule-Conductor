@@ -156,11 +156,11 @@ public class TeachersController implements Initializable {
                             InstrumentTeacherDAO.deleteTeacher(id);
                             InstrumentTeacherDAO.selectTeachers();
                             teachersTable.setItems(Data.getAllTeachers());
-                            Alerts.teacherDeleteConfirm();
+                            alertDeleteConfirm();
                         }
                     }
                 } catch (NullPointerException exception) {
-                    Alerts.teacherDeleteNull();
+                    alertNull();
                 }
             }
         };
@@ -177,7 +177,7 @@ public class TeachersController implements Initializable {
                         ex.printStackTrace();
                     }
                 } catch (NullPointerException exception) {
-                    Alerts.teacherDeleteNull();
+                    alertNull();
                 }
             }
         };
@@ -187,4 +187,27 @@ public class TeachersController implements Initializable {
         deleteBTN.setOnAction(clickDeleteBtnHandler);
     }
 
+    /**
+     * Method for generating an alert to indicate an invalid teacher selection. 
+     */
+    public static void alertNull() {
+        String alertTitle = "Invalid Selection";
+        String alertText = "Please select a teacher";
+        Alert invalidAlert = new Alert(Alert.AlertType.ERROR);
+        invalidAlert.setTitle(alertTitle);
+        invalidAlert.setContentText(alertText);
+        invalidAlert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to confirm that a teacher was deleted. 
+     */
+    public static void alertDeleteConfirm() {
+        String alertTitle = "Confirmation";
+        String alertText = "Teacher was deleted";
+        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle(alertTitle);
+        confirmAlert.setContentText(alertText);
+        confirmAlert.showAndWait();
+    }
 }
