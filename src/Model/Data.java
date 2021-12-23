@@ -136,6 +136,13 @@ public abstract class Data {
     }
     
     /**
+     * Method for clearing the list of all divisions. 
+     */
+    public static void clearDivisions() {
+        allDivisions.clear();
+    }
+    
+    /**
      * Method for returning a list of country specific divisions. 
      * @return Returns an observable list of country specific divisions
      */
@@ -156,13 +163,6 @@ public abstract class Data {
      */
     public static void clearFilteredDivisions() { 
         filteredDivisions.clear();
-    }
-    
-    /**
-     * Method for clearing the list of all divisions. 
-     */
-    public static void clearDivisions() {
-        allDivisions.clear();
     }
     
     public static ObservableList<Appointment> getAllAppointments() {
