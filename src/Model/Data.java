@@ -614,4 +614,33 @@ public abstract class Data {
         return null;  
     }
     
+    /**Method for looking up a student in the instrument_student table by a string. 
+     * @param partialName A string passed from search the field
+     * @return Returns any found teachers, or null
+     */
+    public static ObservableList<InstrumentStudent> lookupStudent(String partialName) {
+        ObservableList<InstrumentStudent> studentName = FXCollections.observableArrayList();
+        for(InstrumentStudent studentSearch : getAllStudents()) {
+            if(studentSearch.getName().toLowerCase().contains(partialName)) {
+                studentName.add(studentSearch);
+            }
+        } 
+        return studentName;
+    }
+    
+    /**Method for looking up a student in the instrument_student table by student ID. 
+     * @param studentId A student ID passed from search field
+     * @return Returns a found student or null
+     */
+    public static InstrumentStudent lookupStudent(Integer studentId) {
+        ObservableList<InstrumentStudent> allStudents = getAllStudents();
+        for(int i = 0; i < allStudents.size(); i++) {
+            InstrumentStudent studentCompare = allStudents.get(i);
+            if(studentCompare.getId() == studentId) {
+                return studentCompare;
+            }
+        }
+        return null;  
+    }
+    
 }
