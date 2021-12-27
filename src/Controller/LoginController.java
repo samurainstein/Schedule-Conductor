@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -41,8 +42,6 @@ public class LoginController implements Initializable {
     @FXML
     private TextField usernameTF;
     @FXML
-    private TextField passwordTF;
-    @FXML
     private Button loginBT;
     @FXML
     private Label zoneIDLabel;
@@ -51,6 +50,8 @@ public class LoginController implements Initializable {
     private String pageTitle;
     private ZoneId zoneID;
     private Stage stage;
+    @FXML
+    private PasswordField passwordFld;
 
     /**
      * Initializes the controller class.
@@ -68,7 +69,7 @@ public class LoginController implements Initializable {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     String username = usernameTF.getText();
-                    String password = passwordTF.getText();
+                    String password = passwordFld.getText();
                     int id = InstrumentTeacherDAO.teacherLogin(username, password);
                     if (id == 0) {
                         alertInvalidLogin();
@@ -90,7 +91,7 @@ public class LoginController implements Initializable {
         EventHandler<ActionEvent> clickLoginBtnHandler = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 String username = usernameTF.getText();
-                String password = passwordTF.getText();
+                String password = passwordFld.getText();
                 int id = InstrumentTeacherDAO.teacherLogin(username, password);
                 if (id == 0) {
                     alertInvalidLogin();
@@ -110,7 +111,7 @@ public class LoginController implements Initializable {
         };
         
         usernameTF.setOnKeyPressed(pressEnterHandler);
-        passwordTF.setOnKeyPressed(pressEnterHandler);
+        passwordFld.setOnKeyPressed(pressEnterHandler);
         loginBT.setOnKeyPressed(pressEnterHandler);
         loginBT.setOnAction(clickLoginBtnHandler);
     }
