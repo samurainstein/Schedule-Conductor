@@ -7,8 +7,11 @@ package Controller;
 
 import DAO.AppointmentDAO;
 import DAO.InstrumentStudentDAO;
+import DAO.InstrumentTeacherDAO;
+import Model.Appointment;
 import Model.Data;
 import Model.InstrumentStudent;
+import Model.InstrumentTeacher;
 import Utilities.DateAndTime;
 import Utilities.EventHandlerNavMenu;
 import java.net.URL;
@@ -79,6 +82,12 @@ public class ReportsController implements Initializable {
     @FXML
     private TableColumn<InstrumentStudent, String> divisionCol;
     @FXML
+    private TableColumn<InstrumentStudent, String> postalCodeCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> addressCol;
+    @FXML
+    private TableColumn<InstrumentStudent, String> phoneCol;
+    @FXML
     private TableColumn<InstrumentStudent, String> instrumentCol;
     @FXML
     private TableColumn<InstrumentStudent, String> availableOnlineCol;
@@ -88,6 +97,30 @@ public class ReportsController implements Initializable {
     private ComboBox<String> instrumentCB;
     @FXML
     private Button runBTN2;
+    @FXML
+    private Tab teachApptTAB;
+    @FXML
+    private TableView<Appointment> allApptTable;
+    @FXML
+    private TableColumn<Appointment, Integer> allIdCol;
+    @FXML
+    private TableColumn<Appointment, String> allTitleCol;
+    @FXML
+    private TableColumn<Appointment, String> allDescriptionCol;
+    @FXML
+    private TableColumn<Appointment, String> allLocationCol;
+    @FXML
+    private TableColumn<Appointment, LocalDateTime> allStartCol;
+    @FXML
+    private TableColumn<Appointment, LocalDateTime> allEndCol;
+    @FXML
+    private TableColumn<Appointment, String> allTeacherCol;
+    @FXML
+    private TableColumn<Appointment, String> allStudentCol;
+    @FXML
+    private ComboBox<InstrumentTeacher> teacherCB;
+    @FXML
+    private Button runBTN3;
 
     /**
      * Initializes the controller class.
@@ -111,9 +144,21 @@ public class ReportsController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
         divisionCol.setCellValueFactory(new PropertyValueFactory<>("Division"));
+        postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("PostalCode"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
         instrumentCol.setCellValueFactory(new PropertyValueFactory<>("Instrument"));
         availableOnlineCol.setCellValueFactory(new PropertyValueFactory<>("AvailableOnline"));
         availableInPersonCol.setCellValueFactory(new PropertyValueFactory<>("AvailableInPerson"));
+        
+        allIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        allTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        allDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        allLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        allStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));          
+        allEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        allTeacherCol.setCellValueFactory(new PropertyValueFactory<>("teacherName"));
+        allStudentCol.setCellValueFactory(new PropertyValueFactory<>("studentName"));
         
 //        EventHandler apptTotals = new EventHandler() {
 //            @Override
@@ -133,11 +178,20 @@ public class ReportsController implements Initializable {
             public void handle(Event arg0) {
                 try {
                     instrumentCB.setItems(Data.getAllInstruments());
-                    instrumentCB.setPromptText("Select and instrument");
+                    instrumentCB.setPromptText("Select an instrument");
                     InstrumentStudentDAO.selectStudentInstruments();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+            }
+        };
+        
+        EventHandler apptsByTeacherTab = new EventHandler() {
+            @Override
+            public void handle(Event arg0) {
+                InstrumentTeacherDAO.selectTeachers();
+                teacherCB.setItems(Data.getAllTeachers());
+                teacherCB.setPromptText("Select a teacher");
             }
         };
         
@@ -172,9 +226,21 @@ public class ReportsController implements Initializable {
             }
         };
         
+        EventHandler teacherAppointmentsHandler = new EventHandler() {
+            @Override
+            public void handle(Event arg0) {
+                allApptTable.getItems().clear();
+                int teacherIdSearch = teacherCB.getSelectionModel().getSelectedItem().getId();
+                AppointmentDAO.selectAppointmentsByTeacher(teacherIdSearch);
+                allApptTable.setItems(Data.getAppointmentsByTeacher());
+            }
+        };
+        
         studentsByInstTAB.setOnSelectionChanged(stdntByInstTab);
+        teachApptTAB.setOnSelectionChanged(apptsByTeacherTab);
         runBTN.setOnAction(apptTotalsHandler);
         runBTN2.setOnAction(studentsByInstHandler);
+        runBTN3.setOnAction(teacherAppointmentsHandler);
     }
 }
 
