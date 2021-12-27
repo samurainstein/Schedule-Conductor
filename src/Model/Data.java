@@ -31,6 +31,7 @@ public abstract class Data {
     private static ObservableList<Appointment> dailyAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> teacherAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> studentAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> appointmentsByTeacher = FXCollections.observableArrayList();
     private static ObservableList<ZonedDateTime> zonedAppointmentTimes = FXCollections.observableArrayList();
     private static ObservableList<LocalTime> appointmentTimes = FXCollections.observableArrayList();
     private static ObservableList<String> locations = FXCollections.observableArrayList();
@@ -559,6 +560,29 @@ public abstract class Data {
      */
     public static void clearInstrumentStudents() {
         instrumentStudents.clear();
+    }
+    
+    /**
+     * Method for returning a list of appointments with a specific contact. 
+     * @return Returns an observable list of contact specific appointments
+     */
+    public static ObservableList<Appointment> getAppointmentsByTeacher() {
+        return appointmentsByTeacher;
+    }
+    
+    /**
+     * Method for adding an appointment to the list of contact specific appointments. 
+     * @param appointment Appointment to be added
+     */
+    public static void addAppointmentByTeacher(Appointment appointment) {
+        appointmentsByTeacher.add(appointment);
+    }
+    
+    /**
+     * Method for clearing the list of contact specific appointments. 
+     */
+    public static void clearAppointmentsByTeacher() {
+        appointmentsByTeacher.clear();
     }
     
 }
