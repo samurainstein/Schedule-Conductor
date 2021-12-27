@@ -8,6 +8,7 @@ package Model;
 import DAO.InstrumentStudentDAO;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import javafx.collections.FXCollections;
@@ -299,8 +300,9 @@ public abstract class Data {
      * @return Returns an observable list of appointments
      */
     public static ObservableList<Appointment> getTeacherAppointments(int teacherId) {
+        LocalDateTime now = LocalDateTime.now();
         for(Appointment appointment : allAppointments) {
-            if(appointment.getTeacherId() == teacherId)
+            if(appointment.getTeacherId() == teacherId && appointment.getStart().isAfter(now))
                 teacherAppointments.add(appointment);
         }
         return teacherAppointments;
