@@ -44,7 +44,7 @@
    <center>
       <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
          <children>
-            <TabPane fx:id="reportsTabPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="600.0">
+            <TabPane fx:id="reportsTabPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
                <tabs>
                   <Tab fx:id="apptTotals" text="Appointment Totals">
                      <content>
@@ -66,17 +66,20 @@
                       <content>
                         <VBox>
                            <children>
-                                <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                                    <columns>
-                                        <TableColumn fx:id="idCol" prefWidth="30.5" text="ID" />
-                                        <TableColumn fx:id="nameCol" prefWidth="132.0" text="Name" />
-                                        <TableColumn fx:id="countryCol" prefWidth="114.5" text="Country" />
-                                        <TableColumn fx:id="divisionCol" prefWidth="109.0" text="Division" />
-                                        <TableColumn fx:id="instrumentCol" prefWidth="93.0" text="Instrument" />
-                                        <TableColumn fx:id="availableOnlineCol" prefWidth="52.0" text="Online" />
-                                        <TableColumn fx:id="availableInPersonCol" prefWidth="68.0" text="In Person" />
-                                    </columns>
-                                </TableView>
+                               <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                   <columns>
+                                       <TableColumn fx:id="idCol" prefWidth="50.0" text="ID" />
+                                       <TableColumn fx:id="nameCol" prefWidth="125.0" text="Name" />
+                                       <TableColumn fx:id="countryCol" prefWidth="100.0" text="Country" />
+                                       <TableColumn fx:id="divisionCol" prefWidth="139.42849731445312" text="Division" />
+                                       <TableColumn fx:id="postalCodeCol" prefWidth="81.14288330078125" text="Postal Code" />
+                                       <TableColumn fx:id="addressCol" prefWidth="133.14288330078125" text="Address" />
+                                       <TableColumn fx:id="phoneCol" prefWidth="97.142822265625" text="Phone" />
+                                       <TableColumn fx:id="instrumentCol" prefWidth="117.71429443359375" text="Instrument" />
+                                       <TableColumn fx:id="availableOnlineCol" prefWidth="63.4285888671875" text="Online" />
+                                       <TableColumn fx:id="availableInPersonCol" prefWidth="69.7142333984375" text="In Person" />
+                                   </columns>
+                               </TableView>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" styleClass="h-box">
                                  <children>
                                     <ComboBox fx:id="instrumentCB" prefWidth="150.0" />
@@ -92,6 +95,35 @@
                            </children>
                         </VBox>
                     </content>                     
+                  </Tab>
+                  <Tab fx:id="teachApptTAB" text="Teacher Appointments">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                               <TableView fx:id="allApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                   <columns>
+                                       <TableColumn fx:id="allIdCol" prefWidth="40.57141167776922" text="ID" />
+                                       <TableColumn fx:id="allTitleCol" prefWidth="109.71430587768555" text="Title" />
+                                       <TableColumn fx:id="allDescriptionCol" prefWidth="183.4285430908203" text="Description" />
+                                       <TableColumn fx:id="allLocationCol" prefWidth="116.0" text="Location" />
+                                       <TableColumn fx:id="allStartCol" prefWidth="111.99996948242188" text="Start" />
+                                       <TableColumn fx:id="allEndCol" prefWidth="120.0" text="End" />
+                                       <TableColumn fx:id="allTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
+                                       <TableColumn fx:id="allStudentCol" prefWidth="135.4285888671875" text="Student" />
+                                   </columns>
+                               </TableView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" styleClass="h-box">
+                                 <children>
+                                    <ComboBox fx:id="teacherCB" prefWidth="150.0" />
+                                    <Button fx:id="runBTN3" mnemonicParsing="false" text="Run" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
                   </Tab>
                </tabs>
             </TabPane>
