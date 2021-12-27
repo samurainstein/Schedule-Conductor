@@ -200,4 +200,45 @@ public abstract class AppointmentDAO {
         }
         return count;
     }
+    
+    /**
+     * Select statement for all rows in the appointments table with a certain teacher ID associated with them.
+     * @param teacherIdSearch Teacher ID to be searched for
+     */
+    public static void selectAppointmentsByTeacher(int teacherIdSearch) {
+        try {
+            Data.clearAppointmentsByTeacher();
+            Connection conn = DBConnection.getConnection();
+            String sqlStatement = "SELECT * FROM appointments " +
+                                "WHERE Teacher_ID = ? " +
+                                "ORDER BY Start;";
+            DBQuery.setPreparedStatement(conn, sqlStatement);
+            PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+            preparedStatement.setInt(1, teacherIdSearch);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()) {
+                int appointmentID = resultSet.getInt("Appointment_ID");
+                String title = resultSet.getString("Title");
+                String description = resultSet.getString("Description");
+                String location = resultSet.getString("Location");
+                Timestamp startTimestamp = resultSet.getTimestamp("Start");
+                LocalDateTime start = startTimestamp.toLocalDateTime();
+                Timestamp endTimestamp = resultSet.getTimestamp("End");
+                LocalDateTime end = endTimestamp.toLocalDateTime();
+                String teacherName = resultSet.getString("Teacher");
+                int teacherId = resultSet.getInt("Teacher_ID");
+                String studentName = resultSet.getString("Student");
+                int studentId = resultSet.getInt("Student_ID");                
+
+                Appointment appointment = new Appointment(appointmentID, title, description, 
+                            location, start, end, teacherName, teacherId, studentName, studentId);
+
+                Data.addAppointmentByTeacher(appointment);
+            }
+        }
+        catch(SQLException exception) {
+                exception.printStackTrace();
+        }
+    }
 }
