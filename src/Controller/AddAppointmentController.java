@@ -104,6 +104,7 @@ public class AddAppointmentController implements Initializable {
         studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
+        appointmentAddLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
         reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
         logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());

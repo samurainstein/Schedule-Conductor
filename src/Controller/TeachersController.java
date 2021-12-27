@@ -105,6 +105,7 @@ public class TeachersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
+        teachersLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
         studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());

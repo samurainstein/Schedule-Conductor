@@ -163,6 +163,7 @@ public class AppointmentsController implements Initializable {
         teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
         studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
+        appointmentsLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
         appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
         reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());

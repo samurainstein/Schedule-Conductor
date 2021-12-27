@@ -109,6 +109,7 @@ public class AddTeacherController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
+        teacherAddLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
         studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());

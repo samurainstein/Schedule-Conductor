@@ -5,10 +5,12 @@
  */
 package Controller;
 
+import static Controller.TeachersController.alertNoResults;
 import DAO.AppointmentDAO;
 import DAO.InstrumentStudentDAO;
 import Model.Data;
 import Model.InstrumentStudent;
+import Model.InstrumentTeacher;
 import Utilities.Alerts;
 import Utilities.EventHandlerNavMenu;
 import Utilities.PageLoader;
@@ -17,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,7 +33,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -90,6 +96,8 @@ public class StudentsController implements Initializable {
     private Parent root;
     private String pageTitle;
     private Stage stage;
+    @FXML
+    private TextField searchTxf;
 
     /**
      * Initializes the controller class.
@@ -99,6 +107,7 @@ public class StudentsController implements Initializable {
         homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
+        studentsLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
         studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
@@ -180,7 +189,30 @@ public class StudentsController implements Initializable {
                 }
             }
         };
+        
+        EventHandler<KeyEvent> searchFieldHandler = new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    String searchText = searchTxf.getText().toLowerCase();
+                    ObservableList<InstrumentStudent> studentSearch = Data.lookupStudent(searchText);
+                    studentsTable.setItems(studentSearch);
 
+                    if (studentSearch.isEmpty()) {
+                        try {
+                            int studentId = Integer.parseInt(searchText);
+                            InstrumentStudent studentIdSearch = Data.lookupStudent(studentId);
+                            if (studentIdSearch != null) {
+                                studentSearch.add(studentIdSearch);
+                            }
+                        } catch (NumberFormatException exception) {
+                            alertNoResults();
+                        }
+                    }
+                }
+            }
+        };
+
+        searchTxf.setOnKeyPressed(searchFieldHandler);
         addBTN.setOnAction(clickAddBtnHandler);
         updateBTN.setOnAction(clickUpdateBtnHandler);
         deleteBTN.setOnAction(clickDeleteBtnHandler);
@@ -204,6 +236,18 @@ public class StudentsController implements Initializable {
     public static void alertDeleteConfirm() {
         String alertTitle = "Confirmation";
         String alertText = "Student was deleted";
+        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle(alertTitle);
+        confirmAlert.setContentText(alertText);
+        confirmAlert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to notify no results found. 
+     */
+    public static void alertNoResults() {
+        String alertTitle = "Search";
+        String alertText = "No results found";
         Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmAlert.setTitle(alertTitle);
         confirmAlert.setContentText(alertText);

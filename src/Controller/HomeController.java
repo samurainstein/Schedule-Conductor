@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
 
 /**
  * FXML Controller class
@@ -76,6 +77,7 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        homeLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         homeLBL.setOnMouseClicked(EventHandlerNavMenu.navHomeEvent());
         teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());

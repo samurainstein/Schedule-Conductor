@@ -107,6 +107,7 @@ public class AddStudentController implements Initializable {
         teachersLBL.setOnMouseClicked(EventHandlerNavMenu.navTeachersEvent());
         teacherAddLBL.setOnMouseClicked(EventHandlerNavMenu.navTeacherAddEvent());
         studentsLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentsEvent());
+        studentAddLBL.setStyle("-fx-background-color: derive(#939DAD, 70%);");
         studentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navStudentAddEvent());
         appointmentsLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentsEvent());
         appointmentAddLBL.setOnMouseClicked(EventHandlerNavMenu.navAppointmentAddEvent());
