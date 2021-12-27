@@ -585,4 +585,33 @@ public abstract class Data {
         appointmentsByTeacher.clear();
     }
     
+    /**Method for looking up a teacher in the instrument_teacher table by a string. 
+     * @param partialName A string passed from search the field
+     * @return Returns any found teachers, or null
+     */
+    public static ObservableList<InstrumentTeacher> lookupTeacher(String partialName) {
+        ObservableList<InstrumentTeacher> teacherName = FXCollections.observableArrayList();
+        for(InstrumentTeacher teacherSearch : getAllTeachers()) {
+            if(teacherSearch.getName().toLowerCase().contains(partialName)) {
+                teacherName.add(teacherSearch);
+            }
+        } 
+        return teacherName;
+    }
+    
+    /**Method for looking up a teacher in the instrument_teacher table by teacher ID. 
+     * @param teacherId A teacher ID passed from search field
+     * @return Returns a found teacher or null
+     */
+    public static InstrumentTeacher lookupTeacher(Integer teacherId) {
+        ObservableList<InstrumentTeacher> allTeachers = getAllTeachers();
+        for(int i = 0; i < allTeachers.size(); i++) {
+            InstrumentTeacher teacherCompare = allTeachers.get(i);
+            if(teacherCompare.getId() == teacherId) {
+                return teacherCompare;
+            }
+        }
+        return null;  
+    }
+    
 }
