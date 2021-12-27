@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -41,30 +42,46 @@
    <center>
       <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-              <columns>
-                  <TableColumn fx:id="idCol" prefWidth="50.0" text="ID" />
-                  <TableColumn fx:id="nameCol" prefWidth="125.0" text="Name" />
-                  <TableColumn fx:id="countryCol" prefWidth="100.0" text="Country" />
-                  <TableColumn fx:id="divisionCol" prefWidth="139.42849731445312" text="Division" />
-                  <TableColumn fx:id="postalCodeCol" prefWidth="81.14288330078125" text="Postal Code" />
-                  <TableColumn fx:id="addressCol" prefWidth="133.14288330078125" text="Address" />
-                  <TableColumn fx:id="phoneCol" prefWidth="97.142822265625" text="Phone" />
-                  <TableColumn fx:id="instrumentCol" prefWidth="117.71429443359375" text="Instrument" />
-                  <TableColumn fx:id="availableOnlineCol" prefWidth="63.4285888671875" text="Online" />
-                  <TableColumn fx:id="availableInPersonCol" prefWidth="69.7142333984375" text="In Person" />
-              </columns>
-            </TableView>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="975.0" spacing="100.0" StackPane.alignment="BOTTOM_CENTER">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="addBTN" mnemonicParsing="false" text="Add" />
-                  <Button fx:id="updateBTN" mnemonicParsing="false" text="Update" />
-                  <Button fx:id="deleteBTN" mnemonicParsing="false" text="Delete" />
+                  <HBox alignment="BOTTOM_RIGHT" maxWidth="-Infinity" prefHeight="100.0" prefWidth="975.0">
+                     <children>
+                        <TextField fx:id="searchTxf" promptText="Search by name or ID">
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="studentsTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                    <columns>
+                        <TableColumn fx:id="idCol" prefWidth="50.0" text="ID" />
+                        <TableColumn fx:id="nameCol" prefWidth="125.0" text="Name" />
+                        <TableColumn fx:id="countryCol" prefWidth="100.0" text="Country" />
+                        <TableColumn fx:id="divisionCol" prefWidth="139.42849731445312" text="Division" />
+                        <TableColumn fx:id="postalCodeCol" prefWidth="81.14288330078125" text="Postal Code" />
+                        <TableColumn fx:id="addressCol" prefWidth="133.14288330078125" text="Address" />
+                        <TableColumn fx:id="phoneCol" prefWidth="97.142822265625" text="Phone" />
+                        <TableColumn fx:id="instrumentCol" prefWidth="117.71429443359375" text="Instrument" />
+                        <TableColumn fx:id="availableOnlineCol" prefWidth="63.4285888671875" text="Online" />
+                        <TableColumn fx:id="availableInPersonCol" prefWidth="69.7142333984375" text="In Person" />
+                    </columns>
+                  </TableView>
+                  <HBox alignment="CENTER" maxWidth="-Infinity" prefWidth="975.0" spacing="100.0">
+                     <children>
+                        <Button fx:id="addBTN" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="updateBTN" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="deleteBTN" mnemonicParsing="false" text="Delete" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </HBox>
                </children>
-               <StackPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </StackPane.margin>
-            </HBox>
+            </VBox>
          </children>
       </StackPane>
    </center>

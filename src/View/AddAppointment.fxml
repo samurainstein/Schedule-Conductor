@@ -43,68 +43,72 @@
    <center>
       <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
          <children>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" styleClass="add_update_vbox">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" styleClass="add_update_vbox">
                      <children>
-                        <Label styleClass="add_update-label" text="Title" />
-                        <TextField fx:id="titleTF" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Title" />
+                              <TextField fx:id="titleTF" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="11.0" layoutY="11.0" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Description" />
+                              <TextArea fx:id="descriptionTA" prefHeight="150.0" prefWidth="220.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="11.0" layoutY="111.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Location" />
+                              <ComboBox fx:id="locationCB" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="11.0" layoutY="211.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Date" />
+                              <DatePicker fx:id="dateDP" prefWidth="220.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Time" />
+                              <ComboBox fx:id="timeCB" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="50.0" layoutY="248.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Length" />
+                              <ComboBox fx:id="lengthCB" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="11.0" layoutY="409.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Teacher" />
+                              <ComboBox fx:id="teacherCB" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="11.0" layoutY="426.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="add_update-label" text="Student" />
+                              <ComboBox fx:id="studentCB" prefWidth="150.0" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="11.0" layoutY="11.0" prefHeight="150.0" prefWidth="200.0">
+                  </VBox>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="600.0" spacing="100.0">
                      <children>
-                        <Label styleClass="add_update-label" text="Description" />
-                        <TextArea fx:id="descriptionTA" prefHeight="150.0" prefWidth="220.0" />
+                        <Button fx:id="saveBTN" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="clearBTN" mnemonicParsing="false" text="Clear" />
+                        <Button fx:id="cancelBTN" mnemonicParsing="false" text="Cancel" />
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="11.0" layoutY="111.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label styleClass="add_update-label" text="Location" />
-                        <ComboBox fx:id="locationCB" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="11.0" layoutY="211.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label styleClass="add_update-label" text="Date" />
-                        <DatePicker fx:id="dateDP" prefWidth="220.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label styleClass="add_update-label" text="Time" />
-                        <ComboBox fx:id="timeCB" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="50.0" layoutY="248.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label styleClass="add_update-label" text="Length" />
-                        <ComboBox fx:id="lengthCB" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="11.0" layoutY="409.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label styleClass="add_update-label" text="Teacher" />
-                        <ComboBox fx:id="teacherCB" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="11.0" layoutY="426.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label styleClass="add_update-label" text="Student" />
-                        <ComboBox fx:id="studentCB" prefWidth="150.0" />
-                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="975.0" spacing="100.0" StackPane.alignment="BOTTOM_CENTER">
-               <children>
-                  <Button fx:id="saveBTN" mnemonicParsing="false" text="Save" />
-                  <Button fx:id="clearBTN" mnemonicParsing="false" text="Clear" />
-                  <Button fx:id="cancelBTN" mnemonicParsing="false" text="Cancel" />
-               </children>
-               <StackPane.margin>
-                  <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
-               </StackPane.margin>
-            </HBox>
          </children>
       </StackPane>
    </center>

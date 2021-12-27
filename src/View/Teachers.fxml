@@ -67,12 +67,18 @@
                         <TableColumn fx:id="availableInPersonCol" prefWidth="69.7142333984375" text="In Person" />
                     </columns>
                   </TableView>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="975.0" spacing="100.0">
+                  <HBox alignment="CENTER" maxWidth="-Infinity" prefWidth="975.0" spacing="100.0">
                      <children>
                         <Button fx:id="addBTN" mnemonicParsing="false" text="Add" />
                         <Button fx:id="updateBTN" mnemonicParsing="false" text="Update" />
                         <Button fx:id="deleteBTN" mnemonicParsing="false" text="Delete" />
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
                   </HBox>
                </children>
             </VBox>

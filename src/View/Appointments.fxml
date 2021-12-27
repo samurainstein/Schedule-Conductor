@@ -43,84 +43,91 @@
    <center>
       <StackPane styleClass="border-pane-center" BorderPane.alignment="CENTER">
          <children>
-            <TabPane fx:id="appointmentsTabPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-               <tabs>
-                  <Tab fx:id="allTab" text="All Appointments">
-                     <content>
-                        <TableView fx:id="allApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                          <columns>
-                              <TableColumn fx:id="allIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="allTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="allDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="allLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="allStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="allEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="allTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="allStudentCol" prefWidth="135.4285888671875" text="Student" />
-                          </columns>
-                        </TableView>
-                     </content>
-                  </Tab>
-                  <Tab fx:id="monthTab" text="Monthly">
-                    <content>
-                      <TableView fx:id="monthApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                           <columns>
-                              <TableColumn fx:id="monthIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="monthTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="monthDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="monthLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="monthStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="monthEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="monthTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="monthStudentCol" prefWidth="135.4285888671875" text="Student" />
-                           </columns>
-                      </TableView>
-                    </content>                     
-                  </Tab>
-                  <Tab fx:id="weekTab" text="Weekly">
-                    <content>
-                      <TableView fx:id="weekApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                           <columns>
-                              <TableColumn fx:id="weekIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="weekTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="weekDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="weekLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="weekStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="weekEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="weekTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="weekStudentCol" prefWidth="135.4285888671875" text="Student" />
-                           </columns>
-                        </TableView>
-                    </content>                     
-                  </Tab>
-                  <Tab fx:id="dayTab" text="Daily">
-                     <content>
-                        <TableView fx:id="dayApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
-                           <columns>
-                              <TableColumn fx:id="dayIdCol" prefWidth="40.57141167776922" text="ID" />
-                              <TableColumn fx:id="dayTitleCol" prefWidth="109.71430587768555" text="Title" />
-                              <TableColumn fx:id="dayDescriptionCol" prefWidth="183.4285430908203" text="Description" />
-                              <TableColumn fx:id="dayLocationCol" prefWidth="116.0" text="Location" />
-                              <TableColumn fx:id="dayStartCol" prefWidth="111.99996948242188" text="Start" />
-                              <TableColumn fx:id="dayEndCol" prefWidth="120.0" text="End" />
-                              <TableColumn fx:id="dayTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
-                              <TableColumn fx:id="dayStudentCol" prefWidth="135.4285888671875" text="Student" />
-                           </columns>
-                        </TableView>
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="975.0" spacing="100.0" StackPane.alignment="BOTTOM_CENTER">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="addBTN" mnemonicParsing="false" text="Add" />
-                  <Button fx:id="updateBTN" mnemonicParsing="false" text="Update" />
-                  <Button fx:id="deleteBTN" mnemonicParsing="false" text="Delete" />
+                  <TabPane fx:id="appointmentsTabPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                     <tabs>
+                        <Tab fx:id="allTab" text="All Appointments">
+                           <content>
+                              <TableView fx:id="allApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                <columns>
+                                    <TableColumn fx:id="allIdCol" prefWidth="40.57141167776922" text="ID" />
+                                    <TableColumn fx:id="allTitleCol" prefWidth="109.71430587768555" text="Title" />
+                                    <TableColumn fx:id="allDescriptionCol" prefWidth="183.4285430908203" text="Description" />
+                                    <TableColumn fx:id="allLocationCol" prefWidth="116.0" text="Location" />
+                                    <TableColumn fx:id="allStartCol" prefWidth="111.99996948242188" text="Start" />
+                                    <TableColumn fx:id="allEndCol" prefWidth="120.0" text="End" />
+                                    <TableColumn fx:id="allTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
+                                    <TableColumn fx:id="allStudentCol" prefWidth="135.4285888671875" text="Student" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </Tab>
+                        <Tab fx:id="monthTab" text="Monthly">
+                          <content>
+                            <TableView fx:id="monthApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                 <columns>
+                                    <TableColumn fx:id="monthIdCol" prefWidth="40.57141167776922" text="ID" />
+                                    <TableColumn fx:id="monthTitleCol" prefWidth="109.71430587768555" text="Title" />
+                                    <TableColumn fx:id="monthDescriptionCol" prefWidth="183.4285430908203" text="Description" />
+                                    <TableColumn fx:id="monthLocationCol" prefWidth="116.0" text="Location" />
+                                    <TableColumn fx:id="monthStartCol" prefWidth="111.99996948242188" text="Start" />
+                                    <TableColumn fx:id="monthEndCol" prefWidth="120.0" text="End" />
+                                    <TableColumn fx:id="monthTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
+                                    <TableColumn fx:id="monthStudentCol" prefWidth="135.4285888671875" text="Student" />
+                                 </columns>
+                            </TableView>
+                          </content>                     
+                        </Tab>
+                        <Tab fx:id="weekTab" text="Weekly">
+                          <content>
+                            <TableView fx:id="weekApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                 <columns>
+                                    <TableColumn fx:id="weekIdCol" prefWidth="40.57141167776922" text="ID" />
+                                    <TableColumn fx:id="weekTitleCol" prefWidth="109.71430587768555" text="Title" />
+                                    <TableColumn fx:id="weekDescriptionCol" prefWidth="183.4285430908203" text="Description" />
+                                    <TableColumn fx:id="weekLocationCol" prefWidth="116.0" text="Location" />
+                                    <TableColumn fx:id="weekStartCol" prefWidth="111.99996948242188" text="Start" />
+                                    <TableColumn fx:id="weekEndCol" prefWidth="120.0" text="End" />
+                                    <TableColumn fx:id="weekTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
+                                    <TableColumn fx:id="weekStudentCol" prefWidth="135.4285888671875" text="Student" />
+                                 </columns>
+                              </TableView>
+                          </content>                     
+                        </Tab>
+                        <Tab fx:id="dayTab" text="Daily">
+                           <content>
+                              <TableView fx:id="dayApptTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="975.0">
+                                 <columns>
+                                    <TableColumn fx:id="dayIdCol" prefWidth="40.57141167776922" text="ID" />
+                                    <TableColumn fx:id="dayTitleCol" prefWidth="109.71430587768555" text="Title" />
+                                    <TableColumn fx:id="dayDescriptionCol" prefWidth="183.4285430908203" text="Description" />
+                                    <TableColumn fx:id="dayLocationCol" prefWidth="116.0" text="Location" />
+                                    <TableColumn fx:id="dayStartCol" prefWidth="111.99996948242188" text="Start" />
+                                    <TableColumn fx:id="dayEndCol" prefWidth="120.0" text="End" />
+                                    <TableColumn fx:id="dayTeacherCol" prefWidth="161.7142333984375" text="Teacher" />
+                                    <TableColumn fx:id="dayStudentCol" prefWidth="135.4285888671875" text="Student" />
+                                 </columns>
+                              </TableView>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+                  <HBox alignment="CENTER" maxWidth="-Infinity" prefWidth="975.0" spacing="100.0">
+                     <children>
+                        <Button fx:id="addBTN" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="updateBTN" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="deleteBTN" mnemonicParsing="false" text="Delete" />
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
                </children>
-               <StackPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </StackPane.margin>
-            </HBox>
+            </VBox>
          </children>
       </StackPane>
    </center>
