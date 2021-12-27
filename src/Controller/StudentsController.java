@@ -129,84 +129,75 @@ public class StudentsController implements Initializable {
         InstrumentStudentDAO.selectStudents();
         studentsTable.setItems(Data.getAllStudents());
 
-        EventHandler<ActionEvent> clickAddBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+        EventHandler<ActionEvent> clickAddBtnHandler = (ActionEvent event) -> {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/AddStudent.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            pageTitle = PageLoader.getStudentAddTitle();
+            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+            PageLoader.pageLoad(stage, root, pageTitle);
+        };
+
+        EventHandler<ActionEvent> clickUpdateBtnHandler = (ActionEvent event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateStudent.fxml"));
+                InstrumentStudent selectedStudent = studentsTable.getSelectionModel().getSelectedItem();
+                String pageTitle1 = PageLoader.getStudentUpdateTitle();
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/View/AddStudent.fxml"));
-                } catch (IOException ex) {
+                    PageLoader.studentUpdatePageLoad(event, loader, pageTitle1, selectedStudent);
+                }catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                pageTitle = PageLoader.getStudentAddTitle();
-                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                PageLoader.pageLoad(stage, root, pageTitle);
+            }catch (NullPointerException exception) {
+                alertNull();
             }
         };
 
-        EventHandler<ActionEvent> clickUpdateBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+        EventHandler<ActionEvent> clickDeleteBtnHandler = (ActionEvent event) -> {
+            try {
+                InstrumentStudent student = studentsTable.getSelectionModel().getSelectedItem();
+                int id = student.getId();
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateStudent.fxml"));
-                    InstrumentStudent selectedStudent = studentsTable.getSelectionModel().getSelectedItem();
-                    String pageTitle = PageLoader.getStudentUpdateTitle();
-                    try {
-                        PageLoader.studentUpdatePageLoad(event, loader, pageTitle, selectedStudent);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                } catch (NullPointerException exception) {
-                    alertNull();
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-            }
-        };
-
-        EventHandler<ActionEvent> clickDeleteBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                try {
-                    InstrumentStudent student = studentsTable.getSelectionModel().getSelectedItem();
-                    int id = student.getId();
-                    try {
-                        AppointmentDAO.selectAppointments();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
+                boolean checkAssociated = Data.checkStudAssocAppt(id);
+                if (checkAssociated == true) {
+                    Alerts.associatedAppointment();
+                } else {
+                    
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this student?");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        InstrumentStudentDAO.deleteStudent(id);
+                        InstrumentStudentDAO.selectStudents();
+                        studentsTable.setItems(Data.getAllStudents());
+                        alertDeleteConfirm();
                     }
-                    boolean checkAssociated = Data.checkStudAssocAppt(id);
-                    if (checkAssociated == true) {
-                        Alerts.associatedAppointment();
-                    } else {
-
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this student?");
-                        Optional<ButtonType> result = alert.showAndWait();
-                        if (result.isPresent() && result.get() == ButtonType.OK) {
-                            InstrumentStudentDAO.deleteStudent(id);
-                            InstrumentStudentDAO.selectStudents();
-                            studentsTable.setItems(Data.getAllStudents());
-                            alertDeleteConfirm();
-                        }
-                    }
-                } catch (NullPointerException exception) {
-                    alertNull();
                 }
+            } catch (NullPointerException exception) {
+                alertNull();
             }
         };
         
-        EventHandler<KeyEvent> searchFieldHandler = new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.ENTER)) {
-                    String searchText = searchTxf.getText().toLowerCase();
-                    ObservableList<InstrumentStudent> studentSearch = Data.lookupStudent(searchText);
-                    studentsTable.setItems(studentSearch);
-
-                    if (studentSearch.isEmpty()) {
-                        try {
-                            int studentId = Integer.parseInt(searchText);
-                            InstrumentStudent studentIdSearch = Data.lookupStudent(studentId);
-                            if (studentIdSearch != null) {
-                                studentSearch.add(studentIdSearch);
-                            }
-                        } catch (NumberFormatException exception) {
-                            alertNoResults();
+        EventHandler<KeyEvent> searchFieldHandler = (KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                String searchText = searchTxf.getText().toLowerCase();
+                ObservableList<InstrumentStudent> studentSearch = Data.lookupStudent(searchText);
+                studentsTable.setItems(studentSearch);
+                
+                if (studentSearch.isEmpty()) {
+                    try {
+                        int studentId = Integer.parseInt(searchText);
+                        InstrumentStudent studentIdSearch = Data.lookupStudent(studentId);
+                        if (studentIdSearch != null) {
+                            studentSearch.add(studentIdSearch);
                         }
+                    } catch (NumberFormatException exception) {
+                        alertNoResults();
                     }
                 }
             }

@@ -126,105 +126,92 @@ public class UpdateAppointmentController implements Initializable {
         teacherCB.setItems(Data.getAllTeachers());
         studentCB.setItems(Data.getAllStudents());
         
-        EventHandler<ActionEvent> clickCancelBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                pageTitle = PageLoader.getAppointmentsTitle();
-                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                PageLoader.pageLoad(stage, root, pageTitle);
+        EventHandler<ActionEvent> clickCancelBtnHandler = (ActionEvent event) -> {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
+            pageTitle = PageLoader.getAppointmentsTitle();
+            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+            PageLoader.pageLoad(stage, root, pageTitle);
         };
 
-        EventHandler<ActionEvent> clickClearBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                titleTF.setText("");
-                descriptionTA.setText("");
-                locationCB.getSelectionModel().clearSelection();
-                dateDP.setValue(null);
-                timeCB.getSelectionModel().clearSelection();
-                lengthCB.getSelectionModel().clearSelection();
-                teacherCB.getSelectionModel().clearSelection();
-                studentCB.getSelectionModel().clearSelection();
-
-            }
+        EventHandler<ActionEvent> clickClearBtnHandler = (ActionEvent event) -> {
+            titleTF.setText("");
+            descriptionTA.setText("");
+            locationCB.getSelectionModel().clearSelection();
+            dateDP.setValue(null);
+            timeCB.getSelectionModel().clearSelection();
+            lengthCB.getSelectionModel().clearSelection();
+            teacherCB.getSelectionModel().clearSelection();
+            studentCB.getSelectionModel().clearSelection();
         };
         
-        EventHandler<ActionEvent> clickSaveBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                int id = Integer.parseInt(idTF.getText());
-                String title = titleTF.getText();
-                String description = descriptionTA.getText();
-                String location = locationCB.getSelectionModel().getSelectedItem();
-                LocalDate date = dateDP.getValue();
-                LocalTime startTime = timeCB.getValue();
-                LocalTime endTime = timeCB.getValue();
-                String length = lengthCB.getSelectionModel().getSelectedItem();
-                InstrumentTeacher teacher = teacherCB.getSelectionModel().getSelectedItem();
-                InstrumentStudent student = studentCB.getSelectionModel().getSelectedItem();
-                
-                if (StringUtils.isEmptyOrWhitespaceOnly(title)
+        EventHandler<ActionEvent> clickSaveBtnHandler = (ActionEvent event) -> {
+            int id = Integer.parseInt(idTF.getText());
+            String title = titleTF.getText();
+            String description = descriptionTA.getText();
+            String location = locationCB.getSelectionModel().getSelectedItem();
+            LocalDate date = dateDP.getValue();
+            LocalTime startTime = timeCB.getValue();
+            LocalTime endTime = timeCB.getValue();
+            String length = lengthCB.getSelectionModel().getSelectedItem();
+            InstrumentTeacher teacher = teacherCB.getSelectionModel().getSelectedItem();
+            InstrumentStudent student = studentCB.getSelectionModel().getSelectedItem();
+            if (StringUtils.isEmptyOrWhitespaceOnly(title)
                     || StringUtils.isEmptyOrWhitespaceOnly(description)) {
-                    Alerts.invalidFields();
-                    return;
+                Alerts.invalidFields();
+                return;
+            }
+            try {
+                if (length.matches("30 Minutes")) {
+                    endTime = startTime.plusMinutes(30);
+                } else if (length.matches("1 Hour")) {
+                    endTime = startTime.plusHours(1);
+                } else if (length.matches("1 Hour 30 Minutes")) {
+                    endTime = startTime.plusMinutes(30);
+                    endTime = startTime.plusHours(1);
+                } else if (length.matches("2 Hours")) {
+                    endTime = startTime.plusHours(2);
                 }
-                
-                try {
-                    if (length.matches("30 Minutes")) {
-                        endTime = startTime.plusMinutes(30);
-                    } else if (length.matches("1 Hour")) {
-                        endTime = startTime.plusHours(1);
-                    } else if (length.matches("1 Hour 30 Minutes")) {
-                        endTime = startTime.plusMinutes(30);
-                        endTime = startTime.plusHours(1);
-                    } else if (length.matches("2 Hours")) {
-                        endTime = startTime.plusHours(2);
+                String teacherName = teacher.getName();
+                int teacherId = teacher.getId();
+                String studentName = student.getName();
+                int studentId = student.getId();
+                AppointmentDAO.selectAppointments();
+                Boolean teacherOverlap = Data.checkTeacherOverlap(teacherId, startTime, endTime, date);
+                Boolean studentOverlap = Data.checkStudentOverlap(studentId, startTime, endTime, date);
+                if (!teacherOverlap && !studentOverlap) {
+                    LocalDateTime start = LocalDateTime.of(date, startTime);
+                    LocalDateTime end = LocalDateTime.of(date, endTime);
+                    AppointmentDAO.updateAppointment(
+                            id,
+                            title,
+                            description,
+                            location,
+                            start,
+                            end,
+                            teacherName,
+                            teacherId,
+                            studentName,
+                            studentId);
+                    Parent root1;
+                    try {
+                        root1 = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+                        stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                        String pageTitle1 = PageLoader.getAppointmentsTitle();
+                        PageLoader.pageLoad(stage, root1, pageTitle1);
+                    }catch (IOException ex) {
+                        ex.printStackTrace();
                     }
-                    String teacherName = teacher.getName();
-                    int teacherId = teacher.getId();
-                    String studentName = student.getName();
-                    int studentId = student.getId();
-                    AppointmentDAO.selectAppointments();
-                    Boolean teacherOverlap = Data.checkTeacherOverlap(teacherId, startTime, endTime, date);
-                    Boolean studentOverlap = Data.checkStudentOverlap(studentId, startTime, endTime, date);
-                    if (!teacherOverlap && !studentOverlap) {
-                        LocalDateTime start = LocalDateTime.of(date, startTime);
-                        LocalDateTime end = LocalDateTime.of(date, endTime);
-                        AppointmentDAO.updateAppointment(
-                                id,
-                                title,
-                                description,
-                                location,
-                                start,
-                                end,
-                                teacherName,
-                                teacherId,
-                                studentName,
-                                studentId);
-
-                        Parent root;
-                        try {
-                            root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
-                            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                            String pageTitle = PageLoader.getAppointmentsTitle();
-                            PageLoader.pageLoad(stage, root, pageTitle);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        
-                    } else {
-                        Alerts.appointmentOverlap();
-                    }
-
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
-                } catch (NullPointerException exception) {
-                    Alerts.invalidFields();
+                } else {
+                    Alerts.appointmentOverlap();
                 }
+            }catch (SQLException exception) {
+                exception.printStackTrace();
+            }catch (NullPointerException exception) {
+                Alerts.invalidFields();
             }
         };
         

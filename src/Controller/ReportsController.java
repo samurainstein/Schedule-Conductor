@@ -174,67 +174,52 @@ public class ReportsController implements Initializable {
 //        };
 //        studentsByInstTAB.setOnSelectionChanged(apptTotals);
         
-        EventHandler stdntByInstTab = new EventHandler() {
-            @Override
-            public void handle(Event arg0) {
-                try {
-                    instrumentCB.setItems(Data.getAllInstruments());
-                    instrumentCB.setPromptText("Select an instrument");
-                    InstrumentStudentDAO.selectStudentInstruments();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+        EventHandler stdntByInstTab = (EventHandler) (Event arg0) -> {
+            try {
+                instrumentCB.setItems(Data.getAllInstruments());
+                instrumentCB.setPromptText("Select an instrument");
+                InstrumentStudentDAO.selectStudentInstruments();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         };
         
-        EventHandler apptsByTeacherTab = new EventHandler() {
-            @Override
-            public void handle(Event arg0) {
-                InstrumentTeacherDAO.selectTeachers();
-                teacherCB.setItems(Data.getAllTeachers());
-                teacherCB.setPromptText("Select a teacher");
+        EventHandler apptsByTeacherTab = (EventHandler) (Event arg0) -> {
+            InstrumentTeacherDAO.selectTeachers();
+            teacherCB.setItems(Data.getAllTeachers());
+            teacherCB.setPromptText("Select a teacher");
+        };
+        
+        EventHandler apptTotalsHandler = (EventHandler) (Event arg0) -> {
+            String location = locationCB.getSelectionModel().getSelectedItem();
+            Month month = monthCB.getSelectionModel().getSelectedItem();
+            LocalDateTime startLDT = DateAndTime.getMonthStart(month);
+            LocalDateTime endLDT = DateAndTime.getMonthEnd(month);
+            int total;
+            try {
+                total = AppointmentDAO.getTotalsReport(location, startLDT, endLDT);
+                totalNumLBL.setText(String.valueOf(total));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         };
         
-        EventHandler apptTotalsHandler = new EventHandler() {
-            @Override
-            public void handle(Event arg0) {
-                String location = locationCB.getSelectionModel().getSelectedItem();
-                Month month = monthCB.getSelectionModel().getSelectedItem();
-                LocalDateTime startLDT = DateAndTime.getMonthStart(month);
-                LocalDateTime endLDT = DateAndTime.getMonthEnd(month);
-                int total;
-                try {
-                    total = AppointmentDAO.getTotalsReport(location, startLDT, endLDT);
-                    totalNumLBL.setText(String.valueOf(total));
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+        EventHandler studentsByInstHandler = (EventHandler) (Event arg0) -> {
+            studentsTable.getItems().clear();
+            try {
+                String instrumentSearch = instrumentCB.getSelectionModel().getSelectedItem();
+                InstrumentStudentDAO.selectStudentsByInstrument(instrumentSearch);
+                studentsTable.setItems(Data.getInstrumentStudents());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         };
         
-        EventHandler studentsByInstHandler = new EventHandler() {
-            @Override
-            public void handle(Event arg0) {
-                studentsTable.getItems().clear();
-                try {
-                    String instrumentSearch = instrumentCB.getSelectionModel().getSelectedItem();
-                    InstrumentStudentDAO.selectStudentsByInstrument(instrumentSearch);
-                    studentsTable.setItems(Data.getInstrumentStudents());
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        };
-        
-        EventHandler teacherAppointmentsHandler = new EventHandler() {
-            @Override
-            public void handle(Event arg0) {
-                allApptTable.getItems().clear();
-                int teacherIdSearch = teacherCB.getSelectionModel().getSelectedItem().getId();
-                AppointmentDAO.selectAppointmentsByTeacher(teacherIdSearch);
-                allApptTable.setItems(Data.getAppointmentsByTeacher());
-            }
+        EventHandler teacherAppointmentsHandler = (EventHandler) (Event arg0) -> {
+            allApptTable.getItems().clear();
+            int teacherIdSearch = teacherCB.getSelectionModel().getSelectedItem().getId();
+            AppointmentDAO.selectAppointmentsByTeacher(teacherIdSearch);
+            allApptTable.setItems(Data.getAppointmentsByTeacher());
         };
         
         studentsByInstTAB.setOnSelectionChanged(stdntByInstTab);

@@ -213,152 +213,135 @@ public class AppointmentsController implements Initializable {
         }
         allApptTable.setItems(Data.getAllAppointments());
         
-        EventHandler<Event> clickAllTabHandler = new EventHandler<Event>() {
-            public void handle(Event event) {
-                try {
-                    AppointmentDAO.selectAppointments();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-                allApptTable.setItems(Data.getAllAppointments());
+        EventHandler<Event> clickAllTabHandler = (Event event) -> {
+            try {
+                AppointmentDAO.selectAppointments();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
+            allApptTable.setItems(Data.getAllAppointments());
         };
 
-        EventHandler<Event> clickMonthTabHandler = new EventHandler<Event>() {
-            public void handle(Event event) {
-                Data.clearMonthlyAppointments();
-                try {
-                    AppointmentDAO.selectAppointments();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-                Data.filterMonthlyAppointments();
-                monthApptTable.setItems(Data.getMonthlyAppointments());
+        EventHandler<Event> clickMonthTabHandler = (Event event) -> {
+            Data.clearMonthlyAppointments();
+            try {
+                AppointmentDAO.selectAppointments();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
+            Data.filterMonthlyAppointments();
+            monthApptTable.setItems(Data.getMonthlyAppointments());
         };
 
-        EventHandler<Event> clickWeekTabHandler = new EventHandler<Event>() {
-            public void handle(Event event) {
-                Data.clearWeeklyAppointments();
+        EventHandler<Event> clickWeekTabHandler = (Event event) -> {
+            Data.clearWeeklyAppointments();
+            try {
+                AppointmentDAO.selectAppointments();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            Data.filterWeeklyAppointments();
+            weekApptTable.setItems(Data.getWeeklyAppointments());
+        };
+        
+        EventHandler<Event> clickDayTabHandler = (Event event) -> {
+            Data.clearDailyAppointments();
+            try {
+                AppointmentDAO.selectAppointments();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            Data.filterDailyAppointments();
+            dayApptTable.setItems(Data.getDailyAppointments());
+        };
+        
+        EventHandler<ActionEvent> clickAddBtnHandler = (ActionEvent event) -> {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            pageTitle = PageLoader.getAppointmentAddTitle();
+            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+            PageLoader.pageLoad(stage, root, pageTitle);
+        };
+
+        EventHandler<ActionEvent> clickUpdateBtnHandler = (ActionEvent event) -> {
+            TableView<Appointment> currentTable = dayApptTable;
+            if (allApptTable.getSelectionModel().getSelectedItem() == null) {
+                if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
+                    if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
+                        if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
+                            alertNull();
+                        } else {
+                            currentTable = dayApptTable;
+                        }
+                    } else {
+                        currentTable = weekApptTable;
+                    }
+                } else {
+                    currentTable = monthApptTable;
+                }
+            } else {
+                currentTable = allApptTable;
+            }
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateAppointment.fxml"));
+                Appointment selectedAppointment = currentTable.getSelectionModel().getSelectedItem();
+                String pageTitle1 = PageLoader.getAppointmentUpdateTitle();
                 try {
-                    AppointmentDAO.selectAppointments();
-                } catch (SQLException ex) {
+                    PageLoader.appointmentUpdatePageLoad(event, loader, pageTitle1, selectedAppointment);
+                }catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Data.filterWeeklyAppointments();
-                weekApptTable.setItems(Data.getWeeklyAppointments());
+            }catch (NullPointerException exception) {
+                alertNull();
             }
         };
         
-        EventHandler<Event> clickDayTabHandler = new EventHandler<Event>() {
-            public void handle(Event event) {
-                Data.clearDailyAppointments();
+        EventHandler<ActionEvent> clickDeleteBtnHandler = (ActionEvent event) -> {
+            TableView<Appointment> currentTable = dayApptTable;
+            if (allApptTable.getSelectionModel().getSelectedItem() == null) {
+                if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
+                    if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
+                        if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
+                            alertNull();
+                        } else {
+                            currentTable = dayApptTable;
+                        }
+                    } else {
+                        currentTable = weekApptTable;
+                    }
+                } else {
+                    currentTable = monthApptTable;
+                }
+            } else {
+                currentTable = allApptTable;
+            }
+            
+            Appointment appointment = currentTable.getSelectionModel().getSelectedItem();
+            int appointmentID = appointment.getAppointmentID();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this appointment?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    AppointmentDAO.deleteAppointment(appointmentID);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 try {
                     AppointmentDAO.selectAppointments();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                Data.filterDailyAppointments();
-                dayApptTable.setItems(Data.getDailyAppointments());
-            }
-        };
-        
-        EventHandler<ActionEvent> clickAddBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                pageTitle = PageLoader.getAppointmentAddTitle();
+                pageTitle = PageLoader.getAppointmentsTitle();
                 stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
                 PageLoader.pageLoad(stage, root, pageTitle);
-            }
-        };
-
-        EventHandler<ActionEvent> clickUpdateBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                TableView<Appointment> currentTable = dayApptTable;
-                if (allApptTable.getSelectionModel().getSelectedItem() == null) {
-                    if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
-                        if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
-                            if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
-                                alertNull();
-                            } else {
-                                currentTable = dayApptTable;
-                            }
-                        } else {
-                            currentTable = weekApptTable;
-                        }
-                    } else {
-                        currentTable = monthApptTable;
-                    }
-                } else {
-                    currentTable = allApptTable;
-                }
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateAppointment.fxml"));
-                    Appointment selectedAppointment = currentTable.getSelectionModel().getSelectedItem();
-                    String pageTitle = PageLoader.getAppointmentUpdateTitle();
-                    try {
-                        PageLoader.appointmentUpdatePageLoad(event, loader, pageTitle, selectedAppointment);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                } catch (NullPointerException exception) {
-                    alertNull();
-                }
-            }
-        };
-        
-        EventHandler<ActionEvent> clickDeleteBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                TableView<Appointment> currentTable = dayApptTable;
-                if (allApptTable.getSelectionModel().getSelectedItem() == null) {
-                    if (monthApptTable.getSelectionModel().getSelectedItem() == null) {
-                        if (weekApptTable.getSelectionModel().getSelectedItem() == null) {
-                            if (dayApptTable.getSelectionModel().getSelectedItem() == null) {
-                                alertNull();
-                            } else {
-                                currentTable = dayApptTable;
-                            }
-                        } else {
-                            currentTable = weekApptTable;
-                        }
-                    } else {
-                        currentTable = monthApptTable;
-                    }
-                } else {
-                    currentTable = allApptTable;
-                }
-
-                Appointment appointment = currentTable.getSelectionModel().getSelectedItem();
-                int appointmentID = appointment.getAppointmentID();
-//                    allViewTable.setItems(Data.getAllAppointments());
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this appointment?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    try {
-                        AppointmentDAO.deleteAppointment(appointmentID);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                    try {
-                        AppointmentDAO.selectAppointments();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                    try {
-                        root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    pageTitle = PageLoader.getAppointmentsTitle();
-                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                    PageLoader.pageLoad(stage, root, pageTitle);
-//                    currentTable.setItems(Data.getAllAppointments());
-//                        Alerts.appointmentDeleteConfirm(appointmentID, type);
-                }
             }
         };
         

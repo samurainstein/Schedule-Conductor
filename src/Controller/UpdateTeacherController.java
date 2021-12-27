@@ -120,83 +120,46 @@ public class UpdateTeacherController implements Initializable {
         reportsLBL.setOnMouseClicked(EventHandlerNavMenu.navReportsEvent());
         logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());
 
-        EventHandler<ActionEvent> comboCountryHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                if (!(countryCB.getSelectionModel().isEmpty())) {
-                    divisionCB.getItems().clear();
-                    int countryIDSelection = countryCB.getValue().getCountryID();
-                    DivisionDAO.selectFilteredDivisions(countryIDSelection);
-                    divisionCB.setItems(Data.getFilteredDivisions());
-                    divisionCB.setPromptText("Please Select a Division");
-                }
-            }
-        };
-
-        EventHandler<ActionEvent> clickSaveBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                int id = Integer.parseInt(idTF.getText());
-                String name = nameTF.getText();
-                String postal = postalTF.getText();
-                String address = addressTF.getText();
-                String phone = phoneTF.getText();
-                String instrument = instrumentTF.getText();
-                RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
-                char onlineRadioChar = onlineRadio.getText().charAt(0);
-                RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
-                char inPersonRadioChar = inPersonRadio.getText().charAt(0);
-                String username = usernameTF.getText();
-                String password = passwordTF.getText();
-
-                if (StringUtils.isEmptyOrWhitespaceOnly(name)
-                        || StringUtils.isEmptyOrWhitespaceOnly(postal)
-                        || StringUtils.isEmptyOrWhitespaceOnly(address)
-                        || StringUtils.isEmptyOrWhitespaceOnly(phone)
-                        || StringUtils.isEmptyOrWhitespaceOnly(instrument)
-                        || StringUtils.isEmptyOrWhitespaceOnly(username)
-                        || StringUtils.isEmptyOrWhitespaceOnly(password)) {
-                    Alerts.invalidFields();
-                    return;
-                }
-
-                try {
-                    String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
-                    String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
-                    InstrumentTeacherDAO.updateTeacher(id, name, country, division, postal, address, phone,
-                            instrument, onlineRadioChar, inPersonRadioChar, username, password);
-                    try {
-                        root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    pageTitle = PageLoader.getTeachersTitle();
-                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                    PageLoader.pageLoad(stage, root, pageTitle);
-                } catch (NullPointerException ex) {
-                    Alerts.countryOrDivisionNullAlert();
-                }
-            }
-        };
-
-        EventHandler<ActionEvent> clickClearBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                nameTF.setText("");
-                countryCB.getSelectionModel().clearSelection();
+        EventHandler<ActionEvent> comboCountryHandler = (ActionEvent event) -> {
+            if (!(countryCB.getSelectionModel().isEmpty())) {
                 divisionCB.getItems().clear();
-                postalTF.setText("");
-                addressTF.setText("");
-                phoneTF.setText("");
-                instrumentTF.setText("");
-                onlineTGL.selectToggle(onlineNRB);
-                inPersonTGL.selectToggle(inPersonNRB);
-                usernameTF.setText("");
-                passwordTF.setText("");
+                int countryIDSelection = countryCB.getValue().getCountryID();
+                DivisionDAO.selectFilteredDivisions(countryIDSelection);
+                divisionCB.setItems(Data.getFilteredDivisions());
+                divisionCB.setPromptText("Please Select a Division");
             }
         };
 
-        EventHandler<ActionEvent> clickCancelBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+        EventHandler<ActionEvent> clickSaveBtnHandler = (ActionEvent event) -> {
+            int id = Integer.parseInt(idTF.getText());
+            String name = nameTF.getText();
+            String postal = postalTF.getText();
+            String address = addressTF.getText();
+            String phone = phoneTF.getText();
+            String instrument = instrumentTF.getText();
+            RadioButton onlineRadio = (RadioButton) onlineTGL.getSelectedToggle();
+            char onlineRadioChar = onlineRadio.getText().charAt(0);
+            RadioButton inPersonRadio = (RadioButton) inPersonTGL.getSelectedToggle();
+            char inPersonRadioChar = inPersonRadio.getText().charAt(0);
+            String username = usernameTF.getText();
+            String password = passwordTF.getText();
+            
+            if (StringUtils.isEmptyOrWhitespaceOnly(name)
+                    || StringUtils.isEmptyOrWhitespaceOnly(postal)
+                    || StringUtils.isEmptyOrWhitespaceOnly(address)
+                    || StringUtils.isEmptyOrWhitespaceOnly(phone)
+                    || StringUtils.isEmptyOrWhitespaceOnly(instrument)
+                    || StringUtils.isEmptyOrWhitespaceOnly(username)
+                    || StringUtils.isEmptyOrWhitespaceOnly(password)) {
+                Alerts.invalidFields();
+                return;
+            }
+            
+            try {
+                String country = countryCB.getSelectionModel().getSelectedItem().getCountryName();
+                String division = divisionCB.getSelectionModel().getSelectedItem().getDivisionName();
+                InstrumentTeacherDAO.updateTeacher(id, name, country, division, postal, address, phone,
+                        instrument, onlineRadioChar, inPersonRadioChar, username, password);
                 try {
                     root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
                 } catch (IOException ex) {
@@ -205,7 +168,34 @@ public class UpdateTeacherController implements Initializable {
                 pageTitle = PageLoader.getTeachersTitle();
                 stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
                 PageLoader.pageLoad(stage, root, pageTitle);
+            } catch (NullPointerException ex) {
+                Alerts.countryOrDivisionNullAlert();
             }
+        };
+
+        EventHandler<ActionEvent> clickClearBtnHandler = (ActionEvent event) -> {
+            nameTF.setText("");
+            countryCB.getSelectionModel().clearSelection();
+            divisionCB.getItems().clear();
+            postalTF.setText("");
+            addressTF.setText("");
+            phoneTF.setText("");
+            instrumentTF.setText("");
+            onlineTGL.selectToggle(onlineNRB);
+            inPersonTGL.selectToggle(inPersonNRB);
+            usernameTF.setText("");
+            passwordTF.setText("");
+        };
+
+        EventHandler<ActionEvent> clickCancelBtnHandler = (ActionEvent event) -> {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/Teachers.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            pageTitle = PageLoader.getTeachersTitle();
+            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+            PageLoader.pageLoad(stage, root, pageTitle);
         };
 
         saveBTN.setOnAction(clickSaveBtnHandler);

@@ -64,32 +64,8 @@ public class LoginController implements Initializable {
         zoneID = ZoneId.systemDefault();
         zoneIDLabel.setText("Location: " + zoneID.toString());
 
-        EventHandler<KeyEvent> pressEnterHandler = new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER) {
-                    String username = usernameTF.getText();
-                    String password = passwordFld.getText();
-                    int id = InstrumentTeacherDAO.teacherLogin(username, password);
-                    if (id == 0) {
-                        alertInvalidLogin();
-                    } else {
-                        try {
-                            root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        Data.setLoggedInTeacherID(id);
-                        pageTitle = PageLoader.getHomeTitle();
-                        stage = (Stage) ((Node) keyEvent.getTarget()).getScene().getWindow();
-                        PageLoader.pageLoad(stage, root, pageTitle);
-                    }
-                }
-            }
-        };
-
-        EventHandler<ActionEvent> clickLoginBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+        EventHandler<KeyEvent> pressEnterHandler = (KeyEvent keyEvent) -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
                 String username = usernameTF.getText();
                 String password = passwordFld.getText();
                 int id = InstrumentTeacherDAO.teacherLogin(username, password);
@@ -103,11 +79,29 @@ public class LoginController implements Initializable {
                     }
                     Data.setLoggedInTeacherID(id);
                     pageTitle = PageLoader.getHomeTitle();
-                    stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                    stage = (Stage) ((Node) keyEvent.getTarget()).getScene().getWindow();
                     PageLoader.pageLoad(stage, root, pageTitle);
                 }
             }
+        };
 
+        EventHandler<ActionEvent> clickLoginBtnHandler = (ActionEvent event) -> {
+            String username = usernameTF.getText();
+            String password = passwordFld.getText();
+            int id = InstrumentTeacherDAO.teacherLogin(username, password);
+            if (id == 0) {
+                alertInvalidLogin();
+            } else {
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Data.setLoggedInTeacherID(id);
+                pageTitle = PageLoader.getHomeTitle();
+                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+                PageLoader.pageLoad(stage, root, pageTitle);
+            }
         };
         
         usernameTF.setOnKeyPressed(pressEnterHandler);

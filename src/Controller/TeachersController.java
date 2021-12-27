@@ -129,84 +129,75 @@ public class TeachersController implements Initializable {
         InstrumentTeacherDAO.selectTeachers();
         teachersTable.setItems(Data.getAllTeachers());
 
-        EventHandler<ActionEvent> clickAddBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+        EventHandler<ActionEvent> clickAddBtnHandler = (ActionEvent event) -> {
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/AddTeacher.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            pageTitle = PageLoader.getTeacherAddTitle();
+            stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+            PageLoader.pageLoad(stage, root, pageTitle);
+        };
+
+        EventHandler<ActionEvent> clickDeleteBtnHandler = (ActionEvent event) -> {
+            try {
+                InstrumentTeacher teacher = teachersTable.getSelectionModel().getSelectedItem();
+                int id = teacher.getId();
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/View/AddTeacher.fxml"));
-                } catch (IOException ex) {
+                    AppointmentDAO.selectAppointments();
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                pageTitle = PageLoader.getTeacherAddTitle();
-                stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-                PageLoader.pageLoad(stage, root, pageTitle);
+                boolean checkAssociated = Data.checkTeachAssocAppt(id);
+                if (checkAssociated == true) {
+                    Alerts.associatedAppointment();
+                } else {
+                    
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this teacher?");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        InstrumentTeacherDAO.deleteTeacher(id);
+                        InstrumentTeacherDAO.selectTeachers();
+                        teachersTable.setItems(Data.getAllTeachers());
+                        alertDeleteConfirm();
+                    }
+                }
+            } catch (NullPointerException exception) {
+                alertNull();
             }
         };
 
-        EventHandler<ActionEvent> clickDeleteBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
+        EventHandler<ActionEvent> clickUpdateBtnHandler = (ActionEvent event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateTeacher.fxml"));
+                InstrumentTeacher selectedTeacher = teachersTable.getSelectionModel().getSelectedItem();
+                String pageTitle1 = PageLoader.getTeacherUpdateTitle();
                 try {
-                    InstrumentTeacher teacher = teachersTable.getSelectionModel().getSelectedItem();
-                    int id = teacher.getId();
-                    try {
-                        AppointmentDAO.selectAppointments();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                    boolean checkAssociated = Data.checkTeachAssocAppt(id);
-                    if (checkAssociated == true) {
-                        Alerts.associatedAppointment();
-                    } else {
-
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this teacher?");
-                        Optional<ButtonType> result = alert.showAndWait();
-                        if (result.isPresent() && result.get() == ButtonType.OK) {
-                            InstrumentTeacherDAO.deleteTeacher(id);
-                            InstrumentTeacherDAO.selectTeachers();
-                            teachersTable.setItems(Data.getAllTeachers());
-                            alertDeleteConfirm();
-                        }
-                    }
-                } catch (NullPointerException exception) {
-                    alertNull();
+                    PageLoader.teachUpdatePageLoad(event, loader, pageTitle1, selectedTeacher);
+                }catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-            }
-        };
-
-        EventHandler<ActionEvent> clickUpdateBtnHandler = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UpdateTeacher.fxml"));
-                    InstrumentTeacher selectedTeacher = teachersTable.getSelectionModel().getSelectedItem();
-                    String pageTitle = PageLoader.getTeacherUpdateTitle();
-                    try {
-                        PageLoader.teachUpdatePageLoad(event, loader, pageTitle, selectedTeacher);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                } catch (NullPointerException exception) {
-                    alertNull();
-                }
+            }catch (NullPointerException exception) {
+                alertNull();
             }
         };
         
-        EventHandler<KeyEvent> searchFieldHandler = new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.ENTER)) {
-                    String searchText = searchTxf.getText().toLowerCase();
-                    ObservableList<InstrumentTeacher> teacherSearch = Data.lookupTeacher(searchText);
-                    teachersTable.setItems(teacherSearch);
-
-                    if (teacherSearch.isEmpty()) {
-                        try {
-                            int teacherId = Integer.parseInt(searchText);
-                            InstrumentTeacher teacherIdSearch = Data.lookupTeacher(teacherId);
-                            if (teacherIdSearch != null) {
-                                teacherSearch.add(teacherIdSearch);
-                            }
-                        } catch (NumberFormatException exception) {
-                            alertNoResults();
+        EventHandler<KeyEvent> searchFieldHandler = (KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                String searchText = searchTxf.getText().toLowerCase();
+                ObservableList<InstrumentTeacher> teacherSearch = Data.lookupTeacher(searchText);
+                teachersTable.setItems(teacherSearch);
+                
+                if (teacherSearch.isEmpty()) {
+                    try {
+                        int teacherId = Integer.parseInt(searchText);
+                        InstrumentTeacher teacherIdSearch = Data.lookupTeacher(teacherId);
+                        if (teacherIdSearch != null) {
+                            teacherSearch.add(teacherIdSearch);
                         }
+                    } catch (NumberFormatException exception) {
+                        alertNoResults();
                     }
                 }
             }
