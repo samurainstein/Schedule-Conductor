@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,8 +32,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -91,6 +96,8 @@ public class TeachersController implements Initializable {
     private Parent root;
     private String pageTitle;
     private Stage stage;
+    @FXML
+    private TextField searchTxf;
 
     /**
      * Initializes the controller class.
@@ -181,7 +188,30 @@ public class TeachersController implements Initializable {
                 }
             }
         };
+        
+        EventHandler<KeyEvent> searchFieldHandler = new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    String searchText = searchTxf.getText().toLowerCase();
+                    ObservableList<InstrumentTeacher> teacherSearch = Data.lookupTeacher(searchText);
+                    teachersTable.setItems(teacherSearch);
 
+                    if (teacherSearch.isEmpty()) {
+                        try {
+                            int teacherId = Integer.parseInt(searchText);
+                            InstrumentTeacher teacherIdSearch = Data.lookupTeacher(teacherId);
+                            if (teacherIdSearch != null) {
+                                teacherSearch.add(teacherIdSearch);
+                            }
+                        } catch (NumberFormatException exception) {
+                            alertNoResults();
+                        }
+                    }
+                }
+            }
+        };
+
+        searchTxf.setOnKeyPressed(searchFieldHandler);
         addBTN.setOnAction(clickAddBtnHandler);
         updateBTN.setOnAction(clickUpdateBtnHandler);
         deleteBTN.setOnAction(clickDeleteBtnHandler);
@@ -205,6 +235,18 @@ public class TeachersController implements Initializable {
     public static void alertDeleteConfirm() {
         String alertTitle = "Confirmation";
         String alertText = "Teacher was deleted";
+        Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
+        confirmAlert.setTitle(alertTitle);
+        confirmAlert.setContentText(alertText);
+        confirmAlert.showAndWait();
+    }
+    
+    /**
+     * Method for generating an alert to notify no results found. 
+     */
+    public static void alertNoResults() {
+        String alertTitle = "Search";
+        String alertText = "No results found";
         Alert confirmAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmAlert.setTitle(alertTitle);
         confirmAlert.setContentText(alertText);
