@@ -89,7 +89,6 @@ public class HomeController implements Initializable {
         logoutLabel.setOnMouseClicked(EventHandlerNavMenu.navLogoutEvent());
         
         loggedInTeacherId = Data.getLoggedInTeacherId();
-        Data.clearAppointments();
         try {
             AppointmentDAO.selectAppointments();
         } catch (SQLException ex) {
