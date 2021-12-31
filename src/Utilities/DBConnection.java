@@ -17,7 +17,8 @@ public class DBConnection {
     
     private static final String protocol = "jdbc";
     private static final String vendorName = ":mysql:";
-    private static final String ipAddress = "//127.0.0.1:3306/";
+//    private static final String ipAddress = "//127.0.0.1:3306/";
+    private static final String ipAddress = "//db-instance-1.cvwsr4tle9jh.us-east-1.rds.amazonaws.com/";
     private static final String dbName = "scheduleconductor";
     //Required for MySQL Connector/J driver 8.0.23 and above
     private static final String timeConv = "?connectionTimeZone=SERVER";
@@ -25,8 +26,8 @@ public class DBConnection {
     private static final String MYSQLJDBCDriver = "com.mysql.cj.jdbc.Driver";
     private static Connection conn = null;
     private static final String username = "root";
-    private static final String password = "My3ql!@#";
-    
+//    private static final String password = "My3ql!@#";
+    private static final String password = "Db!nstan";
         /**
      * This method starts the connection to the database. 
      * @return Returns Connection object
