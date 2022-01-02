@@ -410,7 +410,7 @@ public abstract class Data {
         return lengths;
     }
     
-    public static boolean checkTeacherOverlap(int teacherID, LocalTime startTime, LocalTime endTime, LocalDate startDate) {
+    public static boolean checkAppointmentTeacherOverlap(int appointmentId, int teacherID, LocalTime startTime, LocalTime endTime, LocalDate startDate) {
         boolean overlap = false;
         teacherAppointments.clear();
         for(Appointment appointment : allAppointments) {
@@ -421,6 +421,9 @@ public abstract class Data {
         for(Appointment appointment : teacherAppointments) {
             if(overlap == true) {
                 break;
+            }
+            if(appointment.getAppointmentID() == appointmentId) {
+                continue;
             }
             LocalTime teachStartTime = appointment.getStart().toLocalTime();
             LocalTime teachEndTime = appointment.getEnd().toLocalTime();
@@ -448,7 +451,7 @@ public abstract class Data {
         return overlap;
     }
     
-    public static boolean checkStudentOverlap(int studentID, LocalTime startTime, LocalTime endTime, LocalDate startDate) {
+    public static boolean checkAppointmentStudentOverlap(int appointmentId, int studentID, LocalTime startTime, LocalTime endTime, LocalDate startDate) {
         boolean overlap = false;
         studentAppointments.clear();
         for(Appointment appointment : allAppointments) {
@@ -459,6 +462,9 @@ public abstract class Data {
         for(Appointment appointment : studentAppointments) {
             if(overlap == true) {
                 break;
+            }
+            if(appointment.getAppointmentID() == appointmentId) {
+                continue;
             }
             LocalTime studentStartTime = appointment.getStart().toLocalTime();
             LocalTime studentEndTime = appointment.getEnd().toLocalTime();
