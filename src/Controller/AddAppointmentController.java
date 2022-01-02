@@ -150,6 +150,7 @@ public class AddAppointmentController implements Initializable {
         };
 
         EventHandler<ActionEvent> clickSaveBtnHandler = (ActionEvent event) -> {
+            int appointmentId = 0;
             String title = titleTF.getText();
             String description = descriptionTA.getText();
             String location = locationCB.getSelectionModel().getSelectedItem();
@@ -180,8 +181,8 @@ public class AddAppointmentController implements Initializable {
                 String studentName = student.getName();
                 int studentId = student.getId();
                 AppointmentDAO.selectAppointments();
-                Boolean teacherOverlap = Data.checkTeacherOverlap(teacherId, startTime, endTime, date);
-                Boolean studentOverlap = Data.checkStudentOverlap(studentId, startTime, endTime, date);
+                Boolean teacherOverlap = Data.checkAppointmentTeacherOverlap(appointmentId, teacherId, startTime, endTime, date);
+                Boolean studentOverlap = Data.checkAppointmentStudentOverlap(appointmentId, studentId, startTime, endTime, date);
                 if (!teacherOverlap && !studentOverlap) {
                     LocalDateTime start = LocalDateTime.of(date, startTime);
                     LocalDateTime end = LocalDateTime.of(date, endTime);
