@@ -149,7 +149,7 @@ public class UpdateAppointmentController implements Initializable {
         };
         
         EventHandler<ActionEvent> clickSaveBtnHandler = (ActionEvent event) -> {
-            int id = Integer.parseInt(idTF.getText());
+            int appointmentId = Integer.parseInt(idTF.getText());
             String title = titleTF.getText();
             String description = descriptionTA.getText();
             String location = locationCB.getSelectionModel().getSelectedItem();
@@ -180,13 +180,13 @@ public class UpdateAppointmentController implements Initializable {
                 String studentName = student.getName();
                 int studentId = student.getId();
                 AppointmentDAO.selectAppointments();
-                Boolean teacherOverlap = Data.checkTeacherOverlap(teacherId, startTime, endTime, date);
-                Boolean studentOverlap = Data.checkStudentOverlap(studentId, startTime, endTime, date);
+                Boolean teacherOverlap = Data.checkAppointmentTeacherOverlap(appointmentId, teacherId, startTime, endTime, date);
+                Boolean studentOverlap = Data.checkAppointmentStudentOverlap(appointmentId, studentId, startTime, endTime, date);
                 if (!teacherOverlap && !studentOverlap) {
                     LocalDateTime start = LocalDateTime.of(date, startTime);
                     LocalDateTime end = LocalDateTime.of(date, endTime);
                     AppointmentDAO.updateAppointment(
-                            id,
+                            appointmentId,
                             title,
                             description,
                             location,
