@@ -537,6 +537,11 @@ public abstract class Data {
      * @param instrument Type of instrument to add
      */
     public static void addInstruments(String instrument) {
+        for (String instrumentName : instruments) {
+            if (instrument.equals(instrumentName)) {
+                return;
+            }
+        }
         instruments.add(instrument);
     }
     
